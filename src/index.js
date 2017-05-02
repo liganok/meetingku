@@ -14,11 +14,13 @@ import Home from './containers/Home';
 
 ReactDOM.render((
   <Provider store={store}>
-    <Router history={hashHistory}>
-      <Route path="/" component={App}>
-        <IndexRoute component={Home}/>
-        <Route path="home" component={Home} />
-      </Route>
-    </Router>
+    <MuiThemeProvider>
+      <Router history={hashHistory}>
+        <Route path="/" component={App}>
+          <IndexRoute component={Home}/>
+          <Route path="home" component={Home} />
+        </Route>
+      </Router>
+    </MuiThemeProvider>
   </Provider>
 ), document.getElementById('root'));
