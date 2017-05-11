@@ -1,25 +1,19 @@
-'use strict';
-
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import React from 'react';
-import { Router, Route, IndexRoute, hashHistory } from 'react-router';
+import { Router, hashHistory } from 'react-router';
 import store from './store';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
+import routes from './router/routes';
 
-import App from './containers/App';
-import Home from './containers/Home';
 
 
 ReactDOM.render((
   <Provider store={store}>
     <MuiThemeProvider>
       <Router history={hashHistory}>
-        <Route path="/" component={App}>
-          <IndexRoute component={Home}/>
-          <Route path="home" component={Home} />
-        </Route>
+        {routes}
       </Router>
     </MuiThemeProvider>
   </Provider>

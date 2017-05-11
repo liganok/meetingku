@@ -1,5 +1,7 @@
 import React from 'react';
 import AppBar from 'material-ui/AppBar';
+import FlatButton from 'material-ui/FlatButton';
+
 
 /**
  * A simple example of `AppBar` with an icon on the right.
@@ -7,9 +9,9 @@ import AppBar from 'material-ui/AppBar';
  */
 const Header = () => (
   <AppBar
-    title="MeetingKu"
+    title="Test"
     iconClassNameRight="muidocs-icon-navigation-expand-more"
-
+    iconElementRight={<FlatButton label="Sign In" />}
   />
 );
 
