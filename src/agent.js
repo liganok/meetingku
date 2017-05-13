@@ -5,7 +5,7 @@ import _superagent from 'superagent';
 
 const superagent = superagentPromise(_superagent, global.Promise);
 
-const API_ROOT = 'https://conduit.productionready.io/api';
+const API_ROOT = 'http://localhost:3001/api';
 
 const encode = encodeURIComponent;
 const responseBody = res => res.body;
@@ -39,9 +39,6 @@ const Auth = {
     requests.put('/user', { user })
 };
 
-const Tags = {
-  getAll: () => requests.get('/tags')
-};
 
 const limit = (count, p) => `limit=${count}&offset=${p ? p * count : 0}`;
 const omitSlug = article => Object.assign({}, article, { slug: undefined })
@@ -93,6 +90,5 @@ export default {
   Auth,
   Comments,
   Profile,
-  Tags,
   setToken: _token => { token = _token; }
 };
