@@ -14,12 +14,14 @@ const promiseMiddleware = store => next => action => {
     const currentView = store.getState().viewChangeCounter;
     const skipTracking = action.skipTracking;
 
+
     action.payload.then(
       res => {
         const currentState = store.getState()
         if (!skipTracking && currentState.viewChangeCounter !== currentView) {
           return
         }
+        alert('test2');
         console.log('RESULT', res);
         action.payload = res;
         store.dispatch({ type: ASYNC_END, promise: action.payload });
