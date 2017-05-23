@@ -3,6 +3,40 @@ import React from 'react';
 import agent from '../agent';
 import { connect } from 'react-redux';
 
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { Card, CardActions } from 'material-ui/Card';
+import Avatar from 'material-ui/Avatar';
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
+import CircularProgress from 'material-ui/CircularProgress';
+import LockIcon from 'material-ui/svg-icons/action/lock-outline';
+import { cyan500, pinkA200 } from 'material-ui/styles/colors';
+
+
+const styles = {
+  main: {
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: '100vh',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'cyan500',
+  },
+  card: {
+    minWidth: 300,
+  },
+  avatar: {
+    margin: '1em',
+    textAlign: 'center ',
+  },
+  form: {
+    padding: '0 1em 1em 1em',
+  },
+  input: {
+    display: 'flex',
+  },
+};
+
 const mapStateToProps = state => ({ ...state.auth });
 
 const mapDispatchToProps = dispatch => ({
@@ -35,53 +69,44 @@ class Login extends React.Component {
     const email = this.props.email;
     const password = this.props.password;
     return (
-      <div className="auth-page">
-        <div className="container page">
-          <div className="row">
-
-            <div className="col-md-6 offset-md-3 col-xs-12">
-              <h1 className="text-xs-center">Sign In</h1>
-              <p className="text-xs-center">
-                <Link to="register">
-                  Need an account?
-                </Link>
-              </p>
-
-              <form onSubmit={this.submitForm(email, password)}>
-                <fieldset>
-
-                  <fieldset className="form-group">
-                    <input
-                      className="form-control form-control-lg"
-                      type="email"
-                      placeholder="Email"
-                      value={email}
-                      onChange={this.changeEmail} />
-                  </fieldset>
-
-                  <fieldset className="form-group">
-                    <input
-                      className="form-control form-control-lg"
-                      type="password"
-                      placeholder="Password"
-                      value={password}
-                      onChange={this.changePassword} />
-                  </fieldset>
-
-                  <button
-                    className="btn btn-lg btn-primary pull-xs-right"
-                    type="submit"
-                    disabled={this.props.inProgress}>
-                    Sign in
-                  </button>
-
-                </fieldset>
-              </form>
+      <MuiThemeProvider>
+        <div style={{ ...styles.main, }}>
+          <Card style={styles.card}>
+            <div style={styles.avatar}>
+              <Avatar backgroundColor={pinkA200 } icon={<LockIcon />} size={60} />
             </div>
-
-          </div>
+            <form onSubmit={this.submitForm(email, password)}>
+              <div style={styles.form}>
+                <div style={styles.input} >
+                  <TextField
+                    hintText="User name"
+                    floatingLabelText="User name"
+                    value = {email}
+                    onChange={this.changeEmail}
+                  />
+                </div>
+                <div style={styles.input} >
+                  <TextField
+                    hintText="Password"
+                    floatingLabelText="Password"
+                    value = {password}
+                    onChange={this.changePassword}
+                  />
+                </div>
+              </div>
+              <CardActions>
+                <RaisedButton
+                  type="submit"
+                  primary
+                  icon={ <CircularProgress size={25} thickness={2} />}
+                  label = "Sign In"
+                  fullWidth
+                />
+              </CardActions>
+            </form>
+          </Card>
         </div>
-      </div>
+      </MuiThemeProvider>
     );
   }
 }
