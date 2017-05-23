@@ -98,7 +98,7 @@ class Login extends React.Component {
                 <RaisedButton
                   type="submit"
                   primary
-                  icon={ <CircularProgress size={25} thickness={2} />}
+                  icon={this.props.inProgress && <CircularProgress size={25} thickness={2} />}
                   label = "Sign In"
                   fullWidth
                 />
