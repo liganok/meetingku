@@ -1,12 +1,20 @@
-import React, {Component} from 'react';
-import Header from './Header';
+import {HashRouter, Switch, Route,Link } from 'react-router-dom'
+import React from 'react';
+import Login from '../containers/Login';
+import Header from '../containers/Header';
 
-class App extends Component {
+import Agenda from '../components/AgendaList';
+
+class App extends React.Component {
   render() {
     return (
       <div>
         <Header/>
-        {this.props.children}
+        <Switch>
+          <Route exact path='/' component={Login}/>
+          <Route path='/login' component={Login}/>
+          <Route path='/agenda' component={Agenda}/>
+        </Switch>
       </div>
     );
   }

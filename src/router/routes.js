@@ -1,4 +1,4 @@
-import { Route, IndexRoute } from 'react-router';
+import {HashRouter, Switch, Route,Link } from 'react-router-dom'
 import React from 'react';
 
 import App from '../containers/App';
@@ -9,7 +9,6 @@ import Agenda from '../components/AgendaList';
 
 export default (
   <Route path="/" component={App}>
-    <IndexRoute component={Login}/>
     <Route path="login" component={Login} />
     <Route path="agenda" component={Agenda} />
   </Route>
