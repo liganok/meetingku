@@ -3,7 +3,6 @@ import React from 'react';
 import agent from '../agent';
 import { connect } from 'react-redux';
 
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Card, CardActions } from 'material-ui/Card';
 import Avatar from 'material-ui/Avatar';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -20,7 +19,7 @@ const styles = {
     minHeight: '100vh',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'cyan500',
+    backgroundColor: cyan500,
   },
   card: {
     minWidth: 300,
@@ -69,7 +68,6 @@ class Login extends React.Component {
     const email = this.props.email;
     const password = this.props.password;
     return (
-      <MuiThemeProvider>
         <div style={{ ...styles.main, }}>
           <Card style={styles.card}>
             <div style={styles.avatar}>
@@ -106,7 +104,6 @@ class Login extends React.Component {
             </form>
           </Card>
         </div>
-      </MuiThemeProvider>
     );
   }
 }

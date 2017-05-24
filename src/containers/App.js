@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import Hearder from '../components/Header';
+import Header from './Header';
 
 class App extends Component {
   render() {
     return (
       <div>
-        <Hearder/>
+        <Header/>
         {this.props.children}
       </div>
     );
