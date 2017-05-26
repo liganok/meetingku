@@ -1,4 +1,4 @@
-import {HashRouter, Switch, Route,Link } from 'react-router-dom'
+import {HashRouter, Switch, Route,Link, withRouter } from 'react-router-dom'
 import React from 'react';
 import { connect } from 'react-redux';
 import { APP_LOAD, REDIRECT } from '../constants/actionTypes';
@@ -54,4 +54,4 @@ class App extends React.Component {
   }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(App);
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(App));

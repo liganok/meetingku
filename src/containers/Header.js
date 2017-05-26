@@ -1,12 +1,12 @@
 import React from 'react';
 import AppBar from 'material-ui/AppBar';
 import FlatButton from 'material-ui/FlatButton';
-import {Drawer,Avatar} from 'material-ui';
+import {Drawer, Avatar} from 'material-ui';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import LockIcon from 'material-ui/svg-icons/action/lock-outline';
 import Divider from 'material-ui/Divider';
-import {HashRouter, Switch, Route,Link } from 'react-router-dom'
+import {HashRouter, Switch, Route, Link} from 'react-router-dom'
 import Agenda from '../components/AgendaList';
 
 
@@ -15,11 +15,11 @@ const styles = {
     marginLeft: '1em',
   },
   login: {
-    block:{
+    block: {
       margin: '1em',
       textAlign: 'center ',
     },
-    button:{
+    button: {
       margin: 8,
     }
   },
@@ -28,14 +28,15 @@ const styles = {
   },
 };
 
-const LoggedOutView = props=>{
-  if(!props.currentUser){
+const LoggedOutView = props => {
+  if (!props.currentUser) {
     return (
-      <div style={{ ...styles.login.block, }}>
-        <div style={{display:false}}>
-          <Avatar  icon={<LockIcon />} size={50} />
+      <div style={{...styles.login.block,}}>
+        <div style={{display: false}}>
+          <Avatar icon={<LockIcon />} size={50}/>
         </div>
-        <RaisedButton label="Sign Up" primary={true} style={styles.login.button} />
+        <Link to="/login"><RaisedButton label="Sign In" default={true} style={styles.login.button}/></Link>
+        <RaisedButton label="Sign Up" primary={true} style={styles.login.button}/>
         <Divider />
       </div>
     );
@@ -43,12 +44,12 @@ const LoggedOutView = props=>{
   return null;
 }
 
-const LoggedInView = props=>{
-  if(props.currentUser){
+const LoggedInView = props => {
+  if (props.currentUser) {
     return (
-      <div style={{ ...styles.login.block, }}>
-        <div style={{display:false}}>
-          <Avatar  icon={<LockIcon />} size={50} />
+      <div style={{...styles.login.block,}}>
+        <div style={{display: false}}>
+          <Avatar icon={<LockIcon />} size={50}/>
         </div>
         <Divider />
       </div>
@@ -57,10 +58,10 @@ const LoggedInView = props=>{
   return null;
 }
 
-class Header extends React.Component{
+class Header extends React.Component {
   constructor() {
     super();
-    this.state={open:false}
+    this.state = {open: false}
   }
 
   handleToggle = () => {
@@ -87,12 +88,11 @@ class Header extends React.Component{
             onLeftIconButtonTouchTap={this.handleToggle}
           />
 
-          <LoggedOutView currentUser={this.props.currentUser} />
-          <LoggedInView currentUser={this.props.currentUser} />
+          <LoggedOutView currentUser={this.props.currentUser}/>
+          <LoggedInView currentUser={this.props.currentUser}/>
 
-          <MenuItem onTouchTap={this.handleToggle}>
-            <Link to="/agenda">Agenda</Link>
-          </MenuItem>
+          <Link to="/agenda"><MenuItem onTouchTap={this.handleToggle}>Agenda</MenuItem></Link>
+
           <MenuItem onTouchTap={this.handleToggle}>Menu Item 2</MenuItem>
         </Drawer>
       </div>
