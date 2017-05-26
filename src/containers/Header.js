@@ -5,6 +5,8 @@ import {Drawer, Avatar} from 'material-ui';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import LockIcon from 'material-ui/svg-icons/action/lock-outline';
+import AccountCircle from 'material-ui/svg-icons/action/account-circle';
+
 import Divider from 'material-ui/Divider';
 import {HashRouter, Switch, Route, Link} from 'react-router-dom'
 import Agenda from '../components/AgendaList';
@@ -49,8 +51,13 @@ const LoggedInView = props => {
     return (
       <div style={{...styles.login.block,}}>
         <div style={{display: false}}>
-          <Avatar icon={<LockIcon />} size={50}/>
+          <Avatar icon={<AccountCircle />} size={50}/>
         </div>
+        <Link
+          to={`/user/${props.currentUser.username}`}
+        >
+          {props.currentUser.username}
+        </Link>
         <Divider />
       </div>
     );
