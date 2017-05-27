@@ -54,7 +54,7 @@ const LoggedInView = props => {
           <Avatar icon={<AccountCircle />} size={50}/>
         </div>
         <Link
-          to={`/user/${props.currentUser.username}`}
+          to={`/profile/${props.currentUser.username}`}
         >
           {props.currentUser.username}
         </Link>
