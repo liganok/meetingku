@@ -6,6 +6,7 @@ import agent from '../agent';
 
 import Login from '../containers/Login';
 import Register from '../containers/Register';
+import Profile from '../containers/Profile';
 import Header from '../containers/Header';
 import Agenda from '../components/AgendaList';
 
@@ -51,6 +52,7 @@ class App extends React.Component {
           <Route path='/login' component={Login}/>
           <Route path='/register' component={Register}/>
           <Route path='/agenda' component={Agenda}/>
+          <Route path='/profile' component={Profile}/>
         </Switch>
       </div>
     );
