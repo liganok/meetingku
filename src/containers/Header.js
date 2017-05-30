@@ -8,7 +8,9 @@ import LockIcon from 'material-ui/svg-icons/action/lock-outline';
 import AccountCircle from 'material-ui/svg-icons/action/account-circle';
 
 import Divider from 'material-ui/Divider';
-import {HashRouter, Switch, Route, Link} from 'react-router-dom'
+import {BrowserRouter, Switch, Route, Link} from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
+
 import Agenda from '../components/AgendaList';
 
 
@@ -28,6 +30,9 @@ const styles = {
   input: {
     display: 'flex',
   },
+  link:{
+    textDecoration:'none'
+  }
 };
 
 const LoggedOutView = props => {
@@ -38,7 +43,7 @@ const LoggedOutView = props => {
           <Avatar icon={<LockIcon />} size={50}/>
         </div>
         <Link to="/login"><RaisedButton label="Sign In" default={true} style={styles.login.button}/></Link>
-        <RaisedButton label="Sign Up" primary={true} style={styles.login.button}/>
+        <Link to="/register"><RaisedButton label="Sign Up" primary={true} style={styles.login.button}/></Link>
         <Divider />
       </div>
     );
@@ -66,14 +71,21 @@ const LoggedInView = props => {
 }
 
 class Header extends React.Component {
-  constructor() {
+  constructor(props) {
     super();
     this.state = {open: false}
   }
 
   handleToggle = () => {
-    this.setState({open: !this.state.open})
+    this.setState({open: !this.state.open});
   };
+
+  handleNav(path){
+    this.handleToggle();
+    if(path){
+      this.props.history.push('/agenda');
+    }
+  }
 
   render() {
     return (
@@ -98,7 +110,7 @@ class Header extends React.Component {
           <LoggedOutView currentUser={this.props.currentUser}/>
           <LoggedInView currentUser={this.props.currentUser}/>
 
-          <Link to="/agenda"><MenuItem onTouchTap={this.handleToggle}>Agenda</MenuItem></Link>
+          <Link to="/agenda" style={styles.link}><MenuItem onTouchTap={this.handleToggle}>Agenda</MenuItem></Link>
 
           <MenuItem onTouchTap={this.handleToggle}>Menu Item 2</MenuItem>
         </Drawer>
@@ -107,4 +119,4 @@ class Header extends React.Component {
   }
 }
 
-export default Header;
+export default withRouter(Header);

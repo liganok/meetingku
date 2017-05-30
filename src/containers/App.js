@@ -5,6 +5,7 @@ import { APP_LOAD, REDIRECT } from '../constants/actionTypes';
 import agent from '../agent';
 
 import Login from '../containers/Login';
+import Register from '../containers/Register';
 import Header from '../containers/Header';
 import Agenda from '../components/AgendaList';
 
@@ -25,7 +26,8 @@ const mapDispatchToProps = dispatch => ({
 class App extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.redirectTo) {
-      this.context.router.replace(nextProps.redirectTo);
+      //this.context.router.replace(nextProps.redirectTo);
+      this.props.history.push(nextProps.redirectTo);
       this.props.onRedirect();
     }
   }
@@ -45,8 +47,9 @@ class App extends React.Component {
           appName={this.props.appName}
           currentUser={this.props.currentUser} />
         <Switch>
-          <Route exact path='/' component={Login}/>
+          <Route exact path='/' component={Agenda}/>
           <Route path='/login' component={Login}/>
+          <Route path='/register' component={Register}/>
           <Route path='/agenda' component={Agenda}/>
         </Switch>
       </div>

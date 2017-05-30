@@ -1,4 +1,3 @@
-import { Link } from 'react-router';
 import React from 'react';
 import agent from '../agent';
 import { connect } from 'react-redux';
@@ -88,6 +87,7 @@ class Login extends React.Component {
                     hintText="Password"
                     floatingLabelText="Password"
                     value = {password}
+                    type="password"
                     onChange={this.changePassword}
                   />
                 </div>

@@ -1,12 +1,45 @@
-import { Link } from 'react-router';
 import React from 'react';
 import agent from '../agent';
 import { connect } from 'react-redux';
+
+import { Card, CardActions } from 'material-ui/Card';
+import Avatar from 'material-ui/Avatar';
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
+import CircularProgress from 'material-ui/CircularProgress';
+import LockIcon from 'material-ui/svg-icons/action/lock-outline';
+import { cyan500, pinkA200 } from 'material-ui/styles/colors';
+
+
 import {
   UPDATE_FIELD_AUTH,
   REGISTER,
   REGISTER_PAGE_UNLOADED
 } from '../constants/actionTypes';
+
+const styles = {
+  main: {
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: '100vh',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: cyan500,
+  },
+  card: {
+    minWidth: 300,
+  },
+  avatar: {
+    margin: '1em',
+    textAlign: 'center ',
+  },
+  form: {
+    padding: '0 1em 1em 1em',
+  },
+  input: {
+    display: 'flex',
+  },
+};
 
 const mapStateToProps = state => ({ ...state.auth });
 
@@ -47,63 +80,50 @@ class Register extends React.Component {
     const username = this.props.username;
 
     return (
-      <div className="auth-page">
-        <div className="container page">
-          <div className="row">
-
-            <div className="col-md-6 offset-md-3 col-xs-12">
-              <h1 className="text-xs-center">Sign Up</h1>
-              <p className="text-xs-center">
-                <Link to="login">
-                  Have an account?
-                </Link>
-              </p>
-
-              <ListErrors errors={this.props.errors} />
-
-              <form onSubmit={this.submitForm(username, email, password)}>
-                <fieldset>
-
-                  <fieldset className="form-group">
-                    <input
-                      className="form-control form-control-lg"
-                      type="text"
-                      placeholder="Username"
-                      value={this.props.username}
-                      onChange={this.changeUsername} />
-                  </fieldset>
-
-                  <fieldset className="form-group">
-                    <input
-                      className="form-control form-control-lg"
-                      type="email"
-                      placeholder="Email"
-                      value={this.props.email}
-                      onChange={this.changeEmail} />
-                  </fieldset>
-
-                  <fieldset className="form-group">
-                    <input
-                      className="form-control form-control-lg"
-                      type="password"
-                      placeholder="Password"
-                      value={this.props.password}
-                      onChange={this.changePassword} />
-                  </fieldset>
-
-                  <button
-                    className="btn btn-lg btn-primary pull-xs-right"
-                    type="submit"
-                    disabled={this.props.inProgress}>
-                    Sign in
-                  </button>
-
-                </fieldset>
-              </form>
-            </div>
-
+      <div style={{...styles.main}}>
+        <Card style={styles.card}>
+          <div style={styles.avatar}>
+            <Avatar backgroundColor={pinkA200 } icon={<LockIcon />} size={60} />
           </div>
-        </div>
+          <form onSubmit={this.submitForm(username, email, password)}>
+            <div style={styles.form}>
+              <div style={styles.input} >
+                <TextField
+                  hintText="User name"
+                  floatingLabelText="User name"
+                  value = {username}
+                  onChange={this.changeUsername}
+                />
+              </div>
+              <div style={styles.input} >
+                <TextField
+                  hintText="Email"
+                  floatingLabelText="Email"
+                  value = {email}
+                  onChange={this.changeEmail}
+                />
+              </div>
+              <div style={styles.input} >
+                <TextField
+                  hintText="Password"
+                  floatingLabelText="Password"
+                  value = {password}
+                  type="password"
+                  onChange={this.changePassword}
+                />
+              </div>
+            </div>
+            <CardActions>
+              <RaisedButton
+                type="submit"
+                primary
+                icon={this.props.inProgress && <CircularProgress size={25} thickness={2} />}
+                label = "Sign Up"
+                fullWidth
+              />
+            </CardActions>
+          </form>
+        </Card>
       </div>
     );
   }
