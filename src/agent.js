@@ -32,13 +32,23 @@ const Auth = {
   current: () =>
     requests.get('/user'),
   login: (email, password) =>
-    requests.post('/users/login', { user: { email, password } }),
+    requests.post('/user/login', { user: { email, password } }),
   register: (username, email, password) =>
-    requests.post('/users', { user: { username, email, password } }),
+    requests.post('/user', { user: { username, email, password } }),
   save: user =>
     requests.put('/user', { user })
 };
 
+const Agenda = {
+  all: page =>
+    requests.get(`/agenda?${limit(10, page)}`),
+  get: agenda =>
+  requests.get(`/agenda/${agenda.id}`),
+  update: agenda =>
+    requests.put(`/agenda/${agenda.id}`, { agenda: agenda }),
+  create: agenda =>
+    requests.post('/agenda', { agenda })
+};
 
 const limit = (count, p) => `limit=${count}&offset=${p ? p * count : 0}`;
 const omitSlug = article => Object.assign({}, article, { slug: undefined })
@@ -86,7 +96,7 @@ const Profile = {
 };
 
 export default {
-  Articles,
+  Agenda,
   Auth,
   Comments,
   Profile,

@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import { APP_LOAD, REDIRECT } from '../constants/actionTypes';
 import agent from '../agent';
 
+import Snackbar from 'material-ui/Snackbar';
+import CircularProgress from 'material-ui/CircularProgress';
+
 import Login from '../containers/Login';
 import Register from '../containers/Register';
 import Profile from '../containers/Profile';
@@ -14,7 +17,8 @@ const mapStateToProps = state => ({
   appLoaded: state.common.appLoaded,
   appName: state.common.appName,
   currentUser: state.common.currentUser,
-  redirectTo: state.common.redirectTo
+  redirectTo: state.common.redirectTo,
+  inProgress:state.settings.inProgress
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -47,6 +51,12 @@ class App extends React.Component {
         <Header
           appName={this.props.appName}
           currentUser={this.props.currentUser} />
+        <Snackbar
+          open={this.props.inProgress}
+          message={'In process...'}
+        >
+          <CircularProgress />
+        </Snackbar>
         <Switch>
           <Route exact path='/' component={Agenda}/>
           <Route path='/login' component={Login}/>

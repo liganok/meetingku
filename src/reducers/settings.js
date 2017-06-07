@@ -15,6 +15,11 @@ export default (state = {}, action) => {
         ...state,
         inProgress: true
       };
+    case 'ASYNC_END':
+      return {
+        ...state,
+        inProgress: false
+      };
   }
 
   return state;
