@@ -13,6 +13,15 @@ import Profile from '../containers/Profile';
 import Header from '../containers/Header';
 import Agenda from '../components/AgendaList';
 
+const styles = {
+  snackbar:{
+    /*   top:0,
+    transform: open ?
+      'translate(50%, 0)' :
+      `translate(50%, 50)`,*/
+  }
+};
+
 const mapStateToProps = state => ({
   appLoaded: state.common.appLoaded,
   appName: state.common.appName,
@@ -52,6 +61,7 @@ class App extends React.Component {
           appName={this.props.appName}
           currentUser={this.props.currentUser} />
         <Snackbar
+          style={styles.snackbar}
           open={this.props.inProgress? this.props.inProgress:false}
           message={'In process...'}/>
         <Switch>

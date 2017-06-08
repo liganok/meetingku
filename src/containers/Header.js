@@ -32,6 +32,8 @@ const styles = {
   },
   link:{
     textDecoration:'none'
+  },
+  appBar:{
   }
 };
 
@@ -94,6 +96,7 @@ class Header extends React.Component {
           title="Test"
           iconClassNameRight="muidocs-icon-navigation-expand-more"
           onLeftIconButtonTouchTap={this.handleToggle}
+          style={styles.appBar}
         />
         <Drawer style={styles.main}
                 docked={false}
@@ -105,6 +108,7 @@ class Header extends React.Component {
             title="Test"
             iconClassNameRight="muidocs-icon-navigation-expand-more"
             onLeftIconButtonTouchTap={this.handleToggle}
+            style={styles.appBar}
           />
 
           <LoggedOutView currentUser={this.props.currentUser}/>
