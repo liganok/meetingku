@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import agent from '../agent';
 
 import {
   GET_AGENDALIST,
@@ -8,14 +9,14 @@ import {
 const mapStateToProps = state => ({ ...state.agendaList });
 
 const mapDispatchToProps = dispatch => ({
-  onLoad: () =>
-    dispatch({ type: GET_AGENDALIST })
+  onLoad: (payload) =>
+    dispatch({ type: GET_AGENDALIST, payload })
 });
 
 class AgendaList extends React.Component{
 
   componentWillMount() {
-    this.props.onLoad();
+    this.props.onLoad(agent.Agenda.all());
   }
 
   render(){

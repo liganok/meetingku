@@ -52,11 +52,8 @@ class App extends React.Component {
           appName={this.props.appName}
           currentUser={this.props.currentUser} />
         <Snackbar
-          open={this.props.inProgress}
-          message={'In process...'}
-        >
-          <CircularProgress />
-        </Snackbar>
+          open={this.props.inProgress? this.props.inProgress:false}
+          message={'In process...'}/>
         <Switch>
           <Route exact path='/' component={Agenda}/>
           <Route path='/login' component={Login}/>
