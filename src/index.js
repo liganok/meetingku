@@ -5,7 +5,7 @@ import {BrowserRouter as Router } from 'react-router-dom'
 import store from './store';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-import App from './containers/App';
+import App from './components/App';
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();

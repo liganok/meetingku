@@ -1,26 +1,48 @@
 import React from 'react';
-import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+import {connect} from 'react-redux';
+
+import Paper from 'material-ui/Paper';
+import TextField from 'material-ui/TextField';
+
+import {UPDATE_FIELD_AGENDA} from '../constants/actionTypes';
+
 import FlatButton from 'material-ui/FlatButton';
 
-const Agenda = () => (
-  <Card>
-    <CardHeader
-      title="Without Avatar"
-      subtitle="Subtitle"
-      actAsExpander={true}
-      showExpandableButton={true}
-    />
-    <CardActions>
-      <FlatButton label="Action1" />
-      <FlatButton label="Action2" />
-    </CardActions>
-    <CardText expandable={true}>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-      Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-      Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
-    </CardText>
-  </Card>
-);
+const style = {
+  root: {
+    margin: 20,
+  },
 
-export default Agenda;
+  text:{
+    margin: 10
+  }
+};
+
+const mapStateToProps = state => ({...state});
+const mapDispatchToProps = dispatch => ({
+  onChangeName: value => dispatch({type: UPDATE_FIELD_AGENDA, key: 'name', value}),
+
+});
+
+class Agenda extends React.Component {
+  constructor() {
+    super();
+    this.changeName = ev => this.props.onChangeName(ev.target.value);
+  }
+
+  render() {
+    return (
+      <Paper style={style.root}>
+        <TextField
+          style={style.root}
+          floatingLabelText="Agenda name"
+          value={this.props.name}
+          onChange={this.changeName}
+        />
+      </Paper>
+    );
+  }
+}
+;
+
+export default connect(mapStateToProps, mapDispatchToProps)(Agenda);

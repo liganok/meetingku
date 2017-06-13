@@ -36,4 +36,6 @@ export const FOLLOW_USER = 'FOLLOW_USER';
 export const UNFOLLOW_USER = 'UNFOLLOW_USER';
 
 export const GET_AGENDALIST = 'GET_AGENDALIST';
+export const UPDATE_FIELD_AGENDA = 'UPDATE_FIELD_AGENDA';
+
 

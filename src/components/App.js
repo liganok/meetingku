@@ -7,13 +7,18 @@ import agent from '../agent';
 import Snackbar from 'material-ui/Snackbar';
 import CircularProgress from 'material-ui/CircularProgress';
 
-import Login from '../containers/Login';
-import Register from '../containers/Register';
-import Profile from '../containers/Profile';
-import Header from '../containers/Header';
-import Agenda from '../components/AgendaList';
+import Login from './Login';
+import Register from './Register';
+import Profile from './Profile';
+import Header from './Header';
+import AgendaList from './AgendaList';
+import Agenda from './Agenda';
+
 
 const styles = {
+  root:{
+    margin:0,
+  },
   snackbar:{
     /*   top:0,
     transform: open ?
@@ -56,7 +61,7 @@ class App extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div style={styles.root}>
         <Header
           appName={this.props.appName}
           currentUser={this.props.currentUser} />
@@ -68,6 +73,7 @@ class App extends React.Component {
           <Route exact path='/' component={Agenda}/>
           <Route path='/login' component={Login}/>
           <Route path='/register' component={Register}/>
+          <Route path='/agendalist' component={AgendaList}/>
           <Route path='/agenda' component={Agenda}/>
           <Route path='/profile' component={Profile}/>
         </Switch>

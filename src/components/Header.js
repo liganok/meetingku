@@ -11,7 +11,7 @@ import Divider from 'material-ui/Divider';
 import {BrowserRouter, Switch, Route, Link} from 'react-router-dom'
 import { withRouter } from 'react-router-dom';
 
-import Agenda from '../components/AgendaList';
+import Agenda from './AgendaList';
 
 
 const styles = {
@@ -34,6 +34,7 @@ const styles = {
     textDecoration:'none'
   },
   appBar:{
+    margin:0
   }
 };
 
