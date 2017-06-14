@@ -1,7 +1,7 @@
-import {HashRouter, Switch, Route,Link, withRouter } from 'react-router-dom'
+import {HashRouter, Switch, Route, Link, withRouter} from 'react-router-dom'
 import React from 'react';
-import { connect } from 'react-redux';
-import { APP_LOAD, REDIRECT } from '../constants/actionTypes';
+import {connect} from 'react-redux';
+import {APP_LOAD, REDIRECT} from '../constants/actionTypes';
 import agent from '../agent';
 
 import Snackbar from 'material-ui/Snackbar';
@@ -16,14 +16,16 @@ import Agenda from './Agenda';
 
 
 const styles = {
-  root:{
-    margin:0,
+  root: {
+    minWidth: '360px',
+    width: '632px',
+    margin: '16px auto',
   },
-  snackbar:{
+  snackbar: {
     /*   top:0,
-    transform: open ?
-      'translate(50%, 0)' :
-      `translate(50%, 50)`,*/
+     transform: open ?
+     'translate(50%, 0)' :
+     `translate(50%, 50)`,*/
   }
 };
 
@@ -32,14 +34,14 @@ const mapStateToProps = state => ({
   appName: state.common.appName,
   currentUser: state.common.currentUser,
   redirectTo: state.common.redirectTo,
-  inProgress:state.settings.inProgress
+  inProgress: state.settings.inProgress
 });
 
 const mapDispatchToProps = dispatch => ({
   onLoad: (payload, token) =>
-    dispatch({ type: APP_LOAD, payload, token, skipTracking: true }),
+    dispatch({type: APP_LOAD, payload, token, skipTracking: true}),
   onRedirect: () =>
-    dispatch({ type: REDIRECT })
+    dispatch({type: REDIRECT})
 });
 
 class App extends React.Component {
@@ -59,27 +61,33 @@ class App extends React.Component {
 
     this.props.onLoad(token ? agent.Auth.current() : null, token);
   }
+
   render() {
     return (
-      <div style={styles.root}>
+      <div>
         <Header
           appName={this.props.appName}
-          currentUser={this.props.currentUser} />
+          currentUser={this.props.currentUser}/>
+
         <Snackbar
           style={styles.snackbar}
-          open={this.props.inProgress? this.props.inProgress:false}
+          open={this.props.inProgress ? this.props.inProgress : false}
           message={'In process...'}/>
-        <Switch>
-          <Route exact path='/' component={Agenda}/>
+        <Switch >
           <Route path='/login' component={Login}/>
           <Route path='/register' component={Register}/>
-          <Route path='/agendalist' component={AgendaList}/>
-          <Route path='/agenda' component={Agenda}/>
-          <Route path='/profile' component={Profile}/>
         </Switch>
+        <div style={styles.root}>
+          <Switch >
+            <Route exact path='/' component={Agenda}/>
+            <Route path='/agendalist' component={AgendaList}/>
+            <Route path='/agenda' component={Agenda}/>
+            <Route path='/profile' component={Profile}/>
+          </Switch>
+        </div>
       </div>
     );
   }
 }
 
-export default withRouter(connect(mapStateToProps,mapDispatchToProps)(App));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

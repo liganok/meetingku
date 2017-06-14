@@ -4,6 +4,7 @@ import agent from '../agent';
 
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import {List, ListItem} from 'material-ui/List';
+import Agenda from './Agenda';
 
 import {
   GET_AGENDALIST,
@@ -60,7 +61,7 @@ class AgendaList extends React.Component{
   }
 
   render(){
-    if(!this.props.agendas) return(<div></div>);
+    if(!this.props.agendas) return(<div><Agenda/></div>);
     let list = this.props.agendas.map((item,index)=>{
       return(
         <ListItem style={styles.card} key={index} primaryText={item.name}/>
@@ -68,6 +69,7 @@ class AgendaList extends React.Component{
     });
     return(
       <div>
+        <Agenda/>
         <List style={styles.main}>
           {list}
         </List>
