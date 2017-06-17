@@ -1,4 +1,4 @@
-import {HashRouter, Switch, Route, Link, withRouter} from 'react-router-dom'
+import {Switch, Route, Link, withRouter} from 'react-router-dom'
 import React from 'react';
 import {connect} from 'react-redux';
 import {APP_LOAD, REDIRECT} from '../constants/actionTypes';
@@ -12,7 +12,9 @@ import Register from './Register';
 import Profile from './Profile';
 import Header from './Header';
 import AgendaList from './AgendaList';
-import Agenda from './Agenda';
+import AgendaItem from './AgendaItem';
+import AgendaDetail from './AgendaDetail';
+
 
 
 const styles = {
@@ -79,9 +81,10 @@ class App extends React.Component {
         </Switch>
         <div style={styles.root}>
           <Switch >
-            <Route exact path='/' component={Agenda}/>
+            <Route exact path='/' component={AgendaList}/>
             <Route path='/agendalist' component={AgendaList}/>
-            <Route path='/agenda' component={Agenda}/>
+            <Route path='/AgendaItem' component={AgendaItem}/>
+            <Route path='/detail' component={AgendaDetail}/>
             <Route path='/profile' component={Profile}/>
           </Switch>
         </div>

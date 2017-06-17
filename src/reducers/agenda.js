@@ -17,7 +17,7 @@ export default (state = defaultState, action) => {
     case AGENDA_SAVE:
       return {...state, currentAgenda:action.payload.agenda,};
     case AGENDA_CLOSE_DIALOG:
-      return {...state, isAddAgenda:false};
+      return {...state, isAddAgenda:false,name:null,startDate:null,startTime:null};
 
     default:
       return state;

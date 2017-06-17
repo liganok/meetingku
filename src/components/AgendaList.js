@@ -1,76 +1,64 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import agent from '../agent';
+import {Link} from 'react-router-dom';
 
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import {List, ListItem} from 'material-ui/List';
-import Agenda from './Agenda';
+import AddAgenda from './AddAgenda';
+import AgendaItem from './AgendaItem';
+
 
 import {
   GET_AGENDALIST,
+  AGENDALIST_NAV_DETAIL
 } from '../constants/actionTypes';
 
 const styles = {
-  main: {
-    paddingLeft:20,
-    paddingRight:20
-  },
-  card: {
+
+  listItem: {
+    padding: 0,
+    marginTop: '20px',
 
   },
-  avatar: {
-    margin: '1em',
-    textAlign: 'center ',
-  },
-  form: {
-    padding: '0 1em 1em 1em',
-  },
-  input: {
-    display: 'flex',
-  },
+
 };
 
-const mapStateToProps = state => ({ ...state.agendaList });
+const mapStateToProps = state => ({...state.agendaList});
 
 const mapDispatchToProps = dispatch => ({
   onLoad: (payload) =>
-    dispatch({ type: GET_AGENDALIST, payload })
+    dispatch({type: GET_AGENDALIST, payload}),
+  onNavDetail: agenda =>
+    dispatch({type: AGENDALIST_NAV_DETAIL,payload:agenda}),
 });
 
-const CardItem = props => {
-  if (!props.agenda) {
-    return (
-      <div>
-        <Card>
-          <CardHeader
-            title={props.agenda.name}
-            actAsExpander={true}
-            showExpandableButton={true}
-          />
-        </Card>
-      </div>
-    );
-  }
-  return null;
-}
 
-class AgendaList extends React.Component{
+class AgendaList extends React.Component {
 
   componentWillMount() {
     this.props.onLoad(agent.Agenda.all());
   }
 
-  render(){
-    if(!this.props.agendas) return(<div><Agenda/></div>);
-    let list = this.props.agendas.map((item,index)=>{
-      return(
-        <ListItem style={styles.card} key={index} primaryText={item.name}/>
+  render() {
+    if (!this.props.agendas) return (<div><AddAgenda/></div>);
+    let list = this.props.agendas.map((item, index) => {
+      return (
+        <ListItem key={index} innerDivStyle={styles.listItem}>
+          <Link to={`detail/${item.id}`}>
+            <AgendaItem
+              name={item.name}
+              startDate={item.startDate}
+              startTime={item.startTime}
+            />
+          </Link>
+        </ListItem>
       );
     });
-    return(
+    return (
       <div>
-        <Agenda/>
-        <List style={styles.main}>
+        <AddAgenda/>
+        <List style={styles.listItem}>
           {list}
         </List>
       </div>

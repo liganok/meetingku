@@ -1,5 +1,6 @@
 import {
   GET_AGENDALIST,
+  AGENDALIST_NAV_DETAIL
 } from '../constants/actionTypes';
 
 export default (state = {}, action) => {

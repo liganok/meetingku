@@ -14,7 +14,7 @@ injectTapEventPlugin();
 ReactDOM.render((
   <Provider store={store}>
     <MuiThemeProvider>
-      <Router>
+      <Router history={history}>
         <App/>
       </Router>
     </MuiThemeProvider>

@@ -44,7 +44,7 @@ const mapDispatchToProps = dispatch => ({
 
 });
 
-class Agenda extends React.Component {
+class AddAgenda extends React.Component {
   constructor() {
     super();
     this.changeName = ev => this.props.onChangeName(ev.target.value);
@@ -62,7 +62,9 @@ class Agenda extends React.Component {
       name:this.props.name,
 
     };
-    this.props.onSaveAgenda(agenda);
+    if(agenda.name){
+      this.props.onSaveAgenda(agenda);
+    }
     this.props.onCloseDialog();
   }
 
@@ -116,4 +118,4 @@ class Agenda extends React.Component {
 }
 ;
 
-export default connect(mapStateToProps, mapDispatchToProps)(Agenda);
+export default connect(mapStateToProps, mapDispatchToProps)(AddAgenda);

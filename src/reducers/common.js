@@ -14,7 +14,8 @@ import {
   PROFILE_FAVORITES_PAGE_UNLOADED,
   SETTINGS_PAGE_UNLOADED,
   LOGIN_PAGE_UNLOADED,
-  REGISTER_PAGE_UNLOADED
+  REGISTER_PAGE_UNLOADED,
+  AGENDALIST_NAV_DETAIL
 } from '../constants/actionTypes';
 
 const defaultState = {
@@ -36,9 +37,6 @@ export default (state = defaultState, action) => {
       return { ...state, redirectTo: null };
     case LOGOUT:
       return { ...state, redirectTo: '/login', token: null, currentUser: null };
-    case ARTICLE_SUBMITTED:
-      const redirectUrl = `article/${action.payload.article.slug}`;
-      return { ...state, redirectTo: redirectUrl };
     case SETTINGS_SAVED:
       return {
         ...state,
@@ -55,15 +53,15 @@ export default (state = defaultState, action) => {
       };
     case DELETE_ARTICLE:
       return { ...state, redirectTo: '/' };
-    case ARTICLE_PAGE_UNLOADED:
-    case EDITOR_PAGE_UNLOADED:
-    case HOME_PAGE_UNLOADED:
-    case PROFILE_PAGE_UNLOADED:
-    case PROFILE_FAVORITES_PAGE_UNLOADED:
-    case SETTINGS_PAGE_UNLOADED:
     case LOGIN_PAGE_UNLOADED:
     case REGISTER_PAGE_UNLOADED:
       return { ...state, viewChangeCounter: state.viewChangeCounter + 1 };
+    case AGENDALIST_NAV_DETAIL:
+      const redirectUrl = `detail/${action.payload.id}`;
+      return {
+        ...state,
+        redirectTo: redirectUrl
+      };
     default:
       return state;
   }

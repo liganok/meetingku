@@ -4,7 +4,9 @@ import {
   ASYNC_END,
   LOGIN,
   LOGOUT,
-  REGISTER
+  REGISTER,
+  AGENDA_SAVE,
+  GET_AGENDALIST,
 } from './constants/actionTypes';
 
 const promiseMiddleware = store => next => action => {
@@ -21,10 +23,14 @@ const promiseMiddleware = store => next => action => {
         if (!skipTracking && currentState.viewChangeCounter !== currentView) {
           return
         }
-        console.log('RESULT', res);
+        //console.log('RESULT', res);
         action.payload = res;
         store.dispatch({ type: ASYNC_END, promise: action.payload });
         store.dispatch(action);
+        //console.log('action', action);
+        if(action.type === AGENDA_SAVE){
+          store.dispatch({ type: GET_AGENDALIST, payload:agent.Agenda.all()});
+        }
       },
       error => {
         const currentState = store.getState()

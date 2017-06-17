@@ -115,7 +115,7 @@ class Header extends React.Component {
           <LoggedOutView currentUser={this.props.currentUser}/>
           <LoggedInView currentUser={this.props.currentUser}/>
 
-          <Link to="/agenda" style={styles.link}><MenuItem onTouchTap={this.handleToggle}>Agenda</MenuItem></Link>
+          <Link to="/agendalist" style={styles.link}><MenuItem onTouchTap={this.handleToggle}>Agendas</MenuItem></Link>
 
           <MenuItem onTouchTap={this.handleToggle}>Menu Item 2</MenuItem>
         </Drawer>
