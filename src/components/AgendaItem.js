@@ -9,7 +9,9 @@ import {
   AGENDA_UPDATE_FIELD,
   AGENDA_CREATE,
   AGENDA_SAVE,
-  AGENDA_CLOSE_DIALOG} from '../constants/actionTypes';
+  AGENDA_CLOSE_DIALOG,
+  AGENDALIST_NAV_DETAIL,
+} from '../constants/actionTypes';
 
 import FlatButton from 'material-ui/FlatButton';
 import DatePicker from 'material-ui/DatePicker';
@@ -44,7 +46,8 @@ const mapDispatchToProps = dispatch => ({
   onCreateAgenda: () => dispatch({type: AGENDA_CREATE}),
   onSaveAgenda: agenda => dispatch({type: AGENDA_SAVE, payload:agent.Agenda.create(agenda)}),
   onCloseDialog: () => dispatch({type: AGENDA_CLOSE_DIALOG}),
-
+  onNavDetail: (agenda) =>
+    dispatch({type: AGENDALIST_NAV_DETAIL,payload:agenda}),
 });
 
 class AgendaItem extends React.Component {
@@ -53,6 +56,7 @@ class AgendaItem extends React.Component {
     this.changeName = ev => this.props.onChangeName(ev.target.value);
     this.changeStartDate = (ev, data) => this.props.onChangeStartDate(data);
     this.changeStartTime = (ev, time) => this.props.onChangeStartTime(time);
+    this.onNavDetail = () => this.props.onNavDetail();
 
     this.state = {
       isAddAgenda: false,
