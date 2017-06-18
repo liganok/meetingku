@@ -6,7 +6,8 @@ import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
-
+import IconButton from 'material-ui/IconButton';
+import ActionHome from 'material-ui/svg-icons/action/home';
 
 import {
   AGENDALIST_NAV_DETAIL,
@@ -61,10 +62,14 @@ class AgendaItem extends React.Component {
       },
 
       cardActions: {
-        display: this.props.isShowActions&&(id === this.props.mouseOverId)? 'block':'None',
+        //display: this.props.isShowActions&&(id === this.props.mouseOverId)? 'block':'None',
+        visibility: this.props.isShowActions&&(id === this.props.mouseOverId)? 'visible':'hidden',
+
       },
 
-      startText: {},
+      actionButton: {
+        fontSize:'8px',
+      },
 
       durationLabel: {},
 
@@ -90,10 +95,12 @@ class AgendaItem extends React.Component {
 
         <div style={styles.cardActions}>
           <CardActions >
-            <FlatButton label="Action1" onTouchTap={ev => {
-              alert('he')
-            }}/>
-            <FlatButton label="Action2"/>
+            <IconButton>
+              <ActionHome/>
+            </IconButton>
+            <IconButton>
+              <ActionHome/>
+            </IconButton>
           </CardActions>
         </div>
 
