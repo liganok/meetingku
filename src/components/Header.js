@@ -94,7 +94,6 @@ class Header extends React.Component {
     return (
       <div>
         <AppBar
-          title="Test"
           iconClassNameRight="muidocs-icon-navigation-expand-more"
           onLeftIconButtonTouchTap={this.handleToggle}
           style={styles.appBar}
@@ -106,7 +105,7 @@ class Header extends React.Component {
                 onRequestChange={(open) => this.setState({open})}
         >
           <AppBar
-            title="Test"
+            title={this.props.appName}
             iconClassNameRight="muidocs-icon-navigation-expand-more"
             onLeftIconButtonTouchTap={this.handleToggle}
             style={styles.appBar}

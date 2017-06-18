@@ -25,3 +25,9 @@ export const AGENDA_CLOSE_DIALOG = 'AGENDA_CLOSE_DIALOG';
 
 //auth
 export const UPDATE_FIELD_AUTH = 'UPDATE_FIELD_AUTH';
+
+//agendaItem
+export const AI_ACTION_MOUSE_OVER = 'AI_ACTION_MOUSE_OVER';
+export const AI_ACTION_MOUSE_OUT = 'AI_ACTION_MOUSE_OUT';
+
+

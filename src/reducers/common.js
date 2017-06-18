@@ -31,7 +31,8 @@ export default (state = defaultState, action) => {
       const redirectUrl = `detail/${action.payload.id}`;
       return {
         ...state,
-        redirectTo: redirectUrl
+        redirectTo: redirectUrl,
+        currentAgenda:action.payload,
       };
     case ASYNC_START:
       return {

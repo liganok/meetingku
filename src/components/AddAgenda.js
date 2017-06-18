@@ -98,8 +98,8 @@ class AddAgenda extends React.Component {
           <DatePicker
             hintText="Start date"
             floatingLabelText="Start date"
-            value={this.props.startDate}
-            onChange={this.changeStartDate}/>
+            value={this.props.startTime}
+            onChange={this.changeStartTime}/>
           <TimePicker
             hintText="Start time"
             floatingLabelText="Start time"

@@ -5,6 +5,7 @@ import common from './reducers/common';
 import auth from './reducers/auth';
 import agenda from './reducers/agenda';
 import agendaList from './reducers/agendaList';
+import agendaItem from './reducers/agendaItem';
 
 
 export default combineReducers({
@@ -12,5 +13,6 @@ export default combineReducers({
   auth,
   settings,
   agenda,
-  agendaList
+  agendaList,
+  agendaItem,
 });

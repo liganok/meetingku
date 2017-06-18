@@ -1,9 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import agent from '../agent';
-import {Link} from 'react-router-dom';
 
-import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import {List, ListItem} from 'material-ui/List';
 import AddAgenda from './AddAgenda';
 import AgendaItem from './AgendaItem';
@@ -30,7 +28,7 @@ const mapDispatchToProps = dispatch => ({
   onLoad: (payload) =>
     dispatch({type: GET_AGENDALIST, payload}),
   onNavDetail: value =>
-    dispatch({type: AGENDALIST_NAV_DETAIL,payload:value}),
+    dispatch({type: AGENDALIST_NAV_DETAIL, payload: value}),
 });
 
 
@@ -38,7 +36,7 @@ class AgendaList extends React.Component {
 
   constructor() {
     super();
-    this.navDetail =(value)=> ev => {
+    this.navDetail = (value) => ev => {
       this.props.onNavDetail(value);
     }
   }
@@ -48,24 +46,18 @@ class AgendaList extends React.Component {
   }
 
   render() {
-    if (!this.props.agendas) return (<div><AddAgenda/></div>);
+    if (!this.props.agendas) return (<div><AddAgenda/></div>)
     let list = this.props.agendas.map((item, index) => {
       return (
-        <ListItem key={index} innerDivStyle={styles.listItem} >
-          <div onClick={this.navDetail(item)} value={item}>
-            <AgendaItem
-              agenda = {item}
-              name={item.name}
-              startDate={item.startDate}
-              startTime={item.startTime}
-            />
-          </div>
+        <ListItem key={index} innerDivStyle={styles.listItem}>
+          <AgendaItem
+            agenda={item}
+          />
         </ListItem>
       );
     });
     return (
       <div>
-        <button onClick={this.props.onNavDetail}>test</button>
         <AddAgenda/>
         <List style={styles.listItem}>
           {list}
