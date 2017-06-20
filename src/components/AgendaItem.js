@@ -8,6 +8,8 @@ import FlatButton from 'material-ui/FlatButton';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import IconButton from 'material-ui/IconButton';
 import ActionHome from 'material-ui/svg-icons/action/home';
+import PlayCircleOutline from 'material-ui/svg-icons/av/play-circle-outline';
+
 
 import {
   AGENDALIST_NAV_DETAIL,
@@ -19,10 +21,10 @@ const mapStateToProps = state => ({...state.agendaItem});
 const mapDispatchToProps = dispatch => ({
   onNavDetail: value =>
     dispatch({type: AGENDALIST_NAV_DETAIL, payload: value}),
-  onActionMouseOver: value=>
-    dispatch({type: AI_ACTION_MOUSE_OVER, payload:value}),
-  onActionMouseOut: value=>
-    dispatch({type: AI_ACTION_MOUSE_OUT, payload:value}),
+  onActionMouseOver: value =>
+    dispatch({type: AI_ACTION_MOUSE_OVER, payload: value}),
+  onActionMouseOut: value =>
+    dispatch({type: AI_ACTION_MOUSE_OUT, payload: value}),
 
 });
 
@@ -32,8 +34,12 @@ class AgendaItem extends React.Component {
     this.navDetail = (value) => ev => {
       this.props.onNavDetail(value);
     };
-    this.actionMouseOver = (value) => ev => {this.props.onActionMouseOver(value)};
-    this.actionMouseOut = (value) => ev => {this.props.onActionMouseOut(value)};
+    this.actionMouseOver = (value) => ev => {
+      this.props.onActionMouseOver(value)
+    };
+    this.actionMouseOut = (value) => ev => {
+      this.props.onActionMouseOut(value)
+    };
 
   }
 
@@ -46,62 +52,81 @@ class AgendaItem extends React.Component {
     const id = this.props.agenda.id;
 
     const styles = {
-      root: {
-        paddingLeft: 10,
-        display: 'block',
-      },
 
       header: {
         paddingTop: 0,
         fontWeight: 'bold'
       },
 
-      content: {
-        width: '40px',
-        fontSize: '14px',
+      cardBody: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+      },
+
+      cardBodyLeft: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+      },
+
+      cardBodyRight: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems:'flex-end',
       },
 
       cardActions: {
         //display: this.props.isShowActions&&(id === this.props.mouseOverId)? 'block':'None',
-        visibility: this.props.isShowActions&&(id === this.props.mouseOverId)? 'visible':'hidden',
+        visibility: this.props.isShowActions && (id === this.props.mouseOverId) ? 'visible' : 'hidden',
 
       },
 
-      actionButton: {
-        fontSize:'8px',
+      largeIcon: {
+        width: 40,
+        height: 40,
       },
-
-      durationLabel: {},
 
     };
 
     return (
-      <Card onMouseOver={this.actionMouseOver(this.props.agenda.id) } onMouseOut={this.actionMouseOut(this.props.agenda.id)}>
-        <div onClick={this.navDetail(this.props.agenda)} >
-          <CardHeader
-            title={name}
-            actAsExpander={true}
-            showExpandableButton={false}
-          />
-          <CardText>
-            <div>
-              Start: {startedAt.substring(0, 10)} {startedAt.substring(11, 16)} Duration: {duration}
-            </div>
-            <div>
-              Updat: {updatedAt.substring(0, 10)} {updatedAt.substring(11, 16)}
-            </div>
-          </CardText>
-        </div>
+      <Card
+        zDepth={2}
+        onMouseOver={this.actionMouseOver(this.props.agenda.id) }
+        onMouseOut={this.actionMouseOut(this.props.agenda.id)}>
 
-        <div style={styles.cardActions}>
-          <CardActions >
-            <IconButton>
-              <ActionHome/>
-            </IconButton>
-            <IconButton>
-              <ActionHome/>
-            </IconButton>
-          </CardActions>
+        <CardHeader
+          title={name}
+          actAsExpander={true}
+          showExpandableButton={false}
+          onClick={this.navDetail(this.props.agenda)}
+        />
+
+        <div style={styles.cardBody}>
+          <div style={styles.cardBodyLeft}>
+            <CardText onClick={this.navDetail(this.props.agenda)}>
+              <div>
+                Start: {startedAt.substring(0, 10)} {startedAt.substring(11, 16)} Duration: {duration}
+              </div>
+              <div>
+                Updat: {updatedAt.substring(0, 10)} {updatedAt.substring(11, 16)}
+              </div>
+            </CardText>
+
+            <CardActions style={styles.cardActions}>
+              <IconButton>
+                <ActionHome/>
+              </IconButton>
+              <IconButton>
+                <ActionHome/>
+              </IconButton>
+            </CardActions>
+          </div>
+
+          <div style={styles.cardBodyRight}>
+            <PlayCircleOutline style={styles.largeIcon}/>
+          </div>
         </div>
 
       </Card>

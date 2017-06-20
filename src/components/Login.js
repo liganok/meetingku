@@ -14,7 +14,7 @@ import { cyan500, pinkA200 } from 'material-ui/styles/colors';
 const styles = {
   main: {
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'row',
     minHeight: '100vh',
     alignItems: 'center',
     justifyContent: 'center',

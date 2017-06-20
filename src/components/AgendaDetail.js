@@ -1,47 +1,32 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import { Switch, Route, Link, withRouter} from 'react-router-dom'
 
 import agent from '../agent';
 
-import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
+import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+import Paper from 'material-ui/Paper';
+
 
 import {
   AGENDA_UPDATE_FIELD,
   AGENDA_CREATE,
   AGENDA_SAVE,
-  AGENDA_CLOSE_DIALOG} from '../constants/actionTypes';
+  AGENDA_CLOSE_DIALOG
+} from '../constants/actionTypes';
 
-import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 import DatePicker from 'material-ui/DatePicker';
 import TimePicker from 'material-ui/TimePicker';
-import Dialog from 'material-ui/Dialog';
-
-
-const styles = {
-  root: {},
-  hintText: {
-    padding: 15,
-  },
-
-  doneButton: {
-    //float:'right',
-
-  },
-
-  dialog: {}
-};
 
 
 const mapStateToProps = state => ({...state.agenda});
 const mapDispatchToProps = dispatch => ({
   onChangeName: value => dispatch({type: AGENDA_UPDATE_FIELD, key: 'name', value}),
-  onChangeStartDate: value => dispatch({type: AGENDA_UPDATE_FIELD, key: 'startDate', value}),
-  onChangeStartTime: value => dispatch({type: AGENDA_UPDATE_FIELD, key: 'startTime', value}),
+  onChangeStartedAt: value => dispatch({type: AGENDA_UPDATE_FIELD, key: 'startedAt', value}),
   onChangeDuration: value => dispatch({type: AGENDA_UPDATE_FIELD, key: 'duration', value}),
   onCreateAgenda: () => dispatch({type: AGENDA_CREATE}),
-  onSaveAgenda: agenda => dispatch({type: AGENDA_SAVE, payload:agent.Agenda.create(agenda)}),
+  onSaveAgenda: agenda => dispatch({type: AGENDA_SAVE, payload: agent.Agenda.create(agenda)}),
   onCloseDialog: () => dispatch({type: AGENDA_CLOSE_DIALOG}),
 
 });
@@ -50,8 +35,7 @@ class AgendaDetail extends React.Component {
   constructor() {
     super();
     this.changeName = ev => this.props.onChangeName(ev.target.value);
-    this.changeStartDate = (ev, data) => this.props.onChangeStartDate(data);
-    this.changeStartTime = (ev, time) => this.props.onChangeStartTime(time);
+    this.changeStartedAt = (ev, data) => this.props.onChangeStartedAt(data);
 
     this.state = {
       isAddAgenda: false,
@@ -61,10 +45,10 @@ class AgendaDetail extends React.Component {
 
   handleSaveAgenda() {
     let agenda = {
-      name:this.props.name,
+      name: this.props.name,
 
     };
-    if(agenda.name){
+    if (agenda.name) {
       this.props.onSaveAgenda(agenda);
     }
     this.props.onCloseDialog();
@@ -74,41 +58,94 @@ class AgendaDetail extends React.Component {
     const name = this.props.name;
     const isAddAgenda = this.props.isAddAgenda;
 
-    const actions = [
-      <FlatButton
-        label="Done"
-        primary={true}
-        keyboardFocused={true}
-        onTouchTap={this.handleSaveAgenda.bind(this)}
-      />,
-    ];
+    const styles = {
+      root: {
+        display:'flex',
+        flexDirection:'column',
+        padding: 10,
+      },
+      header: {
+        display:'flex',
+        flexDirection:'row',
+        justifyContent:'space-between',
+      },
+
+      body: {
+
+      },
+
+      footer: {
+        display:'flex',
+        justifyContent:'flex-end',
+        alignItems:'center',
+      },
+
+      headerText:{
+        bold:true,
+      },
+
+      subHeaderText:{
+        fontSize:'14px',
+      },
+
+      time:{
+        display:'flex',
+        flexDirection:'row',
+        justifyContent:'flex-end',
+        alignItems:'center',
+      },
+
+      datePicker:{
+        width:75,
+        fontSize:'9px'
+      },
+
+      timePicker:{
+        width:50,
+        fontSize:'9px'
+      },
+
+      duration:{
+        fontSize:'15px',
+        paddingLeft:'5px',
+      }
+    };
+
     return (
-      <div style={styles.root}>
-        <Dialog
-          style={styles.dialog}
-          actions={actions}
-          modal={false}
-          open={true}
-        >
+      <Paper zDepth={2} style={styles.root}>
+        <div style={styles.header}>
           <TextField
-            hintText="Title"
-            floatingLabelText="Title"
+            style={styles.headerText}
+            hintText="Name"
             value={name ? name : ''}
             onChange={this.changeName}
           />
-          <DatePicker
-            hintText="Start date"
-            floatingLabelText="Start date"
-            value={this.props.startDate}
-            onChange={this.changeStartDate}/>
-          <TimePicker
-            hintText="Start time"
-            floatingLabelText="Start time"
-            value={this.props.startTime}
-            onChange={this.changeStartTime}/>
+          <div style={styles.time}>
+            <DatePicker
+              textFieldStyle={styles.datePicker}
+              hintText="Start"
+              value={this.props.startedAt}
+              onChange={this.changeStartedAt}/>
+            <TimePicker
+              textFieldStyle={styles.timePicker}
+              value={this.props.startedAt}
+              onChange={this.changeStartedAt}/>
+            <label style={styles.duration}>30m</label>
+          </div>
+        </div>
 
-        </Dialog>
-      </div>
+        <div style={styles.body}>
+          <TextField
+            hintText="Name"
+            onChange={this.changeName}
+          />
+        </div>
+
+        <div style={styles.footer}>
+          <RaisedButton label="Save" primary={true} onTouchTap={(ev)=>this.props.history.push('/login')} />
+        </div>
+
+      </Paper>
     );
   }
 }

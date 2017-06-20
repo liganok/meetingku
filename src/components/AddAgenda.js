@@ -35,8 +35,8 @@ const styles = {
 const mapStateToProps = state => ({...state.agenda});
 const mapDispatchToProps = dispatch => ({
   onChangeName: value => dispatch({type: AGENDA_UPDATE_FIELD, key: 'name', value}),
-  onChangeStartDate: value => dispatch({type: AGENDA_UPDATE_FIELD, key: 'startDate', value}),
-  onChangeStartTime: value => dispatch({type: AGENDA_UPDATE_FIELD, key: 'startTime', value}),
+  onChangeStartDate: value => dispatch({type: AGENDA_UPDATE_FIELD, key: 'startedAt', value}),
+  onChangeStartTime: value => dispatch({type: AGENDA_UPDATE_FIELD, key: 'startedAt', value}),
   onChangeDuration: value => dispatch({type: AGENDA_UPDATE_FIELD, key: 'duration', value}),
   onCreateAgenda: () => dispatch({type: AGENDA_CREATE}),
   onSaveAgenda: agenda => dispatch({type: AGENDA_SAVE, payload:agent.Agenda.create(agenda)}),
@@ -60,7 +60,7 @@ class AddAgenda extends React.Component {
   handleSaveAgenda() {
     let agenda = {
       name:this.props.name,
-
+      startedAt: this.props.startedAt,
     };
     if(agenda.name){
       this.props.onSaveAgenda(agenda);
@@ -98,12 +98,12 @@ class AddAgenda extends React.Component {
           <DatePicker
             hintText="Start date"
             floatingLabelText="Start date"
-            value={this.props.startTime}
+            value={this.props.startedAt}
             onChange={this.changeStartTime}/>
           <TimePicker
             hintText="Start time"
             floatingLabelText="Start time"
-            value={this.props.startTime}
+            value={this.props.startedAt}
             onChange={this.changeStartTime}/>
 
         </Dialog>

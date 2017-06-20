@@ -69,6 +69,7 @@ class App extends React.Component {
       <div>
         <Header
           appName={this.props.appName}
+          inProgress={this.props.inProgress}
           currentUser={this.props.currentUser}/>
 
         <Snackbar

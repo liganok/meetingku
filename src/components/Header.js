@@ -6,6 +6,11 @@ import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import LockIcon from 'material-ui/svg-icons/action/lock-outline';
 import AccountCircle from 'material-ui/svg-icons/action/account-circle';
+import CloudDone from 'material-ui/svg-icons/file/cloud-done';
+import Refresh from 'material-ui/svg-icons/navigation/refresh';
+import CircularProgress from 'material-ui/CircularProgress';
+import IconButton from 'material-ui/IconButton';
+
 
 import Divider from 'material-ui/Divider';
 import {BrowserRouter, Switch, Route, Link} from 'react-router-dom'
@@ -35,6 +40,11 @@ const styles = {
   },
   appBar:{
     margin:0
+  },
+  IconButton:{
+    display:'flex',
+    flexDirection:'row',
+    color:'#ffffff',
   }
 };
 
@@ -83,20 +93,25 @@ class Header extends React.Component {
     this.setState({open: !this.state.open});
   };
 
-  handleNav(path){
-    this.handleToggle();
-    if(path){
-      this.props.history.push('/agenda');
-    }
-  }
-
   render() {
+    const iconER = (
+        <div>
+          <IconButton style={styles.iconButton}>
+            {this.props.inProgress? <CircularProgress color='#fff' size={18} thickness={2.1}/>:<CloudDone color="#fff"/>}
+          </IconButton>
+          <IconButton style={styles.iconButton}>
+            <AccountCircle color="#fff"/>
+          </IconButton>
+        </div>
+    );
+
     return (
       <div>
         <AppBar
-          iconClassNameRight="muidocs-icon-navigation-expand-more"
           onLeftIconButtonTouchTap={this.handleToggle}
           style={styles.appBar}
+          iconElementRight={iconER}
+
         />
         <Drawer style={styles.main}
                 docked={false}
@@ -106,7 +121,6 @@ class Header extends React.Component {
         >
           <AppBar
             title={this.props.appName}
-            iconClassNameRight="muidocs-icon-navigation-expand-more"
             onLeftIconButtonTouchTap={this.handleToggle}
             style={styles.appBar}
           />
