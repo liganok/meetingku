@@ -86,7 +86,7 @@ class AddAgenda extends React.Component {
           style={styles.dialog}
           actions={actions}
           modal={false}
-          open={isAddAgenda}
+          open={false}
           onRequestClose={this.handleSaveAgenda.bind(this)}
         >
           <TextField

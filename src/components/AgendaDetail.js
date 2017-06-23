@@ -20,16 +20,70 @@ import DatePicker from 'material-ui/DatePicker';
 import TimePicker from 'material-ui/TimePicker';
 
 
-const mapStateToProps = state => ({...state.agenda});
+const mapStateToProps = state => ({...state.agendaDetail});
 const mapDispatchToProps = dispatch => ({
   onChangeName: value => dispatch({type: AGENDA_UPDATE_FIELD, key: 'name', value}),
   onChangeStartedAt: value => dispatch({type: AGENDA_UPDATE_FIELD, key: 'startedAt', value}),
   onChangeDuration: value => dispatch({type: AGENDA_UPDATE_FIELD, key: 'duration', value}),
   onCreateAgenda: () => dispatch({type: AGENDA_CREATE}),
   onSaveAgenda: agenda => dispatch({type: AGENDA_SAVE, payload: agent.Agenda.create(agenda)}),
-  onCloseDialog: () => dispatch({type: AGENDA_CLOSE_DIALOG}),
+  onChangeField: (id,key,value) => dispatch({type: AGENDA_UPDATE_FIELD,id:id, key:key,value:value}),
+
 
 });
+
+const styles = {
+  root: {
+    display:'flex',
+    flexDirection:'column',
+    padding: 10,
+  },
+  header: {
+    display:'flex',
+    flexDirection:'row',
+    justifyContent:'space-between',
+  },
+
+  body: {
+
+  },
+
+  footer: {
+    display:'flex',
+    justifyContent:'flex-end',
+    alignItems:'center',
+  },
+
+  headerText:{
+    bold:true,
+  },
+
+  subHeaderText:{
+    fontSize:'14px',
+  },
+
+  time:{
+    display:'flex',
+    flexDirection:'row',
+    justifyContent:'flex-end',
+    alignItems:'center',
+  },
+
+  datePicker:{
+    width:75,
+    fontSize:'9px'
+  },
+
+  timePicker:{
+    width:50,
+    fontSize:'9px'
+  },
+
+  duration:{
+    fontSize:'15px',
+    paddingLeft:'5px',
+  }
+};
 
 class AgendaDetail extends React.Component {
   constructor() {
@@ -54,62 +108,40 @@ class AgendaDetail extends React.Component {
     this.props.onCloseDialog();
   }
 
+  renderComponent(agenda){
+  let componentArr = [];
+  if(typeof(agenda.subItems[0])=='undefined'){
+    componentArr.push(
+      <TextField
+        key={agenda.id}
+        style={styles.root}
+        hintText="Name"
+        value={agenda.name}
+        onChange={(ev)=>{this.props.onChangeField(agenda.id,'name',ev.target.value)}}
+      />
+    );
+    return componentArr;
+  }else{
+    componentArr.push(
+      <TextField
+        key={agenda.id}
+        style={styles.root}
+        hintText="Name"
+        value={agenda.name}
+        onChange={(ev)=>{this.props.onChangeField(agenda.id,'name',ev.target.value)}}
+      />
+    );
+    agenda.subItems.forEach(item=>{
+      componentArr.push(this.renderComponent(item));
+    });
+    return componentArr;
+  }
+}
+
+
+
   render() {
-    const name = this.props.name;
-    const isAddAgenda = this.props.isAddAgenda;
-
-    const styles = {
-      root: {
-        display:'flex',
-        flexDirection:'column',
-        padding: 10,
-      },
-      header: {
-        display:'flex',
-        flexDirection:'row',
-        justifyContent:'space-between',
-      },
-
-      body: {
-
-      },
-
-      footer: {
-        display:'flex',
-        justifyContent:'flex-end',
-        alignItems:'center',
-      },
-
-      headerText:{
-        bold:true,
-      },
-
-      subHeaderText:{
-        fontSize:'14px',
-      },
-
-      time:{
-        display:'flex',
-        flexDirection:'row',
-        justifyContent:'flex-end',
-        alignItems:'center',
-      },
-
-      datePicker:{
-        width:75,
-        fontSize:'9px'
-      },
-
-      timePicker:{
-        width:50,
-        fontSize:'9px'
-      },
-
-      duration:{
-        fontSize:'15px',
-        paddingLeft:'5px',
-      }
-    };
+    const name = this.props.currentAgenda.name;
 
     return (
       <Paper zDepth={2} style={styles.root}>
@@ -135,10 +167,7 @@ class AgendaDetail extends React.Component {
         </div>
 
         <div style={styles.body}>
-          <TextField
-            hintText="Name"
-            onChange={this.changeName}
-          />
+          {this.renderComponent(this.props.currentAgenda)}
         </div>
 
         <div style={styles.footer}>
