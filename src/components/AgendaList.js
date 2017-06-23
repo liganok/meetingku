@@ -61,7 +61,6 @@ class AgendaList extends React.Component {
         <AddAgenda/>
         <List style={styles.listItem}>
           {list}
-          {console.log('---------list-----------',list)}
         </List>
       </div>
     );

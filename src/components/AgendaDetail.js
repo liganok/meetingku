@@ -12,7 +12,6 @@ import {
   AGENDA_UPDATE_FIELD,
   AGENDA_CREATE,
   AGENDA_SAVE,
-  AGENDA_CLOSE_DIALOG
 } from '../constants/actionTypes';
 
 import RaisedButton from 'material-ui/RaisedButton';
@@ -22,10 +21,8 @@ import TimePicker from 'material-ui/TimePicker';
 
 const mapStateToProps = state => ({...state.agendaDetail});
 const mapDispatchToProps = dispatch => ({
-  onChangeName: value => dispatch({type: AGENDA_UPDATE_FIELD, key: 'name', value}),
   onChangeStartedAt: value => dispatch({type: AGENDA_UPDATE_FIELD, key: 'startedAt', value}),
   onChangeDuration: value => dispatch({type: AGENDA_UPDATE_FIELD, key: 'duration', value}),
-  onCreateAgenda: () => dispatch({type: AGENDA_CREATE}),
   onSaveAgenda: agenda => dispatch({type: AGENDA_SAVE, payload: agent.Agenda.create(agenda)}),
   onChangeField: (id,key,value) => dispatch({type: AGENDA_UPDATE_FIELD,id:id, key:key,value:value}),
 
@@ -36,7 +33,7 @@ const styles = {
   root: {
     display:'flex',
     flexDirection:'column',
-    padding: 10,
+    padding: '10px',
   },
   header: {
     display:'flex',
@@ -88,7 +85,6 @@ const styles = {
 class AgendaDetail extends React.Component {
   constructor() {
     super();
-    this.changeName = ev => this.props.onChangeName(ev.target.value);
     this.changeStartedAt = (ev, data) => this.props.onChangeStartedAt(data);
 
     this.state = {
@@ -141,16 +137,19 @@ class AgendaDetail extends React.Component {
 
 
   render() {
-    const name = this.props.currentAgenda.name;
-
+    const currentAgenda = this.props.currentAgenda;
+    if(!currentAgenda) {
+      return null;
+    }
+    Object.assign(currentAgenda,{root:true});
     return (
       <Paper zDepth={2} style={styles.root}>
         <div style={styles.header}>
           <TextField
+            id={currentAgenda.id}
             style={styles.headerText}
-            hintText="Name"
-            value={name ? name : ''}
-            onChange={this.changeName}
+            value={currentAgenda.name}
+            onChange={(ev)=>{this.props.onChangeField(currentAgenda.id,'name',ev.target.value)}}
           />
           <div style={styles.time}>
             <DatePicker
