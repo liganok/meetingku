@@ -21,29 +21,25 @@ const defaultState = {
           {
             id: "594135259b216dbf27294453",
             name: "hello world 1-1-1",
-            duration: 0,
+            duration: 10,
             sequence: 0,
             subItems: [],
-            startedAt: "2017-06-14T13:07:49.377Z",
           },
           {
             id: "594135259b216dbf27294454",
             name: "hello world 1-1-2",
-            duration: 0,
+            duration: 10,
             sequence: 0,
             subItems: [],
-            startedAt: "2017-06-14T13:07:49.377Z",
           },
         ],
-        startedAt: "2017-06-14T13:07:49.377Z",
       },
       {
         id: "594135259b216dbf25294455",
         name: "hello world 1-2",
-        duration: 0,
+        duration: 10,
         sequence: 0,
         subItems: [],
-        startedAt: "2017-06-14T13:07:49.377Z",
       },
     ],
     startedAt: "2017-06-14T13:07:49.377Z",
@@ -76,7 +72,7 @@ function changeAgenda(sourceAgenda, id, key, value) {
 export default (state = defaultState, action) => {
   switch (action.type) {
     case AGENDA_UPDATE_FIELD:
-      let currentAgenda = changeAgenda(state.currentAgenda,action.id,action.key,action.value);
+      changeAgenda(state.currentAgenda,action.id,action.key,action.value);
       return {...state, [action.key]: action.value};
     case AGENDA_CREATE:
       return {...state, isAddAgenda: true};
