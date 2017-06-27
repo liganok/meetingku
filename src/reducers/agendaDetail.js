@@ -48,13 +48,14 @@ const defaultState = {
 
 function changeAgenda(sourceAgenda, id, key, value) {
   let targetAgenda = sourceAgenda;
+  let isHasSubItem = (typeof (targetAgenda.subItems) !== 'undefined');
   if (targetAgenda.id === id) {
     Object.assign(targetAgenda, {
       [key]: value
     });
     return targetAgenda;
   } else {
-    if (typeof(targetAgenda.subItems[0]) != 'undefined') {
+    if (isHasSubItem) {
       let subItemTmp = [];
       targetAgenda.subItems.forEach(item => {
         subItemTmp.push(changeAgenda(item, id, key, value));
@@ -69,11 +70,27 @@ function changeAgenda(sourceAgenda, id, key, value) {
   }
 }
 
+function countDuration(sourceAgenda) {
+  let agenda = sourceAgenda;
+  let isHasSubItem = (typeof (agenda.subItems[0]) !== 'undefined');
+  if(!isHasSubItem){
+    agenda.duration = sourceAgenda.duration;
+  }else{
+    let duration = 0;
+    agenda.subItems.forEach(item=>{
+      duration = duration + countDuration(item).duration;
+    });
+    agenda.duration = duration;
+  }
+  return agenda;
+}
+
 export default (state = defaultState, action) => {
   switch (action.type) {
     case AGENDA_UPDATE_FIELD:
-      changeAgenda(state.currentAgenda,action.id,action.key,action.value);
-      return {...state, [action.key]: action.value};
+      let currentAgenda = changeAgenda(state.currentAgenda,action.id,action.key,action.value);
+      if(action.key==='duration') {currentAgenda = countDuration(currentAgenda)};
+      return {...state, [action.key]: action.value, currentAgenda:currentAgenda};
     case AGENDA_CREATE:
       return {...state, isAddAgenda: true};
     case AGENDA_SAVE:

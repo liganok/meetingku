@@ -58,7 +58,7 @@ const styles = {
     bold: true,
   },
 
-  item_textField: {
+  item_textField_name: {
     fontSize: '14px',
   },
 
@@ -80,8 +80,12 @@ const styles = {
   },
 
   item_time_duration: {
-    fontSize: '15px',
-    paddingLeft: '5px',
+    width:'20px',
+    fontSize: '10px',
+  },
+
+  item_time_label: {
+    fontSize: '10px',
   },
 
   noDisplay: {
@@ -112,93 +116,57 @@ class AgendaDetail extends React.Component {
   renderComponent(agenda) {
     let componentArr = [];
     let isHasStartedAt = (typeof (agenda.startedAt) !== 'undefined');
-    if (typeof(agenda.subItems[0]) == 'undefined') {
-      componentArr.push(
-        <div style={{paddingLeft: '15px'}} key={agenda.id}>
-          <div style={styles.item}>
+    let isHasSubItem = (typeof (agenda.subItems) !== 'undefined');
+    const item = (
+      <div style={{paddingLeft: '15px'}} key={agenda.id}>
+        <div style={styles.item}>
+          <TextField
+            id={`name${agenda.id}`}
+            underlineShow={false}
+            style={!isHasStartedAt ? styles.item_textField_name : styles.item_textField_header}
+            hintText="Name"
+            value={agenda.name}
+            onChange={(ev) => {
+              this.props.onChangeField(agenda.id, 'name', ev.target.value)
+            }}
+          />
+          <div style={styles.item_time}>
+            <DatePicker
+              id={`data${agenda.id}`}
+              textFieldStyle={styles.item_time_datePicker}
+              style={!isHasStartedAt ? styles.noDisplay : styles.item_time_datePicker}
+              hintText="Start"
+              value={isHasStartedAt ? new Date(agenda.startedAt) : null}
+              onChange={(ev, date) => {
+                this.props.onChangeField(agenda.id, 'startedAt', date);
+              }}/>
+            <TimePicker
+              id={`time${agenda.id}`}
+              textFieldStyle={styles.item_time_timePicker}
+              style={!isHasStartedAt ? styles.noDisplay : styles.item_time_timePicker}
+              value={isHasStartedAt ? new Date(agenda.startedAt) : null}
+              onChange={(ev, time) => {
+                this.props.onChangeField(agenda.id, 'startedAt', time)
+              }}/>
             <TextField
-              id={`name${agenda.id}`}
+              id={`duration${agenda.id}`}
               underlineShow={false}
-              style={typeof(agenda.startedAt) === 'undefined' ? styles.item_textField : styles.item_textField_header}
-              hintText="Name"
-              value={agenda.name}
+              style={styles.item_time_duration}
+              value={agenda.duration}
               onChange={(ev) => {
-                this.props.onChangeField(agenda.id, 'name', ev.target.value)
-              }}
-            />
-            <div style={styles.item_time}>
-              <DatePicker
-                id={`data${agenda.id}`}
-                textFieldStyle={styles.item_time_datePicker}
-                style={!isHasStartedAt ? styles.noDisplay : styles.item_time_datePicker}
-                hintText="Start"
-                value={isHasStartedAt ? new Date(agenda.startedAt) : null}
-                onChange={(ev, date) => {
-                  this.props.onChangeField(agenda.id, 'startedAt', date);
-                }}/>
-              <TimePicker
-                id={`time${agenda.id}`}
-                textFieldStyle={styles.item_time_timePicker}
-                style={!isHasStartedAt ? styles.noDisplay : styles.item_time_timePicker}
-                value={isHasStartedAt ? new Date(agenda.startedAt) : null}
-                onChange={(ev, time) => {
-                  this.props.onChangeField(agenda.id, 'startedAt', time)
-                }}/>
-              <TextField
-                id={`duration${agenda.id}`}
-                underlineShow={false}
-                style={styles.item_time_duration}
-                value={`${agenda.duration} m`}/>
-            </div>
+                this.props.onChangeField(agenda.id, 'duration', ev.target.value)
+              }}/>
+            <label style={styles.item_time_label}>M</label>
           </div>
-          <Divider/>
         </div>
-      );
+        <Divider/>
+      </div>);
+    if (!isHasSubItem) {
+      componentArr.push(item);
       return componentArr;
     } else {
 
-      componentArr.push(
-        <div style={{paddingLeft: '15px'}} key={agenda.id}>
-          <div style={styles.item}>
-            <TextField
-              id={`name${agenda.id}`}
-              underlineShow={false}
-              style={typeof(agenda.startedAt) === 'undefined' ? styles.item_textField : styles.item_textField_header}
-              hintText="Name"
-              value={agenda.name}
-              onChange={(ev) => {
-                this.props.onChangeField(agenda.id, 'name', ev.target.value)
-              }}
-            />
-
-            <div style={styles.item_time}>
-              <DatePicker
-                id={`data${agenda.id}`}
-                textFieldStyle={styles.item_time_datePicker}
-                style={!isHasStartedAt ? styles.noDisplay : styles.item_time_datePicker}
-                hintText="Start"
-                value={isHasStartedAt ? new Date(agenda.startedAt) : null}
-                onChange={(ev, date) => {
-                  this.props.onChangeField(agenda.id, 'startedAt', date);
-                }}/>
-              <TimePicker
-                id={`time${agenda.id}`}
-                textFieldStyle={styles.item_time_timePicker}
-                style={!isHasStartedAt ? styles.noDisplay : styles.item_time_timePicker}
-                value={isHasStartedAt ? new Date(agenda.startedAt) : null}
-                onChange={(ev, time) => {
-                  this.props.onChangeField(agenda.id, 'startedAt', time);
-                }}/>
-              <TextField
-                id={`duration${agenda.id}`}
-                underlineShow={false}
-                style={styles.item_time_duration}
-                value={`${agenda.duration} m`}/>
-            </div>
-          </div>
-          <Divider/>
-        </div>
-      );
+      componentArr.push(item);
 
       agenda.subItems.forEach(item => {
         componentArr.push(
