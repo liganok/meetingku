@@ -132,19 +132,23 @@ class AgendaDetail extends React.Component {
                 textFieldStyle={styles.item_time_datePicker}
                 style={!isHasStartedAt ? styles.noDisplay : styles.item_time_datePicker}
                 hintText="Start"
-                value={isHasStartedAt? new Date(agenda.startedAt):null}
-                onChange={(ev,date) => {
+                value={isHasStartedAt ? new Date(agenda.startedAt) : null}
+                onChange={(ev, date) => {
                   this.props.onChangeField(agenda.id, 'startedAt', date);
                 }}/>
               <TimePicker
                 id={`time${agenda.id}`}
                 textFieldStyle={styles.item_time_timePicker}
                 style={!isHasStartedAt ? styles.noDisplay : styles.item_time_timePicker}
-                value={isHasStartedAt? new Date(agenda.startedAt):null}
-                onChange={(ev,time) => {
+                value={isHasStartedAt ? new Date(agenda.startedAt) : null}
+                onChange={(ev, time) => {
                   this.props.onChangeField(agenda.id, 'startedAt', time)
                 }}/>
-              <label style={styles.item_time_duration}>30 m</label>
+              <TextField
+                id={`duration${agenda.id}`}
+                underlineShow={false}
+                style={styles.item_time_duration}
+                value={`${agenda.duration} m`}/>
             </div>
           </div>
           <Divider/>
@@ -173,20 +177,25 @@ class AgendaDetail extends React.Component {
                 textFieldStyle={styles.item_time_datePicker}
                 style={!isHasStartedAt ? styles.noDisplay : styles.item_time_datePicker}
                 hintText="Start"
-                value={isHasStartedAt? new Date(agenda.startedAt):null}
-                onChange={(ev,date) => {
+                value={isHasStartedAt ? new Date(agenda.startedAt) : null}
+                onChange={(ev, date) => {
                   this.props.onChangeField(agenda.id, 'startedAt', date);
                 }}/>
               <TimePicker
                 id={`time${agenda.id}`}
                 textFieldStyle={styles.item_time_timePicker}
-                style={!isHasStartedAt? styles.noDisplay : styles.item_time_timePicker}
-                value={isHasStartedAt? new Date(agenda.startedAt):null}
-                onChange={(ev,time) => {
+                style={!isHasStartedAt ? styles.noDisplay : styles.item_time_timePicker}
+                value={isHasStartedAt ? new Date(agenda.startedAt) : null}
+                onChange={(ev, time) => {
                   this.props.onChangeField(agenda.id, 'startedAt', time);
                 }}/>
-              <label style={styles.item_time_duration}>30 m</label>
-            </div>          </div>
+              <TextField
+                id={`duration${agenda.id}`}
+                underlineShow={false}
+                style={styles.item_time_duration}
+                value={`${agenda.duration} m`}/>
+            </div>
+          </div>
           <Divider/>
         </div>
       );
