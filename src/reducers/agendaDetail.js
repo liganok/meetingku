@@ -78,7 +78,7 @@ function countDuration(sourceAgenda) {
   }else{
     let duration = 0;
     agenda.subItems.forEach(item=>{
-      duration = duration + countDuration(item).duration;
+      duration = Number(duration) + Number(countDuration(item).duration);
     });
     agenda.duration = duration;
   }
