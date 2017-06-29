@@ -80,12 +80,13 @@ class App extends React.Component {
           <Route path='/login' component={Login}/>
           <Route path='/register' component={Register}/>
         </Switch>
-        <div style={styles.root}>
+        <div>
           <Switch >
             <Route exact path='/' component={AgendaList}/>
             <Route path='/agendalist' component={AgendaList}/>
             <Route path='/AgendaItem' component={AgendaItem}/>
             <Route path='/detail' component={AgendaDetail}/>
+            <Route path='/new' component={AgendaDetail}/>
             <Route path='/profile' component={Profile}/>
           </Switch>
         </div>

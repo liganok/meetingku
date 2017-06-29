@@ -46,7 +46,7 @@ const Agenda = {
   requests.get(`/agenda/${agenda.id}`),
   update: agenda =>
     requests.put(`/agenda/${agenda.id}`, { agenda: agenda }),
-  create: agenda =>
+  save: agenda =>
     requests.post('/agenda', { agenda })
 };
 

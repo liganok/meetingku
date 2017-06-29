@@ -7,11 +7,17 @@ import TextField from 'material-ui/TextField';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import Paper from 'material-ui/Paper';
 import Divider from 'material-ui/Divider';
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
+import IconButton from 'material-ui/IconButton';
+import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
 
 import {
   AGENDA_UPDATE_FIELD,
   AGENDA_SAVE,
+  AGENDA_MENU_ITEM_TAP,
 } from '../constants/actionTypes';
 
 import RaisedButton from 'material-ui/RaisedButton';
@@ -21,25 +27,26 @@ import TimePicker from 'material-ui/TimePicker';
 
 const mapStateToProps = state => ({...state.agendaDetail});
 const mapDispatchToProps = dispatch => ({
-  onSaveAgenda: agenda => dispatch({type: AGENDA_SAVE, payload: agent.Agenda.create(agenda)}),
+  onSaveAgenda: agenda => dispatch({type: AGENDA_SAVE, payload: agent.Agenda.save(agenda)}),
   onChangeField: (id, key, value) => dispatch({type: AGENDA_UPDATE_FIELD, id: id, key: key, value: value}),
-
+  onMenuItemTap: (id,value) => dispatch({type: AGENDA_MENU_ITEM_TAP,id:id, value:value}),
 
 });
+
 
 const styles = {
   root: {
     display: 'flex',
     flexDirection: 'column',
     padding: '10px',
+    width: '632px',
+    margin: '16px auto',
   },
   header: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-
-  body: {},
 
   footer: {
     display: 'flex',
@@ -49,6 +56,18 @@ const styles = {
   },
 
   item: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+
+  item_left: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+
+  item_right: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -80,7 +99,7 @@ const styles = {
   },
 
   item_time_duration: {
-    width:'20px',
+    width: '20px',
     fontSize: '10px',
   },
 
@@ -98,28 +117,19 @@ const styles = {
 class AgendaDetail extends React.Component {
   constructor() {
     super();
-    this.changeStartedAt = (ev, data) => this.props.onChangeStartedAt(data);
-
   }
 
   handleSaveAgenda() {
-    let agenda = {
-      name: this.props.name,
-
-    };
-    if (agenda.name) {
-      this.props.onSaveAgenda(agenda);
-    }
-    this.props.onCloseDialog();
+      this.props.onSaveAgenda(this.props.currentAgenda);
   }
 
   renderComponent(agenda) {
     let componentArr = [];
     let isHasStartedAt = (typeof (agenda.startedAt) !== 'undefined');
-    let isHasSubItem = (typeof (agenda.subItems) !== 'undefined');
+    let isHasSubItem = agenda.subItems.length;
     const item = (
       <div style={{paddingLeft: '15px'}} key={agenda.id}>
-        <div style={styles.item}>
+        <div style={styles.item_left}>
           <TextField
             id={`name${agenda.id}`}
             underlineShow={false}
@@ -150,13 +160,21 @@ class AgendaDetail extends React.Component {
               }}/>
             <TextField
               id={`duration${agenda.id}`}
+              disabled={isHasSubItem? true:false}
               underlineShow={false}
               style={styles.item_time_duration}
               value={agenda.duration}
               onChange={(ev) => {
                 this.props.onChangeField(agenda.id, 'duration', ev.target.value)
               }}/>
-            <label style={styles.item_time_label}>M</label>
+            <label style={styles.item_time_label}>min</label>
+            <IconMenu
+              iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+            >
+              <MenuItem value="Add" primaryText="Add" onTouchTap={()=>{this.props.onMenuItemTap(agenda.id,'ADD')}}/>
+              <MenuItem value="Del" primaryText="Delete" onTouchTap={()=>{this.props.onMenuItemTap(agenda.id,'DEL')}}/>
+
+            </IconMenu>
           </div>
         </div>
         <Divider/>
@@ -197,7 +215,7 @@ class AgendaDetail extends React.Component {
         </div>
 
         <div style={styles.footer}>
-          <RaisedButton label="Save" primary={true} onTouchTap={(ev) => this.props.history.push('/login')}/>
+          <RaisedButton label="Save" primary={true} onTouchTap={this.handleSaveAgenda.bind(this)}/>
         </div>
 
       </Paper>

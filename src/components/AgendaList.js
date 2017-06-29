@@ -13,6 +13,11 @@ import {
 } from '../constants/actionTypes';
 
 const styles = {
+  root: {
+    minWidth: '360px',
+    width: '632px',
+    margin: '16px auto',
+  },
 
   listItem: {
     padding: 0,
@@ -57,7 +62,7 @@ class AgendaList extends React.Component {
       );
     });
     return (
-      <div>
+      <div style={styles.root}>
         <AddAgenda/>
         <List style={styles.listItem}>
           {list}

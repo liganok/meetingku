@@ -32,83 +32,12 @@ const styles = {
 };
 
 
-const mapStateToProps = state => ({...state.agenda});
-const mapDispatchToProps = dispatch => ({
-  onChangeName: value => dispatch({type: AGENDA_UPDATE_FIELD, key: 'name', value}),
-  onChangeStartDate: value => dispatch({type: AGENDA_UPDATE_FIELD, key: 'startedAt', value}),
-  onChangeStartTime: value => dispatch({type: AGENDA_UPDATE_FIELD, key: 'startedAt', value}),
-  onChangeDuration: value => dispatch({type: AGENDA_UPDATE_FIELD, key: 'duration', value}),
-  onCreateAgenda: () => dispatch({type: AGENDA_CREATE}),
-  onSaveAgenda: agenda => dispatch({type: AGENDA_SAVE, payload:agent.Agenda.create(agenda)}),
-  onCloseDialog: () => dispatch({type: AGENDA_CLOSE_DIALOG}),
-
-});
-
 class AddAgenda extends React.Component {
-  constructor() {
-    super();
-    this.changeName = ev => this.props.onChangeName(ev.target.value);
-    this.changeStartDate = (ev, data) => this.props.onChangeStartDate(data);
-    this.changeStartTime = (ev, time) => this.props.onChangeStartTime(time);
-
-    this.state = {
-      isAddAgenda: false,
-    };
-  }
-
-
-  handleSaveAgenda() {
-    let agenda = {
-      name:this.props.name,
-      startedAt: this.props.startedAt,
-    };
-    if(agenda.name){
-      this.props.onSaveAgenda(agenda);
-    }
-    this.props.onCloseDialog();
-  }
-
   render() {
-    const name = this.props.name;
-    const isAddAgenda = this.props.isAddAgenda;
-
-    const actions = [
-      <FlatButton
-        label="Done"
-        primary={true}
-        keyboardFocused={true}
-        onTouchTap={this.handleSaveAgenda.bind(this)}
-      />,
-    ];
     return (
       <div style={styles.root}>
-        <Dialog
-          style={styles.dialog}
-          actions={actions}
-          modal={false}
-          open={false}
-          onRequestClose={this.handleSaveAgenda.bind(this)}
-        >
-          <TextField
-            hintText="Title"
-            floatingLabelText="Title"
-            value={name ? name : ''}
-            onChange={this.changeName}
-          />
-          <DatePicker
-            hintText="Start date"
-            floatingLabelText="Start date"
-            value={this.props.startedAt}
-            onChange={this.changeStartTime}/>
-          <TimePicker
-            hintText="Start time"
-            floatingLabelText="Start time"
-            value={this.props.startedAt}
-            onChange={this.changeStartTime}/>
-
-        </Dialog>
-        <Paper onClick={this.props.onCreateAgenda}>
-          <div style={styles.hintText}>
+        <Paper >
+          <div style={styles.hintText} onClick={(ev) => this.props.history.push('/new')}>
             Add an agenda
           </div>
         </Paper>
@@ -118,4 +47,4 @@ class AddAgenda extends React.Component {
 }
 ;
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddAgenda);
+export default AddAgenda;
