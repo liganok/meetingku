@@ -12,7 +12,6 @@ export const ASYNC_END = 'ASYNC_END';
 
 //agendaList
 export const GET_AGENDALIST = 'GET_AGENDALIST';
-export const AGENDALIST_NAV_DETAIL = 'AGENDALIST_NAV_DETAIL';
 
 
 
@@ -23,6 +22,7 @@ export const AGENDA_UPDATE = 'AGENDA_UPDATE';
 export const AGENDA_SAVE = 'AGENDA_SAVE';
 export const AGENDA_CLOSE_DIALOG = 'AGENDA_CLOSE_DIALOG';
 export const AGENDA_MENU_ITEM_TAP = 'AGENDA_MENU_ITEM_TAP';
+export const AGENDA_GET_DETAIL = 'AGENDA_GET_DETAIL';
 
 
 //auth
@@ -31,5 +31,6 @@ export const UPDATE_FIELD_AUTH = 'UPDATE_FIELD_AUTH';
 //agendaItem
 export const AI_ACTION_MOUSE_OVER = 'AI_ACTION_MOUSE_OVER';
 export const AI_ACTION_MOUSE_OUT = 'AI_ACTION_MOUSE_OUT';
+export const AI_ACTION_NAV_DETAIL = 'AI_ACTION_NAV_DETAIL';
 
 

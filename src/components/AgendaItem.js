@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import agent from '../agent';
+import {withRouter} from 'react-router-dom'
 
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
@@ -12,15 +13,14 @@ import PlayCircleOutline from 'material-ui/svg-icons/av/play-circle-outline';
 
 
 import {
-  AGENDALIST_NAV_DETAIL,
+  AGENDA_GET_DETAIL,
   AI_ACTION_MOUSE_OVER,
   AI_ACTION_MOUSE_OUT,
 } from '../constants/actionTypes';
 
 const mapStateToProps = state => ({...state.agendaItem});
 const mapDispatchToProps = dispatch => ({
-  onNavDetail: value =>
-    dispatch({type: AGENDALIST_NAV_DETAIL, payload: value}),
+  onNav: (payload) => dispatch({type: AGENDA_GET_DETAIL, payload}),
   onActionMouseOver: value =>
     dispatch({type: AI_ACTION_MOUSE_OVER, payload: value}),
   onActionMouseOut: value =>
@@ -41,6 +41,11 @@ class AgendaItem extends React.Component {
       this.props.onActionMouseOut(value)
     };
 
+  }
+
+  handleClick(){
+    //this.props.onNav(agent.Agenda.get(this.props.agenda.id));
+    this.props.history.push(`/detail/${this.props.agenda.id}`);
   }
 
 
@@ -100,7 +105,7 @@ class AgendaItem extends React.Component {
           title={name}
           actAsExpander={true}
           showExpandableButton={false}
-          onClick={this.navDetail(this.props.agenda)}
+          onClick={this.handleClick.bind(this)}
         />
 
         <div style={styles.cardBody}>
@@ -135,4 +140,4 @@ class AgendaItem extends React.Component {
 }
 ;
 
-export default connect(mapStateToProps, mapDispatchToProps)(AgendaItem);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(AgendaItem));

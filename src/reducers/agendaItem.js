@@ -1,6 +1,7 @@
 import {
   AI_ACTION_MOUSE_OVER,
-  AI_ACTION_MOUSE_OUT
+  AI_ACTION_MOUSE_OUT,
+  AI_ACTION_NAV_DETAIL,
 } from '../constants/actionTypes';
 const defaultState = {
   isShowActions: false,

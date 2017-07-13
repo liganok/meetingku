@@ -83,9 +83,9 @@ class App extends React.Component {
         <div>
           <Switch >
             <Route exact path='/' component={AgendaList}/>
-            <Route path='/agendalist' component={AgendaList}/>
+            <Route path='/agenda' component={AgendaList}/>
             <Route path='/AgendaItem' component={AgendaItem}/>
-            <Route path='/detail' component={AgendaDetail}/>
+            <Route path='/detail/:id' component={AgendaDetail}/>
             <Route path='/new' component={AgendaDetail}/>
             <Route path='/profile' component={Profile}/>
           </Switch>

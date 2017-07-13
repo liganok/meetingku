@@ -18,6 +18,7 @@ import {
   AGENDA_UPDATE_FIELD,
   AGENDA_SAVE,
   AGENDA_MENU_ITEM_TAP,
+  AGENDA_GET_DETAIL,
 } from '../constants/actionTypes';
 
 import RaisedButton from 'material-ui/RaisedButton';
@@ -27,6 +28,7 @@ import TimePicker from 'material-ui/TimePicker';
 
 const mapStateToProps = state => ({...state.agendaDetail});
 const mapDispatchToProps = dispatch => ({
+  onLoad: (payload) => dispatch({type: AGENDA_GET_DETAIL, payload}),
   onSaveAgenda: agenda => dispatch({type: AGENDA_SAVE, payload: agent.Agenda.save(agenda)}),
   onChangeField: (id, key, value) => dispatch({type: AGENDA_UPDATE_FIELD, id: id, key: key, value: value}),
   onMenuItemTap: (id,value) => dispatch({type: AGENDA_MENU_ITEM_TAP,id:id, value:value}),
@@ -115,8 +117,11 @@ const styles = {
 
 
 class AgendaDetail extends React.Component {
-  constructor() {
-    super();
+
+  componentWillMount() {
+    if(this.props.match.params.id){
+      this.props.onLoad(agent.Agenda.get(this.props.match.params.id));
+    }
   }
 
   handleSaveAgenda() {

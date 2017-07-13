@@ -4,46 +4,16 @@ import {
   AGENDA_SAVE,
   AGENDA_CLOSE_DIALOG,
   AGENDA_MENU_ITEM_TAP,
+  AGENDA_GET_DETAIL,
 } from '../constants/actionTypes';
+
 const defaultState = {
   isAddAgenda: false,
   currentAgenda: {
-    id: "594135259b216dbf27294451",
-    name: "hello world 1",
+    id: "NEW135259b216dbf27294451",
     duration: 0,
     sequence: 0,
-    subItems: [
-      {
-        id: "594135259b216dbf27294452",
-        name: "hello world 1-1",
-        duration: 0,
-        sequence: 0,
-        subItems: [
-          {
-            id: "594135259b216dbf27294453",
-            name: "hello world 1-1-1",
-            duration: 10,
-            sequence: 0,
-            subItems: [],
-          },
-          {
-            id: "594135259b216dbf27294454",
-            name: "hello world 1-1-2",
-            duration: 10,
-            sequence: 0,
-            subItems: [],
-          },
-        ],
-      },
-      {
-        id: "594135259b216dbf25294455",
-        name: "hello world 1-2",
-        duration: 10,
-        sequence: 0,
-        subItems: [],
-      },
-    ],
-    startedAt: "2017-06-14T13:07:49.377Z",
+    subItems:[],
   }
 };
 
@@ -90,7 +60,7 @@ function addAgenda(sourceAgenda,id) {
   let targetAgenda = sourceAgenda;//JSON.parse( JSON.stringify(sourceAgenda) );
   if(targetAgenda.id === id){
     let count = targetAgenda.subItems.length + 1;
-    let idNew = 'T'+targetAgenda.id+count;
+    let idNew = 'NEW'+targetAgenda.id+count;
     targetAgenda.subItems.push({id:idNew,duration:0,subItems:[]});
   }else {
     targetAgenda.subItems.forEach(item=>{
@@ -119,8 +89,10 @@ function removeAgenda(sourceAgenda,id) {
 }
 
 
-export default (state = defaultState, action) => {
+export default (state=defaultState, action) => {
   switch (action.type) {
+    case AGENDA_GET_DETAIL:
+      return {...state,currentAgenda:action.payload};
     case AGENDA_UPDATE_FIELD:
       let currentAgenda = changeAgenda(JSON.parse( JSON.stringify(state.currentAgenda)),action.id,action.key,action.value);
       if(action.key==='duration') {currentAgenda = countDuration(currentAgenda)};
@@ -132,9 +104,7 @@ export default (state = defaultState, action) => {
     case AGENDA_CREATE:
       return {...state, isAddAgenda: true};
     case AGENDA_SAVE:
-      return {...state, currentAgenda: action.payload.agenda,};
-    case AGENDA_CLOSE_DIALOG:
-      return {...state, isAddAgenda: false, name: null, startTime: null};
+      return {...state,};
     case AGENDA_MENU_ITEM_TAP:
       if(action.value === 'ADD'){
         state.currentAgenda = addAgenda(JSON.parse( JSON.stringify(state.currentAgenda) ),action.id);

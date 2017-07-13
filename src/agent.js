@@ -42,8 +42,8 @@ const Auth = {
 const Agenda = {
   all: page =>
     requests.get(`/agenda`),
-  get: agenda =>
-  requests.get(`/agenda/${agenda.id}`),
+  get: agendaId =>
+  requests.get(`/agenda/${agendaId}`),
   update: agenda =>
     requests.put(`/agenda/${agenda.id}`, { agenda: agenda }),
   save: agenda =>

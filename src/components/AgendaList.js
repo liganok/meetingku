@@ -32,8 +32,6 @@ const mapStateToProps = state => ({...state.agendaList});
 const mapDispatchToProps = dispatch => ({
   onLoad: (payload) =>
     dispatch({type: GET_AGENDALIST, payload}),
-  onNavDetail: value =>
-    dispatch({type: AGENDALIST_NAV_DETAIL, payload: value}),
 });
 
 
@@ -41,9 +39,6 @@ class AgendaList extends React.Component {
 
   constructor() {
     super();
-    this.navDetail = (value) => ev => {
-      this.props.onNavDetail(value);
-    }
   }
 
   componentWillMount() {
