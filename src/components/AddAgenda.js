@@ -37,7 +37,7 @@ class AddAgenda extends React.Component {
     return (
       <div style={styles.root}>
         <Paper >
-          <div style={styles.hintText} onClick={(ev) => this.props.history.push('/new')}>
+          <div style={styles.hintText}>
             Add an agenda
           </div>
         </Paper>

@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom'
 import {connect} from 'react-redux';
 import agent from '../agent';
 
@@ -9,7 +10,6 @@ import AgendaItem from './AgendaItem';
 
 import {
   GET_AGENDALIST,
-  AGENDALIST_NAV_DETAIL
 } from '../constants/actionTypes';
 
 const styles = {
@@ -22,7 +22,10 @@ const styles = {
   listItem: {
     padding: 0,
     marginTop: '20px',
+  },
 
+  link:{
+    textDecoration:'none'
   },
 
 };
@@ -58,7 +61,7 @@ class AgendaList extends React.Component {
     });
     return (
       <div style={styles.root}>
-        <AddAgenda/>
+        <Link to="/new" style = {styles.link}><AddAgenda/></Link>
         <List style={styles.listItem}>
           {list}
         </List>

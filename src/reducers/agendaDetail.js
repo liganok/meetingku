@@ -11,6 +11,7 @@ const defaultState = {
   isAddAgenda: false,
   currentAgenda: {
     id: "NEW135259b216dbf27294451",
+    startedAt:'2017-07-13T07:24:39.025Z',
     duration: 0,
     sequence: 0,
     subItems:[],

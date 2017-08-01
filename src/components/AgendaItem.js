@@ -1,26 +1,28 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import agent from '../agent';
-import {withRouter} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 
 import Paper from 'material-ui/Paper';
-import TextField from 'material-ui/TextField';
-import FlatButton from 'material-ui/FlatButton';
-import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+
 import IconButton from 'material-ui/IconButton';
-import ActionHome from 'material-ui/svg-icons/action/home';
-import PlayCircleOutline from 'material-ui/svg-icons/av/play-circle-outline';
+import Edit from 'material-ui/svg-icons/image/edit';
+import Delete from 'material-ui/svg-icons/action/delete';
+import Play from 'material-ui/svg-icons/av/play-arrow';
 
 
 import {
-  AGENDA_GET_DETAIL,
   AI_ACTION_MOUSE_OVER,
   AI_ACTION_MOUSE_OUT,
 } from '../constants/actionTypes';
 
+import {
+  MAIN_TEXT_COLOR,
+  HINT_TEXT_COLOR,
+} from '../constants/colors';
+
 const mapStateToProps = state => ({...state.agendaItem});
 const mapDispatchToProps = dispatch => ({
-  onNav: (payload) => dispatch({type: AGENDA_GET_DETAIL, payload}),
   onActionMouseOver: value =>
     dispatch({type: AI_ACTION_MOUSE_OVER, payload: value}),
   onActionMouseOut: value =>
@@ -31,9 +33,6 @@ const mapDispatchToProps = dispatch => ({
 class AgendaItem extends React.Component {
   constructor() {
     super();
-    this.navDetail = (value) => ev => {
-      this.props.onNavDetail(value);
-    };
     this.actionMouseOver = (value) => ev => {
       this.props.onActionMouseOver(value)
     };
@@ -41,11 +40,6 @@ class AgendaItem extends React.Component {
       this.props.onActionMouseOut(value)
     };
 
-  }
-
-  handleClick(){
-    //this.props.onNav(agent.Agenda.get(this.props.agenda.id));
-    this.props.history.push(`/detail/${this.props.agenda.id}`);
   }
 
 
@@ -56,88 +50,45 @@ class AgendaItem extends React.Component {
     const duration = this.props.agenda.duration ? this.props.agenda.duration : '';
     const id = this.props.agenda.id;
 
-    const styles = {
-
-      header: {
-        paddingTop: 0,
-        fontWeight: 'bold'
-      },
-
-      cardBody: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-      },
-
-      cardBodyLeft: {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-      },
-
-      cardBodyRight: {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems:'flex-end',
-      },
-
-      cardActions: {
-        //display: this.props.isShowActions&&(id === this.props.mouseOverId)? 'block':'None',
-        visibility: this.props.isShowActions && (id === this.props.mouseOverId) ? 'visible' : 'hidden',
-
-      },
-
-      largeIcon: {
-        width: 40,
-        height: 40,
-      },
-
-    };
-
     return (
-      <Card
-        zDepth={2}
+      <Paper
+        zDepth={this.props.isShowActions && (id === this.props.mouseOverId) ? 4 : 1}
         onMouseOver={this.actionMouseOver(this.props.agenda.id) }
-        onMouseOut={this.actionMouseOut(this.props.agenda.id)}>
+        onMouseOut={this.actionMouseOut(this.props.agenda.id)}
+        style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between', paddingLeft: 15}}>
 
-        <CardHeader
-          title={name}
-          actAsExpander={true}
-          showExpandableButton={false}
-          onClick={this.handleClick.bind(this)}
-        />
-
-        <div style={styles.cardBody}>
-          <div style={styles.cardBodyLeft}>
-            <CardText onClick={this.navDetail(this.props.agenda)}>
-              <div>
-                Start: {startedAt.substring(0, 10)} {startedAt.substring(11, 16)} Duration: {duration}
-              </div>
-              <div>
-                Updat: {updatedAt.substring(0, 10)} {updatedAt.substring(11, 16)}
-              </div>
-            </CardText>
-
-            <CardActions style={styles.cardActions}>
-              <IconButton>
-                <ActionHome/>
-              </IconButton>
-              <IconButton>
-                <ActionHome/>
-              </IconButton>
-            </CardActions>
-          </div>
-
-          <div style={styles.cardBodyRight}>
-            <PlayCircleOutline style={styles.largeIcon}/>
-          </div>
+        <Link to={`/detail/${this.props.agenda.id}`} style={{textDecoration: 'none', color: MAIN_TEXT_COLOR}}>
+          <h3>{name}</h3>
+          <h6 style={{color:HINT_TEXT_COLOR}}>
+            <span style={{paddingRight: 10}}>
+              Start: {startedAt.substring(0, 10)} {startedAt.substring(11, 16)}
+            </span>
+            <span style={{paddingRight: 10}}>
+              Duration: {duration} Min
+            </span>
+          </h6>
+        </Link>
+        <div
+          style={{
+            display: 'flex', flexDirection: 'row', justifyContent: 'flex-end',
+            visibility: this.props.isShowActions && (id === this.props.mouseOverId) ? 'visible' : 'hidden',
+          }}>
+          <IconButton style={{margin: 0}}>
+            <Edit color="#000"/>
+          </IconButton>
+          <IconButton style={{margin: 0}}>
+            <Delete/>
+          </IconButton>
+          <IconButton>
+            <Play/>
+          </IconButton>
         </div>
 
-      </Card>
+
+      </Paper>
     );
   }
 }
 ;
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(AgendaItem));
+export default connect(mapStateToProps, mapDispatchToProps)(AgendaItem);
