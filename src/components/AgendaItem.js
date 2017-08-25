@@ -80,7 +80,9 @@ class AgendaItem extends React.Component {
             <Delete/>
           </IconButton>
           <IconButton>
-            <Play/>
+            <Link to={`/play/${this.props.agenda.id}`} style={{textDecoration: 'none', color: MAIN_TEXT_COLOR}}>
+              <Play/>
+            </Link>
           </IconButton>
         </div>
 

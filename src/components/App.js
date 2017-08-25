@@ -14,6 +14,8 @@ import Header from './Header';
 import AgendaList from './AgendaList';
 import AgendaItem from './AgendaItem';
 import AgendaDetail from './AgendaDetail';
+import Play from './AgendaPlay';
+
 
 
 
@@ -65,31 +67,32 @@ class App extends React.Component {
   }
 
   render() {
+    let path = this.props.location.pathname;
+    if(path.indexOf('/login') !== -1 || path.indexOf('/register') !== -1 || path.indexOf('/play') !== -1 ){
+      var isNoHeader = true;
+    }
     return (
       <div>
-        <Header
-          appName={this.props.appName}
-          inProgress={this.props.inProgress}
-          currentUser={this.props.currentUser}/>
+        {isNoHeader? <div/>:<Header
+            appName={this.props.appName}
+            inProgress={this.props.inProgress}
+            currentUser={this.props.currentUser}/>}
 
         <Snackbar
           style={styles.snackbar}
           open={this.props.inProgress ? this.props.inProgress : false}
           message={'In process...'}/>
         <Switch >
+          <Route exact path='/' component={AgendaList}/>
           <Route path='/login' component={Login}/>
           <Route path='/register' component={Register}/>
+          <Route path='/agenda' component={AgendaList}/>
+          <Route path='/AgendaItem' component={AgendaItem}/>
+          <Route path='/detail/:id' component={AgendaDetail}/>
+          <Route path='/play/:id' component={Play}/>
+          <Route path='/new' component={AgendaDetail}/>
+          <Route path='/profile' component={Profile}/>
         </Switch>
-        <div>
-          <Switch >
-            <Route exact path='/' component={AgendaList}/>
-            <Route path='/agenda' component={AgendaList}/>
-            <Route path='/AgendaItem' component={AgendaItem}/>
-            <Route path='/detail/:id' component={AgendaDetail}/>
-            <Route path='/new' component={AgendaDetail}/>
-            <Route path='/profile' component={Profile}/>
-          </Switch>
-        </div>
       </div>
     );
   }

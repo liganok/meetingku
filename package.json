@@ -14,7 +14,7 @@
     "superagent-promise": "^1.1.0",
     "material-ui": "^0.18.4",
     "react-tap-event-plugin": "^2.0.1",
-
+    "styled-components": "^2.1.2",
     "express": "^4.13.3"
   },
   "devDependencies": {
