@@ -1,7 +1,7 @@
 import {
   AP_ACTION_GET_DETAIL,
   AP_ACTION_UPDATE_TIMER,
-  AGENDA_SAVE,
+  AP_ACTION_UPDATE_CLOCK,
 } from '../constants/actionTypes';
 
 const defaultState = {
@@ -43,8 +43,8 @@ export default (state=defaultState, action) => {
       return {...state,currentAgenda:agenda};
     case AP_ACTION_UPDATE_TIMER:
       return {...state, timer: action.payload};
-    case AGENDA_SAVE:
-      return {...state,};
+    case AP_ACTION_UPDATE_CLOCK:
+      return {...state, clock: action.payload};
     default:
       return state;
   }
