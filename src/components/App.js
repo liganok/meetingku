@@ -16,7 +16,14 @@ import AgendaItem from './AgendaItem';
 import AgendaDetail from './AgendaDetail';
 import Play from './AgendaPlay';
 
+import { injectGlobal } from 'styled-components';
 
+injectGlobal`
+      margin: 0;
+      padding: 0;
+      background-color: 'green';
+  }
+`;
 
 
 const styles = {

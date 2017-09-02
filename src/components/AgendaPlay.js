@@ -1,8 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
+
 import agent from '../agent'
-import Paper from 'material-ui/Paper'
+import Progress from './Progress'
+import { Div } from './StyledComponent'
 
 import {
   AP_ACTION_GET_DETAIL,
@@ -10,7 +12,6 @@ import {
   AP_ACTION_UPDATE_CLOCK,
   AGENDA_GET_DETAIL,
 } from '../constants/actionTypes'
-
 
 const Wrapper = styled.div`
   display: ${props => props.display};
@@ -25,26 +26,29 @@ const Wrapper = styled.div`
   padding: ${props => props.padding};
   margin: ${props => props.margin};
 `
-
-const BackgroundProgress = styled.div`
-  position: absolute;
-  width: ${props => props.width}px;
-  height: ${props => props.height}px;
-  background-color: green;
-  transition: ${props => props.duration * 60}s linear;
-  opacity: 0.2;
-  z-index:1;
+const HeaderWapper = Div.extend`
+  display: flex;
+  flex-direction: column;
+  width: 700px;
+  height: 100px;
+  flex-direction: row;
+  background-color: white;
+  justify-content: space-between;
+  align-items: center;
 `
 
 function renderComponent (agenda, width, timer) {
   let componentArr = []
   let isHasSubItem = agenda.subItems.length
-  let width2 = timer > agenda.startedPlayAt ? `${width}px` : '0px'
+  let endPlayTime = agenda.duration * 60 + agenda.startedPlayAt
+
+  let completed = timer < agenda.startedPlayAt ? 0
+                  : (timer > endPlayTime? 100: (timer-agenda.startedPlayAt)/60/agenda.duration*100);
   const item = (
-    <Wrapper position="relative"  marginTop={10}>
-      <BackgroundProgress width={timer > agenda.startedPlayAt ? width : 0} height={60} duration={agenda.duration}/>
-      <Wrapper display="flex"   height={60}
-               backgroundColor="white" justifyContent="space-between" alignItems="center" >
+    <Wrapper position="relative" marginTop={10} key={agenda.id}>
+      <Progress height="60px" completed={completed}/>
+      <Wrapper display="flex" height={60}
+               backgroundColor="white" justifyContent="space-between" alignItems="center">
         <h4>{agenda.name}</h4>
         <span>{agenda.duration}</span>
       </Wrapper>
@@ -86,7 +90,7 @@ class AgendaPlay extends React.Component {
       if (clock) {
         clearInterval(clock)
       }
-      if(this.props.clock){
+      if (this.props.clock) {
         clearInterval(this.props.clock)
       }
       var clock = setInterval(() => {
@@ -95,7 +99,7 @@ class AgendaPlay extends React.Component {
           clearInterval(clock)
         }
         this.props.onUpdateTimer(timer)
-      }, 1000)
+      }, 100)
       this.props.onUpdateClock(clock)
 
     }
@@ -115,23 +119,22 @@ class AgendaPlay extends React.Component {
     let duration = `${parseInt(this.props.currentAgenda.duration / 60)}:${parseInt(this.props.currentAgenda.duration % 60)}:00`
 
     return (
-      <Wrapper display="flex" flexDirection="column" width={700} margin="0 auto" >
-        <Wrapper position="relative" marginTop={10}>
-          <BackgroundProgress width={this.props.timer > 1 ? 700 : 0} height={100} duration={currentAgenda.duration}/>
-          <Wrapper display="flex"  width={700} height={100} flexDirection="row"
-                   backgroundColor="white" justifyContent="space-between" alignItems="center" padding={15}>
-              <h2>{currentAgenda.name}</h2>
-            <Wrapper display="flex" flexDirection="column" justifyContent="space-around" alignItems="flex-end">
+      <Div display="flex" flexDirection="column" width="700px" margin="0 auto">
+        <Progress animation={1000} height="100px" marginTop="10px"
+                     completed={this.props.timer / 60 / currentAgenda.duration * 100}/>
+        <Div position="relative" marginTop="10px">
+          <HeaderWapper>
+            <h2>{currentAgenda.name}</h2>
+            <Div display="flex" flexDirection="column" justifyContent="space-around" alignItems="flex-end">
               <h2>{`${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`}</h2>
               <h5>{timer}/{duration}</h5>
-            </Wrapper>
-          </Wrapper>
-        </Wrapper>
+            </Div>
+          </HeaderWapper>
 
-        <Wrapper>
-          {list}
-        </Wrapper>
-      </Wrapper>
+        </Div>
+        {list}
+
+      </Div>
     )
   }
 }
