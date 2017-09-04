@@ -43,14 +43,14 @@ function renderComponent (agenda, width, timer) {
   let endPlayTime = agenda.duration * 60 + agenda.startedPlayAt
 
   let completed = timer < agenda.startedPlayAt ? 0
-                  : (timer > endPlayTime? 100: (timer-agenda.startedPlayAt)/60/agenda.duration*100);
+    : (timer > endPlayTime ? 100 : (timer - agenda.startedPlayAt+1) / 60 / agenda.duration * 100)
   const item = (
     <Wrapper position="relative" marginTop={10} key={agenda.id}>
       <Progress height="60px" completed={completed}/>
       <Wrapper display="flex" height={60}
                backgroundColor="white" justifyContent="space-between" alignItems="center">
         <h4>{agenda.name}</h4>
-        <span>{agenda.duration}</span>
+        <span>{agenda.duration}-{parseInt(completed)}</span>
       </Wrapper>
     </Wrapper>
   )
@@ -117,17 +117,19 @@ class AgendaPlay extends React.Component {
 
     let timer = `${parseInt(this.props.timer / 3600)}:${parseInt(this.props.timer / 60)}:${parseInt(this.props.timer % 60)}`
     let duration = `${parseInt(this.props.currentAgenda.duration / 60)}:${parseInt(this.props.currentAgenda.duration % 60)}:00`
-
+    let completed = (this.props.timer-1) / 60 / currentAgenda.duration * 100;
     return (
       <Div display="flex" flexDirection="column" width="700px" margin="0 auto">
-        <Progress animation={1000} height="100px" marginTop="10px"
-                     completed={this.props.timer / 60 / currentAgenda.duration * 100}/>
+        <Div position="relative" >
+          <Progress animation={1000} height="100px" marginTop="10px"
+                    completed={parseInt(completed)}/>
+        </Div>
         <Div position="relative" marginTop="10px">
           <HeaderWapper>
             <h2>{currentAgenda.name}</h2>
             <Div display="flex" flexDirection="column" justifyContent="space-around" alignItems="flex-end">
               <h2>{`${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`}</h2>
-              <h5>{timer}/{duration}</h5>
+              <h5>{timer}/{duration}-{parseInt(completed)}</h5>
             </Div>
           </HeaderWapper>
 
