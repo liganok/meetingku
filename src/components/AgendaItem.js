@@ -3,12 +3,6 @@ import {connect} from 'react-redux';
 import agent from '../agent';
 import {Link} from 'react-router-dom'
 
-import Paper from 'material-ui/Paper';
-
-import IconButton from 'material-ui/IconButton';
-import Edit from 'material-ui/svg-icons/image/edit';
-import Delete from 'material-ui/svg-icons/action/delete';
-import Play from 'material-ui/svg-icons/av/play-arrow';
 
 
 import {
@@ -51,43 +45,9 @@ class AgendaItem extends React.Component {
     const id = this.props.agenda.id;
 
     return (
-      <Paper
-        zDepth={this.props.isShowActions && (id === this.props.mouseOverId) ? 4 : 1}
-        onMouseOver={this.actionMouseOver(this.props.agenda.id) }
-        onMouseOut={this.actionMouseOut(this.props.agenda.id)}
-        style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between', paddingLeft: 15}}>
-
-        <Link to={`/detail/${this.props.agenda.id}`} style={{textDecoration: 'none', color: MAIN_TEXT_COLOR}}>
-          <h3>{name}</h3>
-          <h6 style={{color:HINT_TEXT_COLOR}}>
-            <span style={{paddingRight: 10}}>
-              Start: {startedAt.substring(0, 10)} {startedAt.substring(11, 16)}
-            </span>
-            <span style={{paddingRight: 10}}>
-              Duration: {duration} Min
-            </span>
-          </h6>
-        </Link>
-        <div
-          style={{
-            display: 'flex', flexDirection: 'row', justifyContent: 'flex-end',
-            visibility: this.props.isShowActions && (id === this.props.mouseOverId) ? 'visible' : 'hidden',
-          }}>
-          <IconButton style={{margin: 0}}>
-            <Edit color="#000"/>
-          </IconButton>
-          <IconButton style={{margin: 0}}>
-            <Delete/>
-          </IconButton>
-          <IconButton>
-            <Link to={`/play/${this.props.agenda.id}`} style={{textDecoration: 'none', color: MAIN_TEXT_COLOR}}>
-              <Play/>
-            </Link>
-          </IconButton>
-        </div>
-
-
-      </Paper>
+      <div>
+        test
+      </div>
     );
   }
 }

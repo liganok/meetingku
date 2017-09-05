@@ -4,9 +4,6 @@ import {connect} from 'react-redux';
 import {APP_LOAD, REDIRECT} from '../constants/actionTypes';
 import agent from '../agent';
 
-import Snackbar from 'material-ui/Snackbar';
-import CircularProgress from 'material-ui/CircularProgress';
-
 import Login from './Login';
 import Register from './Register';
 import Profile from './Profile';
@@ -16,29 +13,6 @@ import AgendaItem from './AgendaItem';
 import AgendaDetail from './AgendaDetail';
 import Play from './AgendaPlay';
 
-import { injectGlobal } from 'styled-components';
-
-injectGlobal`
-      margin: 0;
-      padding: 0;
-      background-color: 'green';
-  }
-`;
-
-
-const styles = {
-  root: {
-    minWidth: '360px',
-    width: '632px',
-    margin: '16px auto',
-  },
-  snackbar: {
-    /*   top:0,
-     transform: open ?
-     'translate(50%, 0)' :
-     `translate(50%, 50)`,*/
-  }
-};
 
 const mapStateToProps = state => ({
   appLoaded: state.common.appLoaded,
@@ -84,11 +58,6 @@ class App extends React.Component {
             appName={this.props.appName}
             inProgress={this.props.inProgress}
             currentUser={this.props.currentUser}/>}
-
-        <Snackbar
-          style={styles.snackbar}
-          open={this.props.inProgress ? this.props.inProgress : false}
-          message={'In process...'}/>
         <Switch >
           <Route exact path='/' component={AgendaList}/>
           <Route path='/login' component={Login}/>
