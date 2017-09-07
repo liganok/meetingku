@@ -32,7 +32,7 @@ class Progress extends React.Component {
   }
 
   render () {
-    const {color, marginTop, completed, animation, height, className, children, ...rest} = this.props;
+    const {color, completed, animation, height, className, children, ...rest} = this.props;
     const style = {
       position: 'absolute',
       backgroundColor: color,
@@ -41,13 +41,10 @@ class Progress extends React.Component {
       height: height,
       opacity: 0.2,
       zIndex:1,
-      marginTop: marginTop,
     };
 
     return (
-      <div className={className || "progressbar-container"} {...rest}>
-        <div className="progressbar-progress" style={style}>{children}</div>
-      </div>
+        <div className="progressbar-progress" style={Object.assign(style,className)}>{children}</div>
     );
   }
 }
