@@ -23,7 +23,7 @@ class Progress extends React.Component {
   static defaultProps = {
     completed: 0,
     color: '#0BD318',
-    animation: 1000,
+    animation: 2000,
     height: 10
   }
 
@@ -32,19 +32,21 @@ class Progress extends React.Component {
   }
 
   render () {
-    const {color, completed, animation, height, className, children, ...rest} = this.props;
-    const style = {
-      position: 'absolute',
-      backgroundColor: color,
-      width: completed + '%',
-      transition: `width ${animation}ms linear`,
-      height: height,
-      opacity: 0.2,
-      zIndex:1,
+    const {completed, animation, style, children, ...rest} = this.props;
+    const styles = {
+      root:{
+        position: 'absolute',
+        backgroundColor: 'green',
+        width: completed + '%',
+        transition: `width ${animation}ms linear`,
+        height: '60px',
+        opacity: 0.2,
+        zIndex:1,
+      }
     };
 
     return (
-        <div className="progressbar-progress" style={Object.assign(style,className)}>{children}</div>
+        <div className="progressbar-progress" style={Object.assign(styles.root,style)}>{children}</div>
     );
   }
 }

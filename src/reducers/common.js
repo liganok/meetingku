@@ -20,12 +20,18 @@ export default (state = defaultState, action) => {
     case LOGOUT:
       return { ...state, redirectTo: '/login', token: null, currentUser: null };
     case LOGIN:
-    case REGISTER:
       return {
         ...state,
         redirectTo: action.error ? null : '/',
         token: action.error ? null : action.payload.user.token,
         currentUser: action.error ? null : action.payload.user
+      };
+    case REGISTER:
+      return {
+        ...state,
+        redirectTo: action.error ? null : '/login',
+        token: null,
+        currentUser: null
       };
     case AGENDALIST_NAV_DETAIL:
       const redirectUrl = `detail/${action.payload.id}`;

@@ -1,29 +1,31 @@
 import React from 'react'
 import Paper from 'material-ui/Paper'
 import Progress from './Progress'
-import styled from 'styled-components'
-
 
 function PlayItem (props) {
   const {
     completed,
-    height,
+    style,
+    styleProcess,
     elevation,
     ...others
   } = props
 
-
   const styles = {
-      root:{
-        height: `${height || 60}px`
+    root: {
+      position: 'relative',
+      marginTop: '10px'
+    },
+    item: {
+      height: '60px'
     }
   }
 
   return (
     <div>
-      <div style={{position: 'relative',marginTop:'10px'}}>
-        <Progress className={styles.root} completed={completed}/>
-        <Paper style ={styles.root} elevation={elevation}  {...others}/>
+      <div style={styles.root}>
+        <Progress style={Object.assign(styles.item, styleProcess)} completed={completed}/>
+        <Paper style={Object.assign(styles.item, style)} elevation={elevation}  {...others}/>
       </div>
     </div>)
 }

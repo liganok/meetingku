@@ -1,10 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import styled from 'styled-components'
 
 import agent from '../agent'
-import Progress from './common/Progress'
-import { Div } from './StyledComponent'
 import PlayItem from './common/PlayItem'
 
 import Card, { CardContent, CardMedia } from 'material-ui/Card'
@@ -21,6 +18,61 @@ import {
 } from '../constants/actionTypes'
 
 
+function HeaderItem (props) {
+  const {
+    completed,
+    name,
+    duration,
+    timer,
+  } = props
+
+  const styles = {
+    root:{
+      height: '120px',
+    }
+  }
+
+  return (
+    <PlayItem style={styles.root} completed={completed}>
+      <div>
+        <Grid container align="center" justify="center">
+          <Grid item xs={9}>
+            <Typography type="headline">{name}</Typography>
+          </Grid>
+          <Grid item xs={2}>
+            <Typography
+              type="display1">{`${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`}</Typography>
+            <Typography type="subheading">{timer}/{duration}-{parseInt(completed)}</Typography>
+          </Grid>
+        </Grid>
+      </div>
+    </PlayItem>
+  )
+}
+
+function BodyItem (props) {
+  const {
+    completed,
+    name,
+    duration
+  } = props
+
+  const styles = {
+    root:{
+      height: '70px',
+    }
+  }
+
+  return (
+    <PlayItem style={styles.root} completed={completed}>
+      <div>
+        <span>{name}</span>
+        <span>{duration}-{parseInt(completed)}</span>
+      </div>
+    </PlayItem>
+  )
+}
+
 function renderComponent (agenda, width, timer) {
   let componentArr = []
   let isHasSubItem = agenda.subItems.length
@@ -29,15 +81,9 @@ function renderComponent (agenda, width, timer) {
   let completed = timer < agenda.startedPlayAt ? 0
     : (timer > endPlayTime ? 100 : (timer - agenda.startedPlayAt + 1) / 60 / agenda.duration * 100)
   const item = (
-    <Grid container align="center" justify="center">
+    <Grid container align="center" justify="center" key={agenda.id} spacing={0}>
       <Grid item xs={12} sm={10} md={8}>
-        <PlayItem height={80} completed={parseInt(completed)} key={agenda.id}>
-          <div display="flex" height={80}
-                   backgroundColor="white" justifyContent="space-between" alignItems="center">
-            <h4>{agenda.name}</h4>
-            <span>{agenda.duration}-{parseInt(completed)}</span>
-          </div>
-        </PlayItem>
+        <BodyItem name={agenda.name} completed={parseInt(completed)} duration={agenda.duration}/>
       </Grid>
     </Grid>
   )
@@ -50,7 +96,7 @@ function renderComponent (agenda, width, timer) {
     componentArr.push(item)
     agenda.subItems.forEach(item => {
       componentArr.push(
-        <div style={{paddingLeft: '15px'}} key={`subItem${item.id}`}>
+        <div style={{paddingLeft: '30px'}} key={`subItem${item.id}`}>
           {renderComponent(item, width, timer)}
         </div>
       )
@@ -85,7 +131,7 @@ class AgendaPlay extends React.Component {
           clearInterval(clock)
         }
         this.props.onUpdateTimer(timer)
-      }, 2000)
+      }, 1000)
       this.props.onUpdateClock(clock)
 
     }
@@ -94,15 +140,7 @@ class AgendaPlay extends React.Component {
   render () {
 
     const currentAgenda = this.props.currentAgenda
-    const styles = {
-      header: {
-        height: '140px',
-      },
 
-      bodyItem: {
-        height: '80px',
-      }
-    }
     if (!currentAgenda) {
       return null
     }
@@ -117,18 +155,7 @@ class AgendaPlay extends React.Component {
       <div>
         <Grid container align="center" justify="center">
           <Grid item xs={12} sm={10} md={8}>
-            <PlayItem height={140} completed={parseInt(completed)}>
-              <Grid container align="center" justify="center" style={styles.header}>
-                <Grid item xs={9}>
-                  <Typography type="headline">{currentAgenda.name}</Typography>
-                </Grid>
-                <Grid item xs={2}>
-                  <Typography
-                    type="display1">{`${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`}</Typography>
-                  <Typography type="subheading">{timer}/{duration}-{parseInt(completed)}</Typography>
-                </Grid>
-              </Grid>
-            </PlayItem>
+            <HeaderItem name={currentAgenda.name} completed={parseInt(completed)} duration={duration} timer={timer}/>
           </Grid>
         </Grid>
         {list}

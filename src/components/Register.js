@@ -2,7 +2,9 @@ import React from 'react';
 import agent from '../agent';
 import { connect } from 'react-redux';
 
-
+import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card'
+import Button from 'material-ui/Button'
+import TextField from 'material-ui/TextField'
 
 import {
   UPDATE_FIELD_AUTH,
@@ -29,33 +31,65 @@ const mapDispatchToProps = dispatch => ({
     dispatch({ type: REGISTER_PAGE_UNLOADED })
 });
 
-class Register extends React.Component {
-  constructor() {
-    super();
-    this.changeEmail = ev => this.props.onChangeEmail(ev.target.value);
-    this.changePassword = ev => this.props.onChangePassword(ev.target.value);
-    this.changeUsername = ev => this.props.onChangeUsername(ev.target.value);
-    this.submitForm = (username, email, password) => ev => {
-      ev.preventDefault();
-      this.props.onSubmit(username, email, password);
-    }
+function Register (props) {
+  const {
+    email,
+    password,
+    username,
+    onChangeEmail,
+    onChangePassword,
+    onChangeUsername,
+    onSubmit
+  } = props
+
+  const styles ={
+    root:{
+      display: 'flex',
+      flexDirection: 'row',
+      minHeight: '100vh',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    card: {
+      minWidth: 300,
+    },
   }
 
-  componentWillUnmount() {
-    this.props.onUnload();
-  }
-
-  render() {
-    const email = this.props.email;
-    const password = this.props.password;
-    const username = this.props.username;
-
-    return (
-      <div >
-        test reg
-      </div>
-    );
-  }
+  return(
+    <div style={styles.root}>
+      <Card style={styles.card}>
+        <form onSubmit={()=>onSubmit(username, email, password)}>
+          <CardContent>
+            <TextField
+              fullWidth
+              id="email"
+              label="Email"
+              value={email}
+              onChange={ev=>onChangeEmail(ev.target.value)}
+            />
+            <TextField
+              fullWidth
+              id="username"
+              label="User name"
+              value={username}
+              onChange={ev=>onChangeUsername(ev.target.value)}
+            />
+            <TextField
+              fullWidth
+              id="password"
+              label="Password"
+              value={password}
+              type="password"
+              onChange={ev=>onChangePassword(ev.target.value)}/>
+          </CardContent>
+          <CardActions>
+            <Button type="submit" raised color="primary">Sign Up</Button>
+            <Button color="primary" href="/login">Sign In</Button>
+          </CardActions>
+        </form>
+      </Card>
+    </div>
+  )
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Register);
