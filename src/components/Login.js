@@ -1,94 +1,82 @@
-import React from 'react'
-import agent from '../agent'
-import { connect } from 'react-redux'
+import React from 'react';
+import agent from '../agent';
+import { connect } from 'react-redux';
+import {Link} from 'react-router-dom'
+
 
 import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card'
 import Button from 'material-ui/Button'
 import TextField from 'material-ui/TextField'
 
-const styles = {
-  main: {
-    display: 'flex',
-    flexDirection: 'row',
-    minHeight: '100vh',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  card: {
-    minWidth: 300,
-  },
-  avatar: {
-    margin: '1em',
-    textAlign: 'center ',
-  },
-  form: {
-    padding: '0 1em 1em 1em',
-  },
-  input: {
-    display: 'flex',
-  },
-}
+import {
+  UPDATE_FIELD_AUTH,
+  LOGIN,
+} from '../constants/actionTypes';
 
-const mapStateToProps = state => ({...state.auth})
+
+
+const mapStateToProps = state => ({ ...state.auth });
 
 const mapDispatchToProps = dispatch => ({
-  onChangeEmail: value =>
-    dispatch({type: 'UPDATE_FIELD_AUTH', key: 'email', value}),
-  onChangePassword: value =>
-    dispatch({type: 'UPDATE_FIELD_AUTH', key: 'password', value}),
-  onSubmit: (email, password) =>
-    dispatch({type: 'LOGIN', payload: agent.Auth.login(email, password)}),
-  onUnload: () =>
-    dispatch({type: 'LOGIN_PAGE_UNLOADED'})
-})
+  onChangeField: (key,value) =>
+    dispatch({ type: UPDATE_FIELD_AUTH, key: key, value }),
+  onSubmit: (email, password) => {
+    const payload = agent.Auth.login(email, password);
+    dispatch({ type: LOGIN, payload })
+  },
+});
 
-class Login extends React.Component {
-  constructor () {
-    super()
-    this.changeEmail = ev => this.props.onChangeEmail(ev.target.value)
-    this.changePassword = ev => this.props.onChangePassword(ev.target.value)
-    this.submitForm = (email, password) => ev => {
-      ev.preventDefault()
-      this.props.onSubmit(email, password)
-    }
+function Login (props) {
+  const {
+    email,
+    password,
+    onChangeField,
+    onSubmit
+  } = props
+
+  const styles ={
+    root:{
+      display: 'flex',
+      flexDirection: 'row',
+      minHeight: '100vh',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    card: {
+      minWidth: 300,
+      width:400,
+    },
   }
 
-  componentWillUnmount () {
-    this.props.onUnload()
-  }
-
-  render () {
-    const email = this.props.email
-    const password = this.props.password
-    return (
-      <div style={{...styles.main,}}>
-        <Card style={styles.card}>
-          <form onSubmit={this.submitForm(email, password)}>
-            <CardContent>
-              <TextField
-                fullWidth
-                id="username"
-                label="User name"
-                value={email}
-                onChange={this.changeEmail}
-              />
-              <TextField
-                fullWidth
-                id="password"
-                label="Password"
-                value={password}
-                type="password"
-                onChange={this.changePassword}/>
-            </CardContent>
-            <CardActions>
-              <Button type="submit" raised color="primary">Sign In</Button>
-              <Button color="primary" href="/register">Sign up</Button>
-            </CardActions>
-          </form>
-        </Card>
-      </div>
-    )
-  }
+  return(
+    <div style={styles.root}>
+      <Card style={styles.card}>
+        <form onSubmit={(ev)=>{onSubmit(email, password);ev.preventDefault()}}>
+          <CardContent>
+            <TextField
+              fullWidth
+              id="email"
+              label="Email"
+              value={email}
+              onChange={ev=>onChangeField('email',ev.target.value)}
+            />
+            <TextField
+              fullWidth
+              id="password"
+              label="Password"
+              value={password}
+              type="password"
+              onChange={ev=>onChangeField('password',ev.target.value)}
+            />
+          </CardContent>
+          <CardActions>
+            <Button type="submit" raised color="primary">Sign In</Button>
+            <Link to="/register"><Button color="primary">Sign Up</Button></Link>
+          </CardActions>
+        </form>
+      </Card>
+    </div>
+  )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
