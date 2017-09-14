@@ -7,7 +7,6 @@ import PlayItem from './common/PlayItem'
 import Card, { CardContent, CardMedia } from 'material-ui/Card'
 import IconButton from 'material-ui/IconButton'
 import Typography from 'material-ui/Typography'
-import Paper from 'material-ui/Paper'
 import Grid from 'material-ui/Grid'
 
 import {
@@ -36,7 +35,7 @@ function HeaderItem (props) {
     <PlayItem style={styles.root} completed={completed}>
       <div>
         <Grid container align="center" justify="center">
-          <Grid item xs={9}>
+          <Grid item xs={10}>
             <Typography type="headline">{name}</Typography>
           </Grid>
           <Grid item xs={2}>
@@ -82,7 +81,7 @@ function renderComponent (agenda, width, timer) {
     : (timer > endPlayTime ? 100 : (timer - agenda.startedPlayAt + 1) / 60 / agenda.duration * 100)
   const item = (
     <Grid container align="center" justify="center" key={agenda.id} spacing={0}>
-      <Grid item xs={12} sm={10} md={8}>
+      <Grid item xs={12}>
         <BodyItem name={agenda.name} completed={parseInt(completed)} duration={agenda.duration}/>
       </Grid>
     </Grid>
@@ -156,9 +155,9 @@ class AgendaPlay extends React.Component {
         <Grid container align="center" justify="center">
           <Grid item xs={12} sm={10} md={8}>
             <HeaderItem name={currentAgenda.name} completed={parseInt(completed)} duration={duration} timer={timer}/>
+            {list}
           </Grid>
         </Grid>
-        {list}
       </div>
     )
   }

@@ -1,56 +1,78 @@
-import React from 'react';
-import {connect} from 'react-redux';
-import agent from '../agent';
-import {Link} from 'react-router-dom'
+import React from 'react'
+import { connect } from 'react-redux'
+import Card, { CardHeader, CardActions, CardContent, CardMedia } from 'material-ui/Card'
+import IconButton from 'material-ui/IconButton'
+import PlayArrowIcon from 'material-ui-icons/PlayArrow'
+import Delete from 'material-ui-icons/Delete'
+import Description from 'material-ui-icons/Description'
 
-
+import {SLink} from './common/StyledComponents'
 
 import {
   AI_ACTION_MOUSE_OVER,
   AI_ACTION_MOUSE_OUT,
-} from '../constants/actionTypes';
+} from '../constants/actionTypes'
 
-import {
-  MAIN_TEXT_COLOR,
-  HINT_TEXT_COLOR,
-} from '../constants/colors';
-
-const mapStateToProps = state => ({...state.agendaItem});
+const mapStateToProps = state => ({...state.agendaItem})
 const mapDispatchToProps = dispatch => ({
   onActionMouseOver: value =>
     dispatch({type: AI_ACTION_MOUSE_OVER, payload: value}),
   onActionMouseOut: value =>
     dispatch({type: AI_ACTION_MOUSE_OUT, payload: value}),
 
-});
+})
 
-class AgendaItem extends React.Component {
-  constructor() {
-    super();
-    this.actionMouseOver = (value) => ev => {
-      this.props.onActionMouseOver(value)
-    };
-    this.actionMouseOut = (value) => ev => {
-      this.props.onActionMouseOut(value)
-    };
+function AgendaItem (props) {
+  const {
+    id,
+    name,
+    startedAt,
+    updatedAt,
+    duration,
+    mouseOverId,
+    isShowActions,
+    onActionMouseOver,
+    onActionMouseOut,
+  } = props
 
+  const styles = {
+    root: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+    },
   }
 
+  return (
+    <Card
+      elevation={isShowActions && (id === mouseOverId) ? 4 : 1}
+      onMouseOver={() => onActionMouseOver(id)}
+      onMouseOut={() => onActionMouseOut(id)}
+      style={styles.root}
+    >
+      <SLink to={`/detail/${id}`}>
+        <CardHeader
+          title={name}
+          subheader={`${startedAt}/${duration} min`}/>
+      </SLink>
+      <CardActions>
+        <SLink to={`/play/${id}`}>
+          <IconButton aria-label="Play/pause">
+            <PlayArrowIcon/>
+          </IconButton>
+        </SLink>
+        <IconButton aria-label="Delete">
+          <Delete/>
+        </IconButton>
+        <SLink to={`/detail/${id}`}>
+          <IconButton aria-label="Detail">
+            <Description/>
+          </IconButton>
+        </SLink>
+      </CardActions>
+    </Card>
+  )
 
-  render() {
-    const name = this.props.agenda.name ? this.props.agenda.name : '';
-    const startedAt = this.props.agenda.startedAt ? new Date(this.props.agenda.startedAt).toISOString() : '';
-    const updatedAt = this.props.agenda.updatedAt ? new Date(this.props.agenda.updatedAt).toISOString() : '';
-    const duration = this.props.agenda.duration ? this.props.agenda.duration : '';
-    const id = this.props.agenda.id;
-
-    return (
-      <div>
-        test
-      </div>
-    );
-  }
 }
-;
 
-export default connect(mapStateToProps, mapDispatchToProps)(AgendaItem);
+export default connect(mapStateToProps, mapDispatchToProps)(AgendaItem)

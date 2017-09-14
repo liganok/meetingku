@@ -1,51 +1,95 @@
-import React from 'react';
-import {Link} from 'react-router-dom'
-import {connect} from 'react-redux';
-import agent from '../agent';
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import agent from '../agent'
+import Add from 'material-ui-icons/Add'
+import Grid from 'material-ui/Grid'
 
-import AddAgenda from './AddAgenda';
-import AgendaItem from './AgendaItem';
-
+import AgendaItem from './AgendaItem'
 
 import {
   GET_AGENDALIST,
-} from '../constants/actionTypes';
+} from '../constants/actionTypes'
 
-
-const mapStateToProps = state => ({...state.agendaList});
+const mapStateToProps = state => ({...state.agendaList})
 
 const mapDispatchToProps = dispatch => ({
   onLoad: (payload) =>
     dispatch({type: GET_AGENDALIST, payload}),
-});
+})
 
+function AddAgenda (props) {
+  const styles = {
+    root: {
+      '&:hover': {
+        backgroundColor: 'red',
+      },
+      marginTop:10,
+      marginBottom:10
+    },
+    addIcon: {
+      height: 25,
+      width: 25,
+      padding: 10,
+    }
+
+  }
+
+  return (
+    <Link to="/new">
+      <Grid container >
+        <Grid item xs={12} style={styles.root}>
+          <Add style={styles.addIcon}/>
+        </Grid>
+      </Grid>
+    </Link>
+
+  )
+}
+
+function ItemList (props) {
+  const {
+    items = []
+  } = props
+
+  const list = items.map((item, index) => {
+    return (
+      <Grid item xs={12} key={index}>
+        <AgendaItem
+          id={item.id}
+          name={item.name}
+          startedAt={item.startedAt}
+          updatedAt={item.updatedAt}
+          duration={item.duration}
+        />
+      </Grid>
+    )
+  })
+
+  return (
+    <Grid container>
+      {list}
+    </Grid>
+  )
+}
 
 class AgendaList extends React.Component {
 
-  constructor() {
-    super();
+  componentWillMount () {
+    this.props.onLoad(agent.Agenda.all())
   }
 
-  componentWillMount() {
-    this.props.onLoad(agent.Agenda.all());
-  }
-
-  render() {
-    if (!this.props.agendas) return (<div><AddAgenda/></div>)
-    let list = this.props.agendas.map((item, index) => {
-      return (
-        <div >
-          test
-        </div>
-      );
-    });
+  render () {
     return (
-      <div >
-        test2
-      </div>
-    );
+      <Grid container align="center" justify="center">
+        <Grid item xs={9}>
+          <AddAgenda/>
+          <ItemList items={this.props.agendas ? this.props.agendas : []}/>
+        </Grid>
+      </Grid>
+    )
   }
 
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AgendaList);
+export default connect(mapStateToProps, mapDispatchToProps)(AgendaList)
