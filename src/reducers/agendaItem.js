@@ -13,7 +13,6 @@ export default (state = defaultState, action) => {
       return {...state, isShowActions:true, mouseOverId:action.payload};
     case AI_ACTION_MOUSE_OUT:
       return {...state, isShowActions:false, mouseOverId:null};
-
     default:
       return state;
   }

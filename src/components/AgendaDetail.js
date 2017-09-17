@@ -19,15 +19,24 @@ import {
   AGENDA_SAVE,
   AGENDA_MENU_ITEM_TAP,
   AGENDA_GET_DETAIL,
+  AI_ACTION_MOUSE_OVER,
+  AI_ACTION_MOUSE_OUT,
 } from '../constants/actionTypes'
 
-function HeaderItem (props) {
-  const {
+function Item (props) {
+  const{
     id,
     name,
-    duration,
     startedAt,
-  } = props
+    duration,
+    isHasSubItem,
+    isRoot=false,
+    mouseOverId,
+    isShowActions,
+    onChangeField,
+    onActionMouseOver,
+    onActionMouseOut,
+  }=props
 
   const styles = {
     root: {
@@ -35,25 +44,33 @@ function HeaderItem (props) {
       paddingLeft: 10
     },
     name: {
-      fontSize: 20
+      fontSize: 15
     },
-    startAt: {
+    startedAt: {
       fontSize: 8
     },
     duration: {
       fontSize: 8,
-      width: 40
+      width: 30,
     },
     icon: {
       width: 15,
       height: 15
+    },
+    actionButton: {
+      width: 20,
+      height: 20
     }
   }
 
-  return (
-    <Paper style={styles.root}>
-      <Grid container>
-        <Grid item xs={9} container direction="column">
+  return(
+    <Paper
+      key={id}
+      style={styles.root}
+      onMouseOver={() => onActionMouseOver(id)}
+      onMouseOut={() => onActionMouseOut(id)}>
+      <Grid container align="center">
+        <Grid item xs={8} container direction="column">
           <Grid item>
             <TextField
               style={styles.name}
@@ -62,58 +79,63 @@ function HeaderItem (props) {
               value={name}
               fullWidth
               margin="normal"
+              onChange={(ev) => {onChangeField(id, 'name', ev.target.value)}}
             />
           </Grid>
-          <Grid item container align="center" spacing={8}>
+          <Grid item container align="center" spacing={8} style={{display: `${isRoot ? '' : 'none'}`}}>
             <Grid item>
               <Flag style={styles.icon}/>
             </Grid>
             <Grid item>
               <TextField
-                style={styles.startAt}
-                id="datetime-local"
+                style={styles.startedAt}
+                id={`startedAt${startedAt}`}
                 step="300"
                 type="datetime-local"
                 value={startedAt}
+                onChange={(ev) => {onChangeField(id, 'startedAt', ev.target.value)}}
               />
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={3} container direction="column" justify="space-between" align="flex-end">
-          <Grid item container justify="flex-end">
-            <IconButton>
+        <Grid item xs={4} container>
+          <Grid item container justify="flex-end"
+                style={{display: isShowActions && (id === mouseOverId) ? '':'none'}}>
+            <IconButton style={styles.actionButton}>
               <Add/>
             </IconButton>
-            <IconButton>
+            <IconButton style={styles.actionButton}>
               <Remove/>
             </IconButton>
           </Grid>
-          <Grid item container justify="flex-end" align="center" spacing={8}>
-            <Grid item>
-              <Alarm style={styles.icon}/>
-            </Grid>
-            <Grid item>
-              <TextField
-                style={styles.duration}
-                id="duration"
-                value={duration}
-                placeholder="Duration"
-                width={5}
-              />
-            </Grid>
-            <Grid item>
-              <Typography type="caption">min</Typography>
-            </Grid>
+          <Grid item container justify="flex-end" align="center">
+            <Alarm style={styles.icon}/>
+            <TextField
+              style={styles.duration}
+              disabled={isHasSubItem ? true : false}
+              id={`duration${duration}`}
+              value={duration}
+              placeholder="Duration"
+              dir="rtl"
+              onChange={(ev) => {onChangeField(id, 'duration', ev.target.value)}}
+            />
+            <Typography type="caption" style={{paddingLeft:'1px'}}>min</Typography>
           </Grid>
         </Grid>
       </Grid>
     </Paper>
   )
+
 }
 
-function SubItem (props) {
+function ItemList (props) {
   const {
-    agenda
+    agenda,
+    onChangeField,
+    onActionMouseOver,
+    onActionMouseOut,
+    mouseOverId,
+    isShowActions,
   } = props
 
   const styles = {
@@ -129,63 +151,44 @@ function SubItem (props) {
     },
     duration: {
       fontSize: 8,
-      width: 40
+      width: 30,
     },
     icon: {
       width: 15,
       height: 15
+    },
+    actionButton: {
+      width: 20,
+      height: 20
     }
   }
 
-  function renderComponent (agenda) {
-    let componentArr = []
-    //let isHasStartedAt = (typeof (agenda.startedAt) !== 'undefined');
-    let isHasSubItem = agenda.subItems.length
+  if (!agenda || agenda.subItems.length === 0) {
+    return null
+  }
 
+  function renderComponent (payload) {
+    const {
+      agenda,
+      isRoot = false,
+    } = payload
+
+    let componentArr = []
+    let isHasSubItem = agenda.subItems.length
     const item = (
-      <Paper key={agenda.id}>
-        <Grid container>
-          <Grid item xs={9} container direction="column">
-            <Grid item>
-              <TextField
-                style={styles.name}
-                id={`name${agenda.id}`}
-                placeholder="Name"
-                value={name}
-                fullWidth
-                margin="normal"
-              />
-            </Grid>
-          </Grid>
-          <Grid item xs={3} container direction="column" justify="space-between" align="flex-end">
-            <Grid item container justify="flex-end">
-              <IconButton>
-                <Add/>
-              </IconButton>
-              <IconButton>
-                <Remove/>
-              </IconButton>
-            </Grid>
-            <Grid item container justify="flex-end" align="center" spacing={8}>
-              <Grid item>
-                <Alarm style={styles.icon}/>
-              </Grid>
-              <Grid item>
-                <TextField
-                  style={styles.duration}
-                  id="duration"
-                  value={agenda.duration}
-                  placeholder="Duration"
-                  width={5}
-                />
-              </Grid>
-              <Grid item>
-                <Typography type="caption">min</Typography>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Paper>
+      <Item
+        id={agenda.id}
+        startedAt={agenda.startedAt}
+        duration={agenda.duration}
+        isHasSubItem={isHasSubItem}
+        name={agenda.name}
+        isRoot={isRoot}
+        mouseOverId={mouseOverId}
+        isShowActions={isShowActions}
+        onChangeField={onChangeField}
+        onActionMouseOver={onActionMouseOver}
+        onActionMouseOut={onActionMouseOut}
+      />
     )
     if (!isHasSubItem) {
       componentArr.push(item)
@@ -197,7 +200,7 @@ function SubItem (props) {
       agenda.subItems.forEach(item => {
         componentArr.push(
           <div style={{paddingLeft: '15px'}} key={`subItem${item.id}`}>
-            {this.renderComponent(item)}
+            {renderComponent({agenda: item})}
           </div>
         )
       })
@@ -208,7 +211,7 @@ function SubItem (props) {
 
   return (
     <div style={styles.root}>
-      {agenda? renderComponent(agenda):''}
+      {renderComponent({agenda: agenda, isRoot: true})}
     </div>
   )
 }
@@ -219,6 +222,8 @@ const mapDispatchToProps = dispatch => ({
   onSaveAgenda: agenda => dispatch({type: AGENDA_SAVE, payload: agent.Agenda.save(agenda)}),
   onChangeField: (id, key, value) => dispatch({type: AGENDA_UPDATE_FIELD, id: id, key: key, value: value}),
   onMenuItemTap: (id, value) => dispatch({type: AGENDA_MENU_ITEM_TAP, id: id, value: value}),
+  onActionMouseOver: value => dispatch({type: AI_ACTION_MOUSE_OVER, payload: value}),
+  onActionMouseOut: value => dispatch({type: AI_ACTION_MOUSE_OUT, payload: value}),
 
 })
 
@@ -242,17 +247,17 @@ class AgendaDetail extends React.Component {
   render () {
 
     const agenda = this.props.currentAgenda
-    if (!agenda) {
-      return null
-    }
-
     return (
       <Grid container justify="center">
-        <Grid item xs={8} container direction="column">
-          <Grid item>
-            <HeaderItem id={agenda.id} name={agenda.name} duration={agenda.duration} startedAt={agenda.startedAt}/>
-            <SubItem agenda={agenda}/>
-          </Grid>
+        <Grid item xs={8}>
+          <ItemList
+            agenda={agenda}
+            mouseOverId={this.props.mouseOverId}
+            isShowActions={this.props.isShowActions}
+            onChangeField={this.props.onChangeField}
+            onActionMouseOver={this.props.onActionMouseOver}
+            onActionMouseOut={this.props.onActionMouseOut}
+          />
         </Grid>
       </Grid>
     )

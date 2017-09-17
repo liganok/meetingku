@@ -5,6 +5,8 @@ import {
   AGENDA_CLOSE_DIALOG,
   AGENDA_MENU_ITEM_TAP,
   AGENDA_GET_DETAIL,
+  AI_ACTION_MOUSE_OVER,
+  AI_ACTION_MOUSE_OUT,
 } from '../constants/actionTypes';
 
 const defaultState = {
@@ -114,6 +116,10 @@ export default (state=defaultState, action) => {
         state.currentAgenda = removeAgenda([JSON.parse( JSON.stringify(state.currentAgenda))],action.id);
       }
       return {...state,};
+    case AI_ACTION_MOUSE_OVER:
+      return {...state, isShowActions:true, mouseOverId:action.payload};
+    case AI_ACTION_MOUSE_OUT:
+      return {...state, isShowActions:false, mouseOverId:null};
     default:
       return state;
   }
