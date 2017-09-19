@@ -11,6 +11,7 @@ import PlayArrowIcon from 'material-ui-icons/PlayArrow'
 import Add from 'material-ui-icons/Add'
 import Remove from 'material-ui-icons/Remove'
 import IconButton from 'material-ui/IconButton'
+import Button from 'material-ui/Button';
 
 import agent from '../agent'
 
@@ -24,19 +25,20 @@ import {
 } from '../constants/actionTypes'
 
 function Item (props) {
-  const{
+  const {
     id,
     name,
     startedAt,
     duration,
     isHasSubItem,
-    isRoot=false,
+    isRoot = false,
     mouseOverId,
     isShowActions,
     onChangeField,
     onActionMouseOver,
     onActionMouseOut,
-  }=props
+    onMenuItemTap,
+  } = props
 
   const styles = {
     root: {
@@ -63,8 +65,9 @@ function Item (props) {
     }
   }
 
-  return(
+  return (
     <Paper
+      elevation={0}
       key={id}
       style={styles.root}
       onMouseOver={() => onActionMouseOver(id)}
@@ -100,11 +103,11 @@ function Item (props) {
         </Grid>
         <Grid item xs={4} container>
           <Grid item container justify="flex-end"
-                style={{display: isShowActions && (id === mouseOverId) ? '':'none'}}>
-            <IconButton style={styles.actionButton}>
+                style={{display: isShowActions && (id === mouseOverId) ? '' : 'none',marginTop:'-10px'}}>
+            <IconButton style={styles.actionButton} onClick={() => {onMenuItemTap(id, 'ADD')}}>
               <Add/>
             </IconButton>
-            <IconButton style={styles.actionButton}>
+            <IconButton style={styles.actionButton} onClick={() => {onMenuItemTap(id, 'DEL')}}>
               <Remove/>
             </IconButton>
           </Grid>
@@ -119,7 +122,7 @@ function Item (props) {
               dir="rtl"
               onChange={(ev) => {onChangeField(id, 'duration', ev.target.value)}}
             />
-            <Typography type="caption" style={{paddingLeft:'1px'}}>min</Typography>
+            <Typography type="caption" style={{paddingLeft: '1px'}}>min</Typography>
           </Grid>
         </Grid>
       </Grid>
@@ -132,10 +135,11 @@ function ItemList (props) {
   const {
     agenda,
     onChangeField,
-    onActionMouseOver,
-    onActionMouseOut,
     mouseOverId,
     isShowActions,
+    onActionMouseOver,
+    onActionMouseOut,
+    onMenuItemTap,
   } = props
 
   const styles = {
@@ -177,6 +181,7 @@ function ItemList (props) {
     let isHasSubItem = agenda.subItems.length
     const item = (
       <Item
+        key={agenda.id}
         id={agenda.id}
         startedAt={agenda.startedAt}
         duration={agenda.duration}
@@ -188,6 +193,7 @@ function ItemList (props) {
         onChangeField={onChangeField}
         onActionMouseOver={onActionMouseOver}
         onActionMouseOut={onActionMouseOut}
+        onMenuItemTap={onMenuItemTap}
       />
     )
     if (!isHasSubItem) {
@@ -212,6 +218,39 @@ function ItemList (props) {
   return (
     <div style={styles.root}>
       {renderComponent({agenda: agenda, isRoot: true})}
+    </div>
+  )
+}
+
+function ActionButtons(props){
+  const {
+    agenda,
+    onSaveAgenda,
+    onDeleteAgenda
+  } = props
+
+  const styles={
+    root:{
+      marginRight: '5px',
+      marginBottom: '15px'
+    },
+    button:{
+      margin: '5px',
+    }
+  }
+
+  return (
+    <div style={styles.root}>
+      <Button
+        raised dense color="primary"
+        style={styles.button}
+        onClick={()=>onSaveAgenda(agenda)}
+      >
+        Save
+      </Button>
+      <Button  dense style={styles.button}>
+        Delete
+      </Button>
     </div>
   )
 }
@@ -250,14 +289,22 @@ class AgendaDetail extends React.Component {
     return (
       <Grid container justify="center">
         <Grid item xs={8}>
-          <ItemList
-            agenda={agenda}
-            mouseOverId={this.props.mouseOverId}
-            isShowActions={this.props.isShowActions}
-            onChangeField={this.props.onChangeField}
-            onActionMouseOver={this.props.onActionMouseOver}
-            onActionMouseOut={this.props.onActionMouseOut}
-          />
+          <Grid item container direction="column">
+            <ItemList
+              agenda={agenda}
+              mouseOverId={this.props.mouseOverId}
+              isShowActions={this.props.isShowActions}
+              onChangeField={this.props.onChangeField}
+              onActionMouseOver={this.props.onActionMouseOver}
+              onActionMouseOut={this.props.onActionMouseOut}
+              onMenuItemTap={this.props.onMenuItemTap}
+            />
+            <Grid container justify="flex-end">
+              <ActionButtons
+                agenda={agenda}
+                onSaveAgenda={this.props.onSaveAgenda}/>
+            </Grid>
+        </Grid>
         </Grid>
       </Grid>
     )
