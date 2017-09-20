@@ -38,7 +38,7 @@ function Register (props) {
     root:{
       display: 'flex',
       flexDirection: 'row',
-      minHeight: '100vh',
+      minHeight: '80vh',
       alignItems: 'center',
       justifyContent: 'center',
     },

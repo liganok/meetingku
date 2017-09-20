@@ -49,7 +49,7 @@ class App extends React.Component {
 
   render() {
     let path = this.props.location.pathname;
-    if(path.indexOf('/login') !== -1 || path.indexOf('/register') !== -1 || path.indexOf('/play') !== -1 ){
+    if(/*path.indexOf('/login') !== -1 || path.indexOf('/register') !== -1 ||*/ path.indexOf('/play') !== -1 ){
       var isNoHeader = true;
     }
     return (

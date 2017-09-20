@@ -1,9 +1,10 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { SLink } from './common/StyledComponents'
 import { connect } from 'react-redux'
 import agent from '../agent'
 import Add from 'material-ui-icons/Add'
 import Grid from 'material-ui/Grid'
+import styled from 'styled-components'
 
 import AgendaItem from './AgendaItem'
 
@@ -21,11 +22,9 @@ const mapDispatchToProps = dispatch => ({
 function AddAgenda (props) {
   const styles = {
     root: {
-      '&:hover': {
-        backgroundColor: 'red',
-      },
-      marginTop:10,
-      marginBottom:10
+      marginTop: 10,
+      marginBottom: 10,
+      padding: 10,
     },
     addIcon: {
       height: 25,
@@ -36,16 +35,21 @@ function AddAgenda (props) {
   }
 
   return (
-    <Link to="/new">
-      <Grid container >
-        <Grid item xs={12} style={styles.root}>
+    <SLink to="/new">
+        <div style={styles.root} className={props.className}>
           <Add style={styles.addIcon}/>
-        </Grid>
-      </Grid>
-    </Link>
+        </div>
+    </SLink>
 
   )
 }
+
+const SAddAgenda = styled(AddAgenda)`
+  transition: background-color 1s;
+  &:hover {
+          background-color: white;
+      }
+`
 
 function ItemList (props) {
   const {
@@ -83,7 +87,7 @@ class AgendaList extends React.Component {
     return (
       <Grid container align="center" justify="center">
         <Grid item xs={9}>
-          <AddAgenda/>
+          <SAddAgenda/>
           <ItemList items={this.props.agendas ? this.props.agendas : []}/>
         </Grid>
       </Grid>

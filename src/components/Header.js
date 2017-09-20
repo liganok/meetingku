@@ -1,36 +1,93 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { SLink } from './common/StyledComponents'
-import { withRouter } from 'react-router-dom'
 import AppBar from 'material-ui/AppBar'
 import Typography from 'material-ui/Typography'
 import IconButton from 'material-ui/IconButton'
-import Button from 'material-ui/Button'
 import Toolbar from 'material-ui/Toolbar'
 import MenuIcon from 'material-ui-icons/Menu'
 import AccountCircle from 'material-ui-icons/AccountCircle'
-import Avatar from 'material-ui/Avatar'
 import Drawer from 'material-ui/Drawer'
 import Grid from 'material-ui/Grid'
-import Menu, { MenuItem } from 'material-ui/Menu';
-
+import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List'
+import ViewAgenda from 'material-ui-icons/ViewAgenda'
+import Delete from 'material-ui-icons/Delete'
+import Help from 'material-ui-icons/Help'
+import Description from 'material-ui-icons/Description'
+import Settings from 'material-ui-icons/Settings'
+import Paper from 'material-ui/Paper'
 import { CircularProgress } from 'material-ui/Progress'
 
+import Login from './Login';
+
 import {
-  H_ACTION_TOGGLE
+  H_ACTION_TOGGLE,
+  H_ACTION_MOUSEOVER,
+  H_ACTION_MOUSEOUT
 } from '../constants/actionTypes'
 
-const mapStateToProps = state => ({...state.header})
-const mapDispatchToProps = dispatch => ({
-  onActionToggle: () =>
-    dispatch({type: H_ACTION_TOGGLE}),
-})
+function UserDetail (props) {
+  const {
+    user,
+    isShowUserDetail = true,
+    onMouseOver,
+    onMouseOut
+  } = props
+
+  const styles = {
+    root: {
+      visibility: isShowUserDetail ? 'visible' : 'hidden',
+      position: 'fixed',
+      paddingRight: 10,
+      transitionDelay: '1s',
+      zIndex:1,
+    }
+  }
+
+  function LoggedOutView (props) {
+    return (
+      <Login/>
+    )
+  }
+
+  function LoggedInView (props) {
+    const {
+      user = {}
+    } = props
+    return (
+      <div style={{width: 200, height: 200}}>
+        <div>
+        </div>
+        <SLink
+          to={`/profile/${1}`}
+        >
+          {user.username}
+        </SLink>
+      </div>
+    )
+  }
+
+  return (
+    <Grid container justify="flex-end" style={styles.root}>
+      <Paper
+        elevation={0}
+        style={{opacity: 0.9}}
+        onMouseOver={onMouseOver}
+        onMouseOut={onMouseOut}>
+        {user ? <LoggedInView user={user}/> : <LoggedOutView/>}
+      </Paper>
+    </Grid>
+  )
+}
 
 function AppHeader (props) {
   const {
     inProgress = false,
+    position = 'fixed',
     isShowRightButtons = true,
     onActionToggle,
+    onMouseOver,
+    onMouseOut
   } = props
 
   const styles = {
@@ -42,28 +99,31 @@ function AppHeader (props) {
       marginRight: 20,
     },
     placeholder: {
-      minHeight: '56px'
-    },
-    accountIcon: {
-      width: 60,
-      height: 60
+      minHeight: 80
     },
   }
 
   return (
     <div>
-      <AppBar position="fixed" style={styles.appBar}>
+      <AppBar position={position} style={styles.appBar}>
         <Toolbar>
-          <IconButton color="contrast" aria-label="Menu" style={styles.menuButton} onClick={onActionToggle}>
+          <IconButton
+            color="contrast" aria-label="Menu"
+            style={styles.menuButton}
+            onClick={onActionToggle}>
             <MenuIcon/>
           </IconButton>
           <Typography type="title" color="inherit" style={styles.title}>
-            Title
+            Agenda
           </Typography>
           <div style={{display: inProgress ? '' : 'none'}}>
             <CircularProgress color="contrast" size={22}/>
           </div>
-          <IconButton color="contrast" style={{display: isShowRightButtons? null:'none'}}>
+          <IconButton
+            color="contrast"
+            onMouseOver={onMouseOver}
+            onMouseOut={onMouseOut}
+            style={{display: isShowRightButtons ? null : 'none'}}>
             <AccountCircle color="contrast"/>
           </IconButton>
         </Toolbar>
@@ -73,34 +133,15 @@ function AppHeader (props) {
   )
 }
 
-const LoggedOutView = props => {
-  if (!props.currentUser) {
-    return (
-      <div>
-        <div>
-        </div>
-      </div>
-    )
-  }
-  return null
-}
-
-const LoggedInView = props => {
-  if (props.currentUser) {
-    return (
-      <div >
-        <div>
-        </div>
-        <SLink
-          to={`/profile/${props.currentUser.username}`}
-        >
-          {props.currentUser.username}
-        </SLink>
-      </div>
-    )
-  }
-  return null
-}
+const mapStateToProps = state => ({...state.header})
+const mapDispatchToProps = dispatch => ({
+  onActionToggle: () =>
+    dispatch({type: H_ACTION_TOGGLE}),
+  onMouseOver: () =>
+    dispatch({type: H_ACTION_MOUSEOVER}),
+  onMouseOut: () =>
+    dispatch({type: H_ACTION_MOUSEOUT}),
+})
 
 class Header extends React.Component {
   render () {
@@ -109,20 +150,63 @@ class Header extends React.Component {
         <AppHeader
           inProgress={this.props.inProgress}
           onActionToggle={this.props.onActionToggle}
-        />
+          onMouseOver={this.props.onMouseOver}
+          onMouseOut={this.props.onMouseOut}/>
+        <UserDetail
+          user={this.props.currentUser}
+          isShowUserDetail={this.props.isShowUserDetail}
+          onMouseOver={this.props.onMouseOver}
+          onMouseOut={this.props.onMouseOut}/>
         <Drawer open={this.props.isShowDrawer} onRequestClose={this.props.onActionToggle}>
           <AppHeader
             isShowRightButtons={false}
+            position="absolute"
             onActionToggle={this.props.onActionToggle}
           />
 
-          <Grid style={{width:300}}>
-            <SLink to="/agenda" ><MenuItem onClick={this.props.onActionToggle}>Agendas</MenuItem></SLink>
+          <Grid style={{width: 300, paddingLeft: 10}}>
+            <SLink to="/agenda">
+              <ListItem button onClick={this.props.onActionToggle}>
+                <ListItemIcon>
+                  <ViewAgenda/>
+                </ListItemIcon>
+                <ListItemText primary="Agenda"/>
+              </ListItem>
+            </SLink>
+            <SLink to="/template">
+              <ListItem button onClick={this.props.onActionToggle}>
+                <ListItemIcon>
+                  <Description/>
+                </ListItemIcon>
+                <ListItemText primary="Template"/>
+              </ListItem>
+            </SLink>
+            <SLink to="/trash">
+              <ListItem button onClick={this.props.onActionToggle}>
+                <ListItemIcon>
+                  <Delete/>
+                </ListItemIcon>
+                <ListItemText primary="Trash"/>
+              </ListItem>
+            </SLink>
+            <SLink to="/setting">
+              <ListItem button onClick={this.props.onActionToggle}>
+                <ListItemIcon>
+                  <Settings/>
+                </ListItemIcon>
+                <ListItemText primary="Setting"/>
+              </ListItem>
+            </SLink>
+            <SLink to="/help">
+              <ListItem button onClick={this.props.onActionToggle}>
+                <ListItemIcon>
+                  <Help/>
+                </ListItemIcon>
+                <ListItemText primary="Help"/>
+              </ListItem>
+            </SLink>
           </Grid>
-
         </Drawer>
-        <LoggedOutView currentUser={this.props.currentUser}/>
-        <LoggedInView currentUser={this.props.currentUser}/>
       </div>
     )
   }
