@@ -18,7 +18,7 @@ import Settings from 'material-ui-icons/Settings'
 import Paper from 'material-ui/Paper'
 import { CircularProgress } from 'material-ui/Progress'
 
-import Login from './Login';
+import Auth from './Auth';
 
 import {
   H_ACTION_TOGGLE,
@@ -29,7 +29,7 @@ import {
 function UserDetail (props) {
   const {
     user,
-    isShowUserDetail = true,
+    isShowUserDetail = false,
     onMouseOver,
     onMouseOut
   } = props
@@ -41,14 +41,13 @@ function UserDetail (props) {
       paddingRight: 10,
       transitionDelay: '1s',
       zIndex:1,
+    },
+    paper:{
+      width: 400,
+      opacity: 0.9
     }
   }
 
-  function LoggedOutView (props) {
-    return (
-      <Login/>
-    )
-  }
 
   function LoggedInView (props) {
     const {
@@ -71,10 +70,10 @@ function UserDetail (props) {
     <Grid container justify="flex-end" style={styles.root}>
       <Paper
         elevation={0}
-        style={{opacity: 0.9}}
+        style={styles.paper}
         onMouseOver={onMouseOver}
         onMouseOut={onMouseOut}>
-        {user ? <LoggedInView user={user}/> : <LoggedOutView/>}
+        {user ? <LoggedInView user={user}/> : <Auth/>}
       </Paper>
     </Grid>
   )

@@ -12,7 +12,11 @@ import {
   GET_AGENDALIST,
 } from '../constants/actionTypes'
 
-const mapStateToProps = state => ({...state.agendaList})
+const mapStateToProps = state => ({
+  currentUser: state.common.currentUser,
+  agendas:state.agendaList.agendas,
+  currentPage:state.agendaList.currentPage,
+})
 
 const mapDispatchToProps = dispatch => ({
   onLoad: (payload) =>
@@ -45,7 +49,7 @@ function AddAgenda (props) {
 }
 
 const SAddAgenda = styled(AddAgenda)`
-  transition: background-color 1s;
+  transition: background-color 1.5s;
   &:hover {
           background-color: white;
       }
@@ -82,7 +86,11 @@ class AgendaList extends React.Component {
   componentWillMount () {
     this.props.onLoad(agent.Agenda.all())
   }
-
+  componentWillReceiveProps(nextProps){
+    if(nextProps.currentUser !== this.props.currentUser){
+      this.props.onLoad(agent.Agenda.all())
+    }
+  }
   render () {
     return (
       <Grid container align="center" justify="center">

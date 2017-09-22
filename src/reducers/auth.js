@@ -1,18 +1,15 @@
 import {
-  LOGIN,
-  REGISTER,
-  LOGIN_PAGE_UNLOADED,
-  REGISTER_PAGE_UNLOADED,
-  ASYNC_START,
-  UPDATE_FIELD_AUTH
+  AUTH_UPDATE_FIELD,
+  AUTH_CHANGE_INDEX
 } from '../constants/actionTypes'
 
 export default (state = {}, action) => {
   switch (action.type) {
 
-    case UPDATE_FIELD_AUTH:
+    case AUTH_UPDATE_FIELD:
       return {...state, [action.key]: action.value}
-
+    case AUTH_CHANGE_INDEX:
+      return {...state, tabIndex: action.value}
     default:
       return state
   }

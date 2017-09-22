@@ -6,6 +6,7 @@ import {
   AGENDALIST_NAV_DETAIL,
   ASYNC_START,
   ASYNC_END,
+  APP_LOAD
 } from '../constants/actionTypes';
 
 const defaultState = {
@@ -15,6 +16,13 @@ const defaultState = {
 
 export default (state = defaultState, action) => {
   switch (action.type) {
+    case APP_LOAD:
+      return {
+        ...state,
+        token: action.token || null,
+        appLoaded: true,
+        currentUser: action.payload ? action.payload.user : null
+      };
     case REDIRECT:
       return { ...state, redirectTo: null };
     case LOGOUT:
@@ -22,7 +30,7 @@ export default (state = defaultState, action) => {
     case LOGIN:
       return {
         ...state,
-        redirectTo: action.error ? null : '/',
+        redirectTo: action.error ? null : '/agenda',
         token: action.error ? null : action.payload.user.token,
         currentUser: action.error ? null : action.payload.user
       };

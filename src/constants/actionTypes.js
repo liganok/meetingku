@@ -26,7 +26,8 @@ export const AGENDA_GET_DETAIL = 'AGENDA_GET_DETAIL';
 
 
 //auth
-export const UPDATE_FIELD_AUTH = 'UPDATE_FIELD_AUTH';
+export const AUTH_UPDATE_FIELD = 'AUTH_UPDATE_FIELD';
+export const AUTH_CHANGE_INDEX = 'AUTH_CHANGE_INDEX';
 
 //agendaItem
 export const AI_ACTION_MOUSE_OVER = 'AI_ACTION_MOUSE_OVER';
