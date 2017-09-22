@@ -41,8 +41,8 @@ class App extends React.Component {
     const token = window.localStorage.getItem('jwt')
     if (token) {
       agent.setToken(token)
-      this.props.onLoad(token ? agent.Auth.current() : null, token)
     }
+    this.props.onLoad(token ? agent.Auth.current() : null, token)
   }
 
   render () {

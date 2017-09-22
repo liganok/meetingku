@@ -92,11 +92,12 @@ class AgendaList extends React.Component {
     }
   }
   render () {
+    if(!this.props.agendas){return null}
     return (
       <Grid container align="center" justify="center">
         <Grid item xs={9}>
           <SAddAgenda/>
-          <ItemList items={this.props.agendas ? this.props.agendas : []}/>
+          <ItemList items={this.props.agendas}/>
         </Grid>
       </Grid>
     )

@@ -17,8 +17,9 @@ import Description from 'material-ui-icons/Description'
 import Settings from 'material-ui-icons/Settings'
 import Paper from 'material-ui/Paper'
 import { CircularProgress } from 'material-ui/Progress'
+import Button from 'material-ui/Button'
 
-import Auth from './Auth';
+import Auth from './Auth'
 
 import {
   H_ACTION_TOGGLE,
@@ -26,66 +27,43 @@ import {
   H_ACTION_MOUSEOUT
 } from '../constants/actionTypes'
 
-function UserDetail (props) {
+function LoggedInView (props) {
   const {
-    user,
-    isShowUserDetail = false,
-    onMouseOver,
-    onMouseOut
+    id,
+    isShow = false
   } = props
-
-  const styles = {
-    root: {
-      visibility: isShowUserDetail ? 'visible' : 'hidden',
-      position: 'fixed',
-      paddingRight: 10,
-      transitionDelay: '1s',
-      zIndex:1,
-    },
-    paper:{
-      width: 400,
-      opacity: 0.9
-    }
-  }
-
-
-  function LoggedInView (props) {
-    const {
-      user = {}
-    } = props
-    return (
-      <div style={{width: 200, height: 200}}>
-        <div>
-        </div>
-        <SLink
-          to={`/profile/${1}`}
-        >
-          {user.username}
-        </SLink>
-      </div>
-    )
-  }
-
   return (
-    <Grid container justify="flex-end" style={styles.root}>
-      <Paper
-        elevation={0}
-        style={styles.paper}
-        onMouseOver={onMouseOver}
-        onMouseOut={onMouseOut}>
-        {user ? <LoggedInView user={user}/> : <Auth/>}
-      </Paper>
-    </Grid>
+    <SLink to={`/profile/${1}`}>
+      <IconButton
+        color="contrast"
+        style={{display: isShow ? null : 'none'}}>
+        <AccountCircle color="contrast"/>
+      </IconButton>
+    </SLink>
   )
+}
+
+function LoggedOutView (props) {
+  const {
+    isShow = false
+  } = props
+  return (
+    <div style={{display: isShow ? null : 'none'}}>
+      <SLink to="/login"><Button color="contrast">Login</Button></SLink>
+      <SLink to="/Register"><Button color="contrast">Register</Button></SLink>
+    </div>
+  )
+
 }
 
 function AppHeader (props) {
   const {
+    user,
     inProgress = false,
     position = 'fixed',
     isShowRightButtons = true,
     onActionToggle,
-    onMouseOver,
+    appLoaded,
     onMouseOut
   } = props
 
@@ -118,13 +96,8 @@ function AppHeader (props) {
           <div style={{display: inProgress ? '' : 'none'}}>
             <CircularProgress color="contrast" size={22}/>
           </div>
-          <IconButton
-            color="contrast"
-            onMouseOver={onMouseOver}
-            onMouseOut={onMouseOut}
-            style={{display: isShowRightButtons ? null : 'none'}}>
-            <AccountCircle color="contrast"/>
-          </IconButton>
+          {appLoaded ? (user ? <LoggedInView isShow={isShowRightButtons}/> :
+            <LoggedOutView isShow={isShowRightButtons}/>) : null}
         </Toolbar>
       </AppBar>
       <div style={styles.placeholder}/>
@@ -132,7 +105,11 @@ function AppHeader (props) {
   )
 }
 
-const mapStateToProps = state => ({...state.header})
+const mapStateToProps = state => ({
+  isShowDrawer: state.header.isShowDrawer,
+  appLoaded: state.common.appLoaded,
+
+})
 const mapDispatchToProps = dispatch => ({
   onActionToggle: () =>
     dispatch({type: H_ACTION_TOGGLE}),
@@ -147,13 +124,10 @@ class Header extends React.Component {
     return (
       <div>
         <AppHeader
+          user={this.props.currentUser}
+          appLoaded={this.props.appLoaded}
           inProgress={this.props.inProgress}
           onActionToggle={this.props.onActionToggle}
-          onMouseOver={this.props.onMouseOver}
-          onMouseOut={this.props.onMouseOut}/>
-        <UserDetail
-          user={this.props.currentUser}
-          isShowUserDetail={this.props.isShowUserDetail}
           onMouseOver={this.props.onMouseOver}
           onMouseOut={this.props.onMouseOut}/>
         <Drawer open={this.props.isShowDrawer} onRequestClose={this.props.onActionToggle}>
