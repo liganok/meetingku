@@ -4,16 +4,12 @@ import { connect } from 'react-redux'
 import agent from '../agent'
 import PlayItem from './common/PlayItem'
 
-import Card, { CardContent, CardMedia } from 'material-ui/Card'
-import IconButton from 'material-ui/IconButton'
 import Typography from 'material-ui/Typography'
 import Grid from 'material-ui/Grid'
 
 import {
   AP_ACTION_GET_DETAIL,
   AP_ACTION_UPDATE_TIMER,
-  AP_ACTION_UPDATE_CLOCK,
-  AGENDA_GET_DETAIL,
 } from '../constants/actionTypes'
 
 
@@ -27,13 +23,11 @@ function HeaderItem (props) {
 
   const styles = {
     root:{
-      height: '120px',
     }
   }
 
   return (
     <PlayItem style={styles.root} completed={completed}>
-      <div>
         <Grid container align="center" justify="center">
           <Grid item xs={10}>
             <Typography type="headline">{name}</Typography>
@@ -44,7 +38,6 @@ function HeaderItem (props) {
             <Typography type="subheading">{timer}/{duration}-{parseInt(completed)}</Typography>
           </Grid>
         </Grid>
-      </div>
     </PlayItem>
   )
 }
@@ -109,30 +102,36 @@ const mapStateToProps = state => ({...state.agendaPlay})
 const mapDispatchToProps = dispatch => ({
   onLoad: (payload) => dispatch({type: AP_ACTION_GET_DETAIL, payload}),
   onUpdateTimer: (payload) => dispatch({type: AP_ACTION_UPDATE_TIMER, payload}),
-  onUpdateClock: (payload) => dispatch({type: AP_ACTION_UPDATE_CLOCK, payload}),
 })
 
 class AgendaPlay extends React.Component {
 
+  constructor() {
+    super();
+    this.clock;
+  }
+
   componentWillMount () {
     if (this.props.match.params.id) {
       this.props.onLoad(agent.Agenda.get(this.props.match.params.id))
+    }
+
+    if(this.props.currentAgenda){
       let startTime = new Date().getTime()
-      if (clock) {
-        clearInterval(clock)
-      }
-      if (this.props.clock) {
-        clearInterval(this.props.clock)
-      }
-      var clock = setInterval(() => {
+      this.clock = setInterval(() => {
         let timer = parseInt((new Date().getTime() - startTime) / 1000)
         if (timer > this.props.currentAgenda.duration * 60) {
-          clearInterval(clock)
+          clearInterval(this.clock)
         }
         this.props.onUpdateTimer(timer)
       }, 1000)
-      this.props.onUpdateClock(clock)
+    }
 
+  }
+
+  componentWillUnmount (){
+    if (this.clock) {
+      clearInterval(this.clock)
     }
   }
 

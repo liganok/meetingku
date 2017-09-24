@@ -13,9 +13,8 @@ import {
 } from '../constants/actionTypes'
 
 const mapStateToProps = state => ({
-  currentUser: state.common.currentUser,
-  agendas:state.agendaList.agendas,
-  currentPage:state.agendaList.currentPage,
+  ...state.agendaList,
+  currentUser: state.common.currentUser
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -84,7 +83,9 @@ function ItemList (props) {
 class AgendaList extends React.Component {
 
   componentWillMount () {
-    this.props.onLoad(agent.Agenda.all())
+    if(this.props.currentUser){
+      this.props.onLoad(agent.Agenda.all())
+    }
   }
   componentWillReceiveProps(nextProps){
     if(nextProps.currentUser !== this.props.currentUser){
@@ -97,7 +98,7 @@ class AgendaList extends React.Component {
       <Grid container align="center" justify="center">
         <Grid item xs={9}>
           <SAddAgenda/>
-          <ItemList items={this.props.agendas}/>
+          {this.props.agendas && <ItemList items={this.props.agendas}/>}
         </Grid>
       </Grid>
     )

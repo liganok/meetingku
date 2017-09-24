@@ -24,7 +24,7 @@ function PlayItem (props) {
   return (
     <div>
       <div style={styles.root}>
-        <Progress style={Object.assign(styles.item, styleProcess)} completed={completed}/>
+        <Progress style={Object.assign(styles.item, styleProcess)} completed={completed} />
         <Paper style={Object.assign(styles.item, style)} elevation={elevation}  {...others}/>
       </div>
     </div>)
