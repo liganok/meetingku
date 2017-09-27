@@ -6,12 +6,15 @@ import agent from '../agent'
 
 import Login from './Login'
 import Register from './Register'
-import Profile from './Profile'
+import Setting from './Setting'
 import Header from './Header'
-import AgendaList from './AgendaList'
+import AgendaList from './Agenda'
 import AgendaItem from './AgendaItem'
 import AgendaDetail from './AgendaDetail'
 import Play from './AgendaPlay'
+import TemplateList from './Template'
+import TrashList from './Trash'
+import Help from './Help'
 
 const mapStateToProps = state => ({
   appLoaded: state.common.appLoaded,
@@ -50,6 +53,7 @@ class App extends React.Component {
     if (/*path.indexOf('/login') !== -1 || path.indexOf('/register') !== -1 ||*/ path.indexOf('/play') !== -1) {
       var isNoHeader = true
     }
+    isNoHeader = true
     return (
       <div>
         {isNoHeader ? <div/> : <Header
@@ -65,7 +69,10 @@ class App extends React.Component {
           <Route path='/detail/:id' component={AgendaDetail}/>
           <Route path='/play/:id' component={Play}/>
           <Route path='/new' component={AgendaDetail}/>
-          <Route path='/profile' component={Profile}/>
+          <Route path='/setting' component={Setting}/>
+          <Route path='/template' component={TemplateList}/>
+          <Route path='/trash' component={TrashList}/>
+          <Route path='/help' component={Help}/>
         </Switch> : null}
       </div>
     )

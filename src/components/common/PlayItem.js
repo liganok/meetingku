@@ -1,38 +1,56 @@
 import React from 'react'
 import Paper from 'material-ui/Paper'
-import Progress from './Progress'
 
-function PlayItem (props) {
+function Progress (props) {
   const {
-    completed,
-    style,
-    styleProcess,
-    elevation,
-    ...others
+    completed = 0,
+    animation = 2000,
+    backgroundColor = 'green',
+    opacity = 0.2,
+    height=0,
   } = props
-
   const styles = {
     root: {
-      position: 'relative',
-      marginTop: '10px'
-    },
-    item: {
-      height: '60px'
+      position: 'absolute',
+      backgroundColor: backgroundColor,
+      height:height,
+      width: completed + '%',
+      transition: `width ${animation}ms linear`,
+      opacity: opacity,
+      zIndex: 1,
     }
   }
-
   return (
-    <div>
-      <div style={styles.root}>
-        <Progress style={Object.assign(styles.item, styleProcess)} completed={completed} />
-        <Paper style={Object.assign(styles.item, style)} elevation={elevation}  {...others}/>
-      </div>
-    </div>)
+    <Paper style={styles.root}/>
+  )
 }
 
-PlayItem.defaultProps = {
-  completed: 0,
-  elevation: 3,
+class PlayItem extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {height:0};
+  }
+
+  componentDidMount(){
+    this.setState({
+      height:this.refs.ref.offsetHeight
+    })
+  }
+
+  render(){
+    const styles = {
+      root: {
+        position: 'relative',
+      },
+    }
+
+    return (
+      <div ref="ref" style={Object.assign(styles.root, this.props.style)}>
+        <Progress height={this.state.height} completed={this.props.completed}>{this.props.children}</Progress>
+        <Paper  elevation={this.props.elevation}>{this.props.children}</Paper>
+      </div>
+    )
+  }
 }
 
 export default PlayItem

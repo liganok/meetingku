@@ -33,6 +33,7 @@ function AgendaItem (props) {
     isShowActions,
     onActionMouseOver,
     onActionMouseOut,
+    type
   } = props
 
   const styles = {

@@ -6,7 +6,7 @@ import {
   LOGOUT,
   REGISTER,
   AGENDA_SAVE,
-  GET_AGENDALIST,
+  GET_LIST_AGENDA,
   AGENDA_GET_DETAIL,
 } from './constants/actionTypes';
 

@@ -11,9 +11,9 @@ export const ASYNC_END = 'ASYNC_END';
 
 
 //agendaList
-export const GET_AGENDALIST = 'GET_AGENDALIST';
-
-
+export const GET_LIST_AGENDA = 'GET_LIST_AGENDA';
+export const GET_LIST_TEMPLATE = 'GET_LIST_TEMPLATE';
+export const GET_LIST_TRASH = 'GET_LIST_TRASH';
 
 //agenda
 export const AGENDA_UPDATE_FIELD = 'AGENDA_UPDATE_FIELD';
