@@ -44,6 +44,8 @@ const limit = (count, p) => `limit=${count}&offset=${p ? p * count : 0}`;
 const Agenda = {
   all: (page,type) =>
     requests.get(`/agenda?type=${type}&${limit(20, page)}`),
+  getTemplate: (page,type) =>
+    requests.get(`/agenda/template?type=${type}&${limit(20, page)}`),
   get: agendaId =>
     requests.get(`/agenda/${agendaId}`),
   update: agenda =>

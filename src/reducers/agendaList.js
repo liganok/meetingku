@@ -26,7 +26,7 @@ export default (state = defaultState, action) => {
     case GET_LIST_TRASH:
       return {
         ...state,
-        trash: action.payload.trash,
+        trash: action.payload.agendas,
         currentPage: 0
       }
 

@@ -53,7 +53,7 @@ class App extends React.Component {
     if (/*path.indexOf('/login') !== -1 || path.indexOf('/register') !== -1 ||*/ path.indexOf('/play') !== -1) {
       var isNoHeader = true
     }
-    isNoHeader = true
+    //isNoHeader = true
     return (
       <div>
         {isNoHeader ? <div/> : <Header
