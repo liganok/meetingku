@@ -64,12 +64,14 @@ class App extends React.Component {
           <Route exact path='/' component={AgendaList}/>
           <Route path='/login' component={Login}/>
           <Route path='/register' component={Register}/>
-          <Route path='/agenda' component={AgendaList}/>
           <Route path='/AgendaItem' component={AgendaItem}/>
-          <Route path='/detail/:id' component={AgendaDetail}/>
-          <Route path='/play/:id' component={Play}/>
+          <Route path='/template/detail/:id' component={AgendaDetail}/>
+          <Route path='/template/play/:id' component={Play}/>
+          <Route path='/agenda/detail/:id' component={AgendaDetail}/>
+          <Route path='/agenda/play/:id' component={Play}/>
           <Route path='/new' component={AgendaDetail}/>
           <Route path='/setting' component={Setting}/>
+          <Route path='/agenda' component={AgendaList}/>
           <Route path='/template' component={TemplateList}/>
           <Route path='/trash' component={TrashList}/>
           <Route path='/help' component={Help}/>

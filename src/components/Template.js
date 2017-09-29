@@ -32,7 +32,7 @@ class Template extends React.Component {
     return (
       <Grid container align="center" justify="center">
         <Grid item xs={11} style={{maxWidth: 800,minWidth:600}}>
-          {this.props.templates && <AgendaList items={this.props.templates}/>}
+          {this.props.templates && <AgendaList items={this.props.templates} type="template"/>}
         </Grid>
       </Grid>
     )

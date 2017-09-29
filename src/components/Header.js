@@ -33,7 +33,7 @@ function LoggedInView (props) {
     isShow = false
   } = props
   return (
-    <SLink to={`/profile/${1}`}>
+    <SLink to={`/setting`}>
       <IconButton
         color="contrast"
         style={{display: isShow ? null : 'none'}}>

@@ -6,23 +6,23 @@ import PlayArrowIcon from 'material-ui-icons/PlayArrow'
 import Delete from 'material-ui-icons/Delete'
 import Description from 'material-ui-icons/Description'
 
-import {SLink} from './common/StyledComponents'
+import { SLink } from './common/StyledComponents'
 
 import {
   AI_ACTION_MOUSE_OVER,
   AI_ACTION_MOUSE_OUT,
 } from '../constants/actionTypes'
 
-const mapStateToProps = state => ({...state.agendaItem})
+const mapStateToProps = state => ({ ...state.agendaItem })
 const mapDispatchToProps = dispatch => ({
   onActionMouseOver: value =>
-    dispatch({type: AI_ACTION_MOUSE_OVER, payload: value}),
+    dispatch({ type: AI_ACTION_MOUSE_OVER, payload: value }),
   onActionMouseOut: value =>
-    dispatch({type: AI_ACTION_MOUSE_OUT, payload: value}),
+    dispatch({ type: AI_ACTION_MOUSE_OUT, payload: value }),
 
 })
 
-function AgendaItem (props) {
+function AgendaItem(props) {
   const {
     id,
     name,
@@ -51,23 +51,23 @@ function AgendaItem (props) {
       onMouseOut={() => onActionMouseOut(id)}
       style={styles.root}
     >
-      <SLink to={`/detail/${id}`}>
+      <SLink to={`/${type}/detail/${id}`}>
         <CardHeader
           title={name}
-          subheader={`${startedAt}/${duration} min`}/>
+          subheader={`${startedAt}/${duration} min`} />
       </SLink>
       <CardActions>
-        <SLink to={`/play/${id}`}>
+        <SLink to={`/${type}/play/${id}`}>
           <IconButton aria-label="Play/pause">
-            <PlayArrowIcon/>
+            <PlayArrowIcon />
           </IconButton>
         </SLink>
         <IconButton aria-label="Delete">
-          <Delete/>
+          <Delete />
         </IconButton>
-        <SLink to={`/detail/${id}`}>
+        <SLink to={`/${type}/detail/${id}`}>
           <IconButton aria-label="Detail">
-            <Description/>
+            <Description />
           </IconButton>
         </SLink>
       </CardActions>

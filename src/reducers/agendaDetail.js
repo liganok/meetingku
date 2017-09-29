@@ -13,10 +13,10 @@ const defaultState = {
   isAddAgenda: false,
   currentAgenda: {
     id: "NEW135259b216dbf27294451",
-    startedAt:'2017-07-13T07:24:39.025Z',
+    startedAt: '2017-07-13T07:24:39.025Z',
     duration: 0,
     sequence: 0,
-    subItems:[],
+    subItems: [],
   }
 };
 
@@ -47,11 +47,11 @@ function changeAgenda(sourceAgenda, id, key, value) {
 function countDuration(sourceAgenda) {
   let agenda = sourceAgenda;
   let isHasSubItem = (typeof (agenda.subItems[0]) !== 'undefined');
-  if(!isHasSubItem){
+  if (!isHasSubItem) {
     agenda.duration = sourceAgenda.duration;
-  }else{
+  } else {
     let duration = 0;
-    agenda.subItems.forEach(item=>{
+    agenda.subItems.forEach(item => {
       duration = Number(duration) + Number(countDuration(item).duration);
     });
     agenda.duration = duration;
@@ -59,32 +59,32 @@ function countDuration(sourceAgenda) {
   return agenda;
 }
 
-function addAgenda(sourceAgenda,id) {
+function addAgenda(sourceAgenda, id) {
   let targetAgenda = sourceAgenda;//JSON.parse( JSON.stringify(sourceAgenda) );
-  if(targetAgenda.id === id){
+  if (targetAgenda.id === id) {
     let count = targetAgenda.subItems.length + 1;
-    let idNew = 'NEW'+targetAgenda.id+count;
-    targetAgenda.subItems.push({id:idNew,duration:0,subItems:[]});
-  }else {
-    targetAgenda.subItems.forEach(item=>{
-      addAgenda(item,id);
+    let idNew = 'NEW' + targetAgenda.id + count;
+    targetAgenda.subItems.push({ id: idNew, duration: 0, subItems: [] });
+  } else {
+    targetAgenda.subItems.forEach(item => {
+      addAgenda(item, id);
     });
   }
 
   return targetAgenda;
 }
 
-function removeAgenda(sourceAgenda,id) {
+function removeAgenda(sourceAgenda, id) {
   let targetAgenda = sourceAgenda;
-  let index = targetAgenda.findIndex(item=>{
+  let index = targetAgenda.findIndex(item => {
     return item.id === id;
   });
 
-  if(index !== -1){
-    targetAgenda.splice(index,1);
-  }else{
-    targetAgenda.forEach(item=>{
-      removeAgenda(item.subItems,id);
+  if (index !== -1) {
+    targetAgenda.splice(index, 1);
+  } else {
+    targetAgenda.forEach(item => {
+      removeAgenda(item.subItems, id);
     });
   }
 
@@ -92,34 +92,37 @@ function removeAgenda(sourceAgenda,id) {
 }
 
 
-export default (state=defaultState, action) => {
+export default (state = defaultState, action) => {
   switch (action.type) {
     case AGENDA_GET_DETAIL:
-      return {...state,currentAgenda:action.payload};
+      return {
+        ...state,
+        currentAgenda: action.payload.status ? action.payload.agenda : null
+      };
     case AGENDA_UPDATE_FIELD:
-      let currentAgenda = changeAgenda(JSON.parse( JSON.stringify(state.currentAgenda)),action.id,action.key,action.value);
-      if(action.key==='duration') {currentAgenda = countDuration(currentAgenda)};
+      let currentAgenda = changeAgenda(JSON.parse(JSON.stringify(state.currentAgenda)), action.id, action.key, action.value);
+      if (action.key === 'duration') { currentAgenda = countDuration(currentAgenda) };
       return {
         ...state,
         //[action.key]: action.value,
-        currentAgenda:changeAgenda(currentAgenda,action.id,action.key,action.value)
+        currentAgenda: changeAgenda(currentAgenda, action.id, action.key, action.value)
       };
     case AGENDA_CREATE:
-      return {...state, isAddAgenda: true};
+      return { ...state, isAddAgenda: true };
     case AGENDA_SAVE:
-      return {...state,};
+      return { ...state, };
     case AGENDA_MENU_ITEM_TAP:
-      if(action.value === 'ADD'){
-        state.currentAgenda = addAgenda(JSON.parse( JSON.stringify(state.currentAgenda) ),action.id);
+      if (action.value === 'ADD') {
+        state.currentAgenda = addAgenda(JSON.parse(JSON.stringify(state.currentAgenda)), action.id);
       }
-      if(action.value === 'DEL'){
-        state.currentAgenda = removeAgenda([JSON.parse( JSON.stringify(state.currentAgenda))],action.id);
+      if (action.value === 'DEL') {
+        state.currentAgenda = removeAgenda([JSON.parse(JSON.stringify(state.currentAgenda))], action.id);
       }
-      return {...state,};
+      return { ...state, };
     case AI_ACTION_MOUSE_OVER:
-      return {...state, isShowActions:true, mouseOverId:action.payload};
+      return { ...state, isShowActions: true, mouseOverId: action.payload };
     case AI_ACTION_MOUSE_OUT:
-      return {...state, isShowActions:false, mouseOverId:null};
+      return { ...state, isShowActions: false, mouseOverId: null };
     default:
       return state;
   }

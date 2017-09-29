@@ -165,7 +165,7 @@ function ItemList (props) {
     }
   }
 
-  if (!agenda || agenda.subItems.length === 0) {
+  if (!agenda) {
     return null
   }
 
@@ -276,8 +276,13 @@ class AgendaDetail extends React.Component {
   }
 
   componentWillMount () {
+    console.log('OOOOOOOOOOOOOOOOOOOOOOO',this.props.match)
     if (this.id) {
-      this.onLoad(agent.Agenda.get(this.props.match.params.id))
+      if(this.props.match.path.indexOf('template')>0){
+        this.onLoad(agent.Template.get(this.props.match.params.id))
+      }else{
+        this.onLoad(agent.Agenda.get(this.props.match.params.id))
+      }
     }
   }
 

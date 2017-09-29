@@ -45,7 +45,7 @@ const Agenda = {
   all: (page,type) =>
     requests.get(`/agenda?type=${type}&${limit(20, page)}`),
   getTemplate: (page,type) =>
-    requests.get(`/agenda/template?type=${type}&${limit(20, page)}`),
+    requests.get(`/template?type=${type}&${limit(20, page)}`),
   get: agendaId =>
     requests.get(`/agenda/${agendaId}`),
   update: agenda =>
@@ -54,8 +54,16 @@ const Agenda = {
     requests.post('/agenda', {agenda})
 }
 
+const Template = {
+  all: (page,type) =>
+    requests.get(`/agenda?type=${type}&${limit(20, page)}`),
+  get: agendaId =>
+    requests.get(`/template/${agendaId}`)
+}
+
 export default {
   Agenda,
   Auth,
+  Template,
   setToken: _token => { token = _token }
 }
