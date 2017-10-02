@@ -72,7 +72,7 @@ class Agenda extends React.Component {
       <Grid container align="center" justify="center">
         <Grid item xs={11} style={{maxWidth: 800,minWidth:600}}>
           <SAddAgenda/>
-          {this.props.agendas && <AgendaList items={this.props.agendas}/>}
+          {this.props.agendas && <AgendaList items={this.props.agendas} type="agenda"/>}
         </Grid>
       </Grid>
     )

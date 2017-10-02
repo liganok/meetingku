@@ -7,7 +7,9 @@ import {
   REGISTER,
   AGENDA_SAVE,
   GET_LIST_AGENDA,
+  GET_LIST_TRASH,
   AGENDA_GET_DETAIL,
+  AI_ACTION_LOGIC_DEL,
 } from './constants/actionTypes';
 
 const promiseMiddleware = store => next => action => {
@@ -31,6 +33,10 @@ const promiseMiddleware = store => next => action => {
         //console.log('action', action);
         if(action.type === AGENDA_SAVE){
           store.dispatch({ type: AGENDA_GET_DETAIL, payload:agent.Agenda.get(res.id)});
+        }
+        if(action.type === AI_ACTION_LOGIC_DEL){
+          store.dispatch({type:GET_LIST_AGENDA, payload:agent.Agenda.all(1,0)})
+          store.dispatch({type:GET_LIST_TRASH, payload:agent.Agenda.all(1,1)})          
         }
       },
       error => {

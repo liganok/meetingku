@@ -42,10 +42,9 @@ const Auth = {
 const limit = (count, p) => `limit=${count}&offset=${p ? p * count : 0}`;
 
 const Agenda = {
+  //type = 0: agenda type=1: trash
   all: (page,type) =>
     requests.get(`/agenda?type=${type}&${limit(20, page)}`),
-  getTemplate: (page,type) =>
-    requests.get(`/template?type=${type}&${limit(20, page)}`),
   get: agendaId =>
     requests.get(`/agenda/${agendaId}`),
   update: agenda =>
@@ -55,8 +54,8 @@ const Agenda = {
 }
 
 const Template = {
-  all: (page,type) =>
-    requests.get(`/agenda?type=${type}&${limit(20, page)}`),
+  all: (page) =>
+    requests.get(`/template?${limit(20, page)}`),
   get: agendaId =>
     requests.get(`/template/${agendaId}`)
 }

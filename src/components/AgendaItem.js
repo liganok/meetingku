@@ -7,10 +7,13 @@ import Delete from 'material-ui-icons/Delete'
 import Description from 'material-ui-icons/Description'
 
 import { SLink } from './common/StyledComponents'
+import agent from '../agent'
 
 import {
   AI_ACTION_MOUSE_OVER,
   AI_ACTION_MOUSE_OUT,
+  AI_ACTION_LOGIC_DEL,
+  AI_ACTION_LOGIC_DEL_UNDO,
 } from '../constants/actionTypes'
 
 const mapStateToProps = state => ({ ...state.agendaItem })
@@ -19,7 +22,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch({ type: AI_ACTION_MOUSE_OVER, payload: value }),
   onActionMouseOut: value =>
     dispatch({ type: AI_ACTION_MOUSE_OUT, payload: value }),
-
+  onActionLogicDel: value =>
+    dispatch({ type: AI_ACTION_LOGIC_DEL, payload: agent.Agenda.update(value) }),
 })
 
 function AgendaItem(props) {
@@ -33,6 +37,7 @@ function AgendaItem(props) {
     isShowActions,
     onActionMouseOver,
     onActionMouseOut,
+    onActionLogicDel,
     type
   } = props
 
@@ -62,9 +67,16 @@ function AgendaItem(props) {
             <PlayArrowIcon />
           </IconButton>
         </SLink>
-        <IconButton aria-label="Delete">
+        {type==='agenda'&&
+        <IconButton aria-label="Delete"
+          onClick={() => onActionLogicDel({ id: id, isDel: true })}>
           <Delete />
-        </IconButton>
+        </IconButton>}
+        {type==='trash'&&
+        <IconButton aria-label="Delete"
+          onClick={() => onActionLogicDel({ id: id, isDel: false })}>
+          <Delete />
+        </IconButton>}
         <SLink to={`/${type}/detail/${id}`}>
           <IconButton aria-label="Detail">
             <Description />

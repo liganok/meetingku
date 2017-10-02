@@ -24,20 +24,15 @@ class Trash extends React.Component {
 
   componentWillMount () {
     if(this.props.currentUser){
-      this.props.onLoad(agent.Agenda.all(this.props.currentPage,2))
+      this.props.onLoad(agent.Agenda.all(this.props.currentPage,1))
     }
   }
-  componentWillReceiveProps(nextProps){
-    if(nextProps.currentUser !== this.props.currentUser){
-      this.props.onLoad(agent.Agenda.all(this.props.currentPage,2))
-    }
-  }
+
   render () {
-    if(!this.props.agendas){return null}
     return (
       <Grid container align="center" justify="center">
         <Grid item xs={11} style={{maxWidth: 800,minWidth:600}}>
-          {this.props.agendas && <AgendaList items={this.props.agendas}/>}
+          {this.props.trash && <AgendaList items={this.props.trash} type="trash"/>}
         </Grid>
       </Grid>
     )

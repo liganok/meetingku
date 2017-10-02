@@ -23,7 +23,7 @@ const mapDispatchToProps = dispatch => ({
 class Template extends React.Component {
 
   componentWillMount () {
-      this.props.onLoad(agent.Agenda.getTemplate(this.props.currentPage,1))
+      this.props.onLoad(agent.Template.all(this.props.currentPage))
   }
   componentWillReceiveProps(nextProps){
 
