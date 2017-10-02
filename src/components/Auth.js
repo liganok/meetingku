@@ -16,8 +16,8 @@ import {
 
 function Login (props) {
   const {
-    email,
-    password,
+    email='',
+    password='',
     onChangeField,
     onSubmit,
     onChangeIndex
@@ -57,9 +57,9 @@ function Login (props) {
 
 function Register (props) {
   const {
-    email,
-    password,
-    username,
+    email='',
+    password='',
+    username='',
     onChangeField,
     onSubmit,
     onChangeIndex

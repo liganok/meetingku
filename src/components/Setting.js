@@ -19,7 +19,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  onClickLogout: () => dispatch({type: LOGOUT})
+  onClickLogout: () => dispatch({ type: LOGOUT })
 })
 
 const styles = {
@@ -36,22 +36,24 @@ const styles = {
   }
 }
 
-function Setting (props) {
+function Setting(props) {
+  const { username, email } = props
   return (
     <Grid container justify="center">
-      <Grid item xs={11} style={{maxWidth: 700, marginTop:20}}>
+      <Grid item xs={11} style={{ maxWidth: 700, marginTop: 20 }}>
         <Paper>
-          <Grid style={styles.root} container justify="space-between" align="center">
-            <Grid item xs={8} container direction="column" >
-              <Typography>{props.currentUser.username}</Typography>
-              <Typography color="secondary">{props.currentUser.email}</Typography>
-            </Grid>
-            <Grid item xs={4} container justify="flex-end" align="center">
-              <IconButton style={styles.iconButton}><KeyboardArrowRight style={styles.icon}/></IconButton>
-              <VDivider height={30}/>
-              <Button dense onClick={props.onClickLogout}>Logout</Button>
-            </Grid>
-          </Grid>
+          {!username &&
+            <Grid style={styles.root} container justify="space-between" align="center">
+              <Grid item xs={8} container direction="column" >
+                <Typography>{username}</Typography>
+                <Typography color="secondary">{email}</Typography>
+              </Grid>
+              <Grid item xs={4} container justify="flex-end" align="center">
+                <IconButton style={styles.iconButton}><KeyboardArrowRight style={styles.icon} /></IconButton>
+                <VDivider height={30} />
+                <Button dense onClick={props.onClickLogout}>Logout</Button>
+              </Grid>
+            </Grid>}
         </Paper>
       </Grid>
     </Grid>

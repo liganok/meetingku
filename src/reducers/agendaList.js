@@ -1,7 +1,8 @@
 import {
   GET_LIST_AGENDA,
   GET_LIST_TEMPLATE,
-  GET_LIST_TRASH
+  GET_LIST_TRASH,
+  LOGOUT
 } from '../constants/actionTypes'
 
 const defaultState = {
@@ -28,6 +29,12 @@ export default (state = defaultState, action) => {
         ...state,
         trash: action.payload.agendas,
         currentPage: 0
+      }
+    case LOGOUT:
+      return {
+        ...status,
+        agendas: null,
+        trash: null
       }
 
     default:
