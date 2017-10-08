@@ -45,8 +45,8 @@ function Setting(props) {
           {!username &&
             <Grid style={styles.root} container justify="space-between" align="center">
               <Grid item xs={8} container direction="column" >
-                <Typography>{username}</Typography>
-                <Typography color="secondary">{email}</Typography>
+                <Typography>{props.currentUser.username}</Typography>
+                <Typography color="secondary">{props.currentUser.email}</Typography>
               </Grid>
               <Grid item xs={4} container justify="flex-end" align="center">
                 <IconButton style={styles.iconButton}><KeyboardArrowRight style={styles.icon} /></IconButton>

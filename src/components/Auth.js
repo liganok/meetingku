@@ -47,8 +47,8 @@ function Login (props) {
           />
         </CardContent>
         <CardActions>
-          <Button type="submit" raised color="primary">Sign In</Button>
-          <Button color="primary" onClick={(ev) => onChangeIndex(1)}>Sign Up</Button>
+          <Button type="submit" raised color="primary">Log In</Button>
+          {/* <Button color="primary" onClick={(ev) => onChangeIndex(1)}>Sign Up</Button> */}
         </CardActions>
       </form>
     </Card>
@@ -97,7 +97,7 @@ function Register (props) {
         </CardContent>
         <CardActions>
           <Button type="submit" raised color="primary">Sign Up</Button>
-          <Button color="primary" onClick={(ev) => onChangeIndex(0)}>Sign In</Button>
+          {/* <Button color="primary" onClick={(ev) => onChangeIndex(0)}>Sign In</Button> */}
         </CardActions>
       </form>
     </Card>
@@ -149,7 +149,7 @@ function Auth (props) {
           textColor="primary"
           fullWidth
         >
-          <Tab label="Sign In"/>
+          <Tab label="Log In"/>
           <Tab label="Sign Up"/>
         </Tabs>
       </AppBar>

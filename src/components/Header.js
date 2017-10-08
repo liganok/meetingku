@@ -49,8 +49,7 @@ function LoggedOutView (props) {
   } = props
   return (
     <div style={{display: isShow ? null : 'none'}}>
-      <SLink to="/login"><Button color="contrast">Login</Button></SLink>
-      <SLink to="/Register"><Button color="contrast">Register</Button></SLink>
+      <SLink to="/login"><Button color="contrast">Log in / Sign up</Button></SLink>
     </div>
   )
 
