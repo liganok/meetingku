@@ -1,14 +1,10 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
-import agent from '../agent'
-import Grid from 'material-ui/Grid'
+import agent from '../../agent'
+import AgendaList from '../common/AgendaList'
 
-import AgendaList from './AgendaList'
-
-
-import {
-  GET_LIST_TRASH,
-} from '../constants/actionTypes'
+import {GET_LIST_TRASH} from '../../constants/actionTypes'
 
 const mapStateToProps = state => ({
   ...state.agendaList,
@@ -30,14 +26,17 @@ class Trash extends React.Component {
 
   render () {
     return (
-      <Grid container align="center" justify="center">
-        <Grid item xs={11} style={{maxWidth: 800,minWidth:600}}>
+        <div >
           {this.props.trash && <AgendaList items={this.props.trash} type="trash"/>}
-        </Grid>
-      </Grid>
+        </div>
     )
   }
 
 }
-
+Trash.propTypes = {
+  currentUser: PropTypes.object,
+  onLoad: PropTypes.func,
+  currentPage: PropTypes.number,
+  trash: PropTypes.array
+}
 export default connect(mapStateToProps, mapDispatchToProps)(Trash)

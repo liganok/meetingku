@@ -1,5 +1,5 @@
 import React from 'react'
-import agent from '../agent'
+import agent from '../../agent'
 import { connect } from 'react-redux'
 
 import Card, { CardActions, CardContent } from 'material-ui/Card'
@@ -12,7 +12,7 @@ import {
   AUTH_CHANGE_INDEX,
   REGISTER,
   LOGIN,
-} from '../constants/actionTypes'
+} from '../../constants/actionTypes'
 
 function Login (props) {
   const {

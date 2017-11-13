@@ -1,38 +1,25 @@
-import { Switch, Route, Link, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { APP_LOAD, REDIRECT } from '../constants/actionTypes'
+import * as types from '../constants/actionTypes'
 import agent from '../agent'
+import routes from '../routes'
+import Header from './Header/Header'
+import MessageBox from './common/MessageBox'
 
-import Login from './Login'
-import Register from './Register'
-import Setting from './Setting'
-import Header from './Header'
-import AgendaList from './Agenda'
-import AgendaItem from './AgendaItem'
-import AgendaDetail from './AgendaDetail'
-import Play from './AgendaPlay'
-import TemplateList from './Template'
-import TrashList from './Trash'
-import Help from './Help'
-
-const mapStateToProps = state => ({
-  appLoaded: state.common.appLoaded,
-  appName: state.common.appName,
-  currentUser: state.common.currentUser,
-  redirectTo: state.common.redirectTo,
-  inProgress: state.common.inProgress
-})
-
+const mapStateToProps = state => ({ ...state.common })
 const mapDispatchToProps = dispatch => ({
-  onLoad: (payload, token) =>
-    dispatch({type: APP_LOAD, payload, token, skipTracking: true}),
-  onRedirect: () =>
-    dispatch({type: REDIRECT})
+  onLoad: (payload, token) => dispatch({ type: types.APP_LOAD, payload, token, }),
+  onRedirect: (value = null) => dispatch({ type: types.REDIRECT, value: value }),
+  onRequestClose: () => dispatch({ type: types.CLOSE_MSG }),
+  onActionToggle: () => dispatch({ type: types.H_ACTION_TOGGLE }),
+  onMouseOver: () => dispatch({ type: types.H_ACTION_MOUSEOVER }),
+  onMouseOut: () => dispatch({ type: types.H_ACTION_MOUSEOUT }),
 })
 
 class App extends React.Component {
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (nextProps.redirectTo) {
       //this.context.router.replace(nextProps.redirectTo);
       this.props.history.push(nextProps.redirectTo)
@@ -40,7 +27,7 @@ class App extends React.Component {
     }
   }
 
-  componentWillMount () {
+  componentWillMount() {
     const token = window.localStorage.getItem('jwt')
     if (token) {
       agent.setToken(token)
@@ -48,37 +35,71 @@ class App extends React.Component {
     this.props.onLoad(token ? agent.Auth.current() : null, token)
   }
 
-  render () {
-    let path = this.props.location.pathname
-    if (/*path.indexOf('/login') !== -1 || path.indexOf('/register') !== -1 ||*/ path.indexOf('/play') !== -1) {
-      var isNoHeader = true
+  render() {
+    const {
+      location,
+      appName,
+      inProgress,
+      isShowDrawer,
+      currentUser,
+      appLoaded,
+      msg,
+      isShowMsg,
+      onRequestClose,
+      onActionToggle
+    } = this.props
+
+    let isShowHeader = true
+    if ( /*path.indexOf('/login') !== -1 || path.indexOf('/register') !== -1 ||*/ location.pathname.indexOf('/play') !== -1) {
+      isShowHeader = false
     }
-    //isNoHeader = true
+    //isShowHeader = false
     return (
       <div>
-        {isNoHeader ? <div/> : <Header
-          appName={this.props.appName}
-          inProgress={this.props.inProgress}
-          currentUser={this.props.currentUser}/>}
-        {this.props.appLoaded ? <Switch>
-          <Route exact path='/' component={AgendaList}/>
-          <Route path='/login' component={Login}/>
-          <Route path='/register' component={Register}/>
-          <Route path='/AgendaItem' component={AgendaItem}/>
-          <Route path='/template/detail/:id' component={AgendaDetail}/>
-          <Route path='/template/play/:id' component={Play}/>
-          <Route path='/agenda/detail/:id' component={AgendaDetail}/>
-          <Route path='/agenda/play/:id' component={Play}/>
-          <Route path='/new' component={AgendaDetail}/>
-          <Route path='/setting' component={Setting}/>
-          <Route path='/agenda' component={AgendaList}/>
-          <Route path='/template' component={TemplateList}/>
-          <Route path='/trash' component={TrashList}/>
-          <Route path='/help' component={Help}/>
-        </Switch> : null}
+        {isShowHeader &&
+          <Header
+            appName={appName}
+            user={currentUser}
+            appLoaded={appLoaded}
+            inProgress={inProgress}
+            isShowDrawer={isShowDrawer}
+            onActionToggle={onActionToggle} />}
+        <div style={styles.body}>
+          {appLoaded && routes}
+        </div>
+        <MessageBox
+          msg={msg}
+          isShowMsg={isShowMsg}
+          onRequestClose={onRequestClose} />
       </div>
     )
   }
+}
+
+const styles = {
+  body: {
+    margin: '0 auto',
+    padding: 0,
+    maxWidth: 700,
+    minWidth: 100
+  }
+}
+
+App.propTypes = {
+  redirectTo: PropTypes.string,
+  history: PropTypes.any,
+  location: PropTypes.any,
+  appName: PropTypes.string,
+  inProgress: PropTypes.bool,
+  isShowDrawer: PropTypes.bool,
+  currentUser: PropTypes.object,
+  appLoaded: PropTypes.bool,
+  msg: PropTypes.object,
+  isShowMsg: PropTypes.bool,
+  onRedirect: PropTypes.func,
+  onRequestClose: PropTypes.func,
+  onLoad: PropTypes.func,
+  onActionToggle: PropTypes.func,
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App))

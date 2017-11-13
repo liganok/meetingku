@@ -1,63 +1,63 @@
-import {
-  REDIRECT,
-  LOGOUT,
-  LOGIN,
-  REGISTER,
-  AGENDALIST_NAV_DETAIL,
-  ASYNC_START,
-  ASYNC_END,
-  APP_LOAD
-} from '../constants/actionTypes';
+import * as types from '../constants/actionTypes';
 
 const defaultState = {
   appName: 'Meetingku',
   token: null,
+  isShowDrawer:false,
+  msg:{status:'',message:'',
+}
 };
 
 export default (state = defaultState, action) => {
   switch (action.type) {
-    case APP_LOAD:
+    case types.APP_LOAD:
       return {
         ...state,
         token: action.token || null,
         appLoaded: true,
         currentUser: action.payload ? action.payload.user : null
       };
-    case REDIRECT:
-      return { ...state, redirectTo: null };
-    case LOGOUT:
+    case types.REDIRECT:
+      return { ...state, redirectTo: action.value };
+    case types.LOGOUT:
       return { ...state, redirectTo: '/login', token: null, currentUser: null };
-    case LOGIN:
+    case types.LOGIN:
       return {
         ...state,
         redirectTo: action.error ? null : '/agenda',
         token: action.error ? null : action.payload.user.token,
         currentUser: action.error ? null : action.payload.user
       };
-    case REGISTER:
+    case types.REGISTER:
       return {
         ...state,
         redirectTo: action.error ? null : '/login',
         token: null,
         currentUser: null
       };
-    case AGENDALIST_NAV_DETAIL:
-      const redirectUrl = `detail/${action.payload.id}`;
-      return {
-        ...state,
-        redirectTo: redirectUrl,
-        currentAgenda:action.payload,
-      };
-    case ASYNC_START:
+    case types.ASYNC_START:
       return {
         ...state,
         inProgress: true
       };
-    case ASYNC_END:
+    case types.ASYNC_END:
       return {
         ...state,
         inProgress: false
       };
+    case types.SHOW_MSG:
+      return {
+        ...state,
+        msg: action.payload,
+        isShowMsg:true
+      };
+    case types.CLOSE_MSG:
+      return {
+        ...state,
+        isShowMsg: false
+      };
+    case types.H_ACTION_TOGGLE:
+      return { ...state, isShowDrawer: !state.isShowDrawer, };
     default:
       return state;
   }

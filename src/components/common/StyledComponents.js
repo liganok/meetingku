@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import Grid from 'material-ui/Grid'
 
 export const SLink = styled(Link)`
   text-decoration:none;
@@ -13,4 +14,8 @@ export const SLink = styled(Link)`
   &:active {
         color: black;
     }
+`
+export const SGrid = styled(Grid) `
+  width:100%;
+  margin:0
 `

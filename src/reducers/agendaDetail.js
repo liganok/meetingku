@@ -2,7 +2,6 @@ import {
   AGENDA_UPDATE_FIELD,
   AGENDA_CREATE,
   AGENDA_SAVE,
-  AGENDA_CLOSE_DIALOG,
   AGENDA_MENU_ITEM_TAP,
   AGENDA_GET_DETAIL,
   AI_ACTION_MOUSE_OVER,
@@ -13,11 +12,11 @@ const defaultState = {
   isAddAgenda: false,
   currentAgenda: {
     id: "NEW135259b216dbf27294451",
-    startedAt: '2017-07-13T07:24:39.025Z',
     duration: 0,
     sequence: 0,
     subItems: [],
-  }
+  },
+  delArr:[]
 };
 
 function changeAgenda(sourceAgenda, id, key, value) {
@@ -75,12 +74,14 @@ function addAgenda(sourceAgenda, id) {
 }
 
 function removeAgenda(sourceAgenda, id) {
+  let delArr=[]
   let targetAgenda = sourceAgenda;
   let index = targetAgenda.findIndex(item => {
     return item.id === id;
   });
 
   if (index !== -1) {
+    delArr.push(targetAgenda[index])
     targetAgenda.splice(index, 1);
   } else {
     targetAgenda.forEach(item => {
@@ -95,6 +96,13 @@ function removeAgenda(sourceAgenda, id) {
 export default (state = defaultState, action) => {
   switch (action.type) {
     case AGENDA_GET_DETAIL:
+      let agenda = null
+      if (action.payload.status) {
+        agenda = action.payload.agenda
+        //convert ISO date to local date for h5 datetime-local display
+        //let ISODate = new Date(agenda.startedAt)
+        //agenda.startedAt = new Date(ISODate.valueOf() - ISODate.getTimezoneOffset() * 60000).toISOString().substring(0, 16)
+      }
       return {
         ...state,
         currentAgenda: action.payload.status ? action.payload.agenda : null
@@ -127,5 +135,4 @@ export default (state = defaultState, action) => {
       return state;
   }
 
-  return state;
 };

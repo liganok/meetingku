@@ -1,17 +1,16 @@
 import React from 'react'
-import { SLink } from './common/StyledComponents'
+import { SLink } from '../common/StyledComponents'
 import { connect } from 'react-redux'
-import agent from '../agent'
+import agent from '../../agent'
 import Add from 'material-ui-icons/Add'
 import Grid from 'material-ui/Grid'
 import styled from 'styled-components'
 
-import AgendaList from './AgendaList'
-
+import AgendaItem from '../common/AgendaItem'
 
 import {
   GET_LIST_AGENDA,
-} from '../constants/actionTypes'
+} from '../../constants/actionTypes'
 
 const mapStateToProps = state => ({
   ...state.agendaList,
@@ -54,11 +53,38 @@ const SAddAgenda = styled(AddAgenda)`
           background-color: white;
       }
 `
-class Agenda extends React.Component {
+
+function ItemList (props) {
+  const {
+    items = []
+  } = props
+
+  const list = items.map((item, index) => {
+    return (
+      <Grid item xs={12} key={index}>
+        <AgendaItem
+          id={item.id}
+          name={item.name}
+          startedAt={item.startedAt}
+          updatedAt={item.updatedAt}
+          duration={item.duration}
+        />
+      </Grid>
+    )
+  })
+
+  return (
+    <Grid container>
+      {list}
+    </Grid>
+  )
+}
+
+class AgendaList extends React.Component {
 
   componentWillMount () {
     if(this.props.currentUser){
-      this.props.onLoad(agent.Agenda.all(this.props.currentPage,0))
+      this.props.onLoad(agent.Agenda.all())
     }
   }
   componentWillReceiveProps(nextProps){
@@ -72,7 +98,7 @@ class Agenda extends React.Component {
       <Grid container align="center" justify="center">
         <Grid item xs={11} style={{maxWidth: 800,minWidth:600}}>
           <SAddAgenda/>
-          {this.props.agendas && <AgendaList items={this.props.agendas} type="agenda"/>}
+          {this.props.agendas && <ItemList items={this.props.agendas}/>}
         </Grid>
       </Grid>
     )
@@ -80,4 +106,4 @@ class Agenda extends React.Component {
 
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Agenda)
+export default connect(mapStateToProps, mapDispatchToProps)(AgendaList)

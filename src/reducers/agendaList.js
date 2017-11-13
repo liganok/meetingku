@@ -32,7 +32,7 @@ export default (state = defaultState, action) => {
       }
     case LOGOUT:
       return {
-        ...status,
+        ...state,
         agendas: null,
         trash: null
       }
