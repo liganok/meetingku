@@ -41,7 +41,7 @@ class AgendaDetail extends React.Component {
       if (match.path.indexOf('template') > 0) {
         onLoad(agent.Template.get(match.params.id))
       } else {
-        onLoad(agent.Agenda.get(match.params.id))
+        onLoad(agent.Agenda.getAgendaDetail(match.params.id))
       }
     }
   }

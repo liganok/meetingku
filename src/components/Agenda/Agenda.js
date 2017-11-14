@@ -58,7 +58,7 @@ class Agenda extends React.Component {
 
   componentWillMount() {
     if (this.props.currentUser) {
-      this.props.onLoad(agent.Agenda.all(this.props.currentPage, 0))
+      this.props.onLoad(agent.Agenda.getAgendas(this.props.currentPage))
     }
   }
   componentWillReceiveProps(nextProps) {

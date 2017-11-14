@@ -98,14 +98,14 @@ export default (state = defaultState, action) => {
     case AGENDA_GET_DETAIL:
       let agenda = null
       if (action.payload.status) {
-        agenda = action.payload.agenda
+        agenda = action.payload.data
         //convert ISO date to local date for h5 datetime-local display
         //let ISODate = new Date(agenda.startedAt)
         //agenda.startedAt = new Date(ISODate.valueOf() - ISODate.getTimezoneOffset() * 60000).toISOString().substring(0, 16)
       }
       return {
         ...state,
-        currentAgenda: action.payload.status ? action.payload.agenda : null
+        currentAgenda: action.payload.status ? action.payload.data : null
       };
     case AGENDA_UPDATE_FIELD:
       let currentAgenda = changeAgenda(JSON.parse(JSON.stringify(state.currentAgenda)), action.id, action.key, action.value);

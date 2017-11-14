@@ -15,19 +15,19 @@ export default (state = defaultState, action) => {
     case GET_LIST_AGENDA:
       return {
         ...state,
-        agendas: action.payload.agendas,
+        agendas: action.payload.data,
         currentPage: 0
       }
     case GET_LIST_TEMPLATE:
       return {
         ...state,
-        templates: action.payload.templates,
+        templates: action.payload.data,
         currentPage: 0
       }
     case GET_LIST_TRASH:
       return {
         ...state,
-        trash: action.payload.agendas,
+        trash: action.payload.data,
         currentPage: 0
       }
     case LOGOUT:

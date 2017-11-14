@@ -27,7 +27,7 @@ const mapDispatchToProps = dispatch => ({
   onActionMouseOut: value =>
     dispatch({ type: AI_ACTION_MOUSE_OUT, payload: value }),
   onActionLogicDel: value =>
-    dispatch({ type: AI_ACTION_LOGIC_DEL, payload: agent.Agenda.update(value) }),
+    dispatch({ type: AI_ACTION_LOGIC_DEL, payload: agent.Agenda.moveToTrash(value) }),
   onRedirect: (value = null) =>
     dispatch({ type: REDIRECT, value: value })
 })
@@ -91,7 +91,7 @@ function AgendaItem(props) {
             {type === 'agenda' &&
               <IconButton aria-label="Delete"
                 style={styles.iconButton}
-                onClick={() => onActionLogicDel({ id: id, isDel: true })}>
+                onClick={() => onActionLogicDel(id)}>
                 <Delete />
               </IconButton>}
             {type === 'trash' &&

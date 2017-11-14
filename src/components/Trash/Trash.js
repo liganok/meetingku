@@ -20,7 +20,7 @@ class Trash extends React.Component {
 
   componentWillMount () {
     if(this.props.currentUser){
-      this.props.onLoad(agent.Agenda.all(this.props.currentPage,1))
+      this.props.onLoad(agent.Agenda.getTrash(this.props.currentPage))
     }
   }
 

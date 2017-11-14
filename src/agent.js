@@ -7,7 +7,6 @@ const PORT = process.env.PORT || 3001;
 const superagent = superagentPromise(_superagent, global.Promise)
 
 const API_ROOT = (process.env.NODE_ENV === 'development') ? `http://localhost:3001/api` : `https://meetingku.herokuapp.com/api`
-console.log('port------------------------', API_ROOT, process.env)
 const encode = encodeURIComponent
 const responseBody = res => res.body
 
@@ -27,22 +26,10 @@ const requests = {
 
 const Auth = {
   current: () => requests.get('/user'),
-  login: (email, password) => requests.post('/user/login', {
-    user: {
-      email,
-      password
-    }
-  }),
-  register: (username, email, password) => requests.post('/user', {
-    user: {
-      username,
-      email,
-      password
-    }
-  }),
-  save: user => requests.put('/user', {
-    user
-  })
+  login: (email, password) => requests.post('/user/login', { user: { email, password } }),
+  register: (username, email, password) => requests.post('/user/register', { user: { username, email, password } }),
+  resetpassword: (newPassword, password, email) => requests.put('/user/resetpassword', { user: { newPassword, password, email } }),
+  getUserInfo: () => requests.get('/user/userInfo'),
 }
 
 const limit = (count, p) => `limit=${count}&offset=${p ? p * count : 0}`;
@@ -51,12 +38,14 @@ const Agenda = {
   //type = 0: agenda type=1: trash
   all: (page, type) => requests.get(`/agenda?type=${type}&${limit(20, page)}`),
   get: agendaId => requests.get(`/agenda/${agendaId}`),
-  update: agenda => requests.put(`/agenda/${agenda.id}`, {
-    agenda: agenda
-  }),
-  save: (agenda,delArr=[1]) => requests.post('/agenda', {
-    agenda,delArr
-  })
+  update: agenda => requests.put(`/agenda/${agenda.id}`, { agenda: agenda }),
+  save: (agenda) => requests.post('/agenda', { agenda }),
+  getTemplates: () => requests.get('/agenda/template'),
+  getAgendas: (page) => requests.get(`/agenda?${limit(20, page)}`),
+  getTrash: (page) => requests.get(`/agenda?type=1&${limit(20, page)}`),
+  getAgendaDetail: (agendaId) => requests.get(`/agenda/detail/${agendaId}`),
+  moveToTrash: (agendaId) => requests.put(`/agenda/logicalDel/${agendaId}`),
+  delete: (agendaId) => requests.delete(`/agenda/remove/${agendaId}`),
 }
 
 const Template = {
@@ -68,7 +57,5 @@ export default {
   Agenda,
   Auth,
   Template,
-  setToken: _token => {
-    token = _token
-  }
+  setToken: _token => { token = _token }
 }
