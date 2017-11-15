@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 3001;
 
 const superagent = superagentPromise(_superagent, global.Promise)
 
-const API_ROOT = (process.env.NODE_ENV === 'development') ? `http://localhost:3001/api` : `https://meetingku.herokuapp.com/api`
+const API_ROOT = (process.env.NODE_ENV === 'development') ? `http://localhost:3001/api` : `https://mkuservice.herokuapp.com/api`
 const encode = encodeURIComponent
 const responseBody = res => res.body
 
@@ -45,6 +45,7 @@ const Agenda = {
   getTrash: (page) => requests.get(`/agenda?type=1&${limit(20, page)}`),
   getAgendaDetail: (agendaId) => requests.get(`/agenda/detail/${agendaId}`),
   moveToTrash: (agendaId) => requests.put(`/agenda/logicalDel/${agendaId}`),
+  moveOutTrash: (agendaId) => requests.put(`/agenda/logicalDel/${agendaId}?undo=1`),
   delete: (agendaId) => requests.delete(`/agenda/remove/${agendaId}`),
 }
 

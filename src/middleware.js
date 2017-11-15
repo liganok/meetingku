@@ -15,19 +15,20 @@ const promiseMiddleware = store => next => action => {
         if (!skipTracking && currentState.viewChangeCounter !== currentView) {
           return
         }
-        //console.log('RESULT', res);
         action.payload = res;
         store.dispatch({ type: types.ASYNC_END, promise: action.payload });
         store.dispatch(action);
-        //console.log('action', action);
         if (action.type === types.AGENDA_SAVE) {
           console.log('RESULT', res);
-          store.dispatch({ type: types.SHOW_MSG, payload:res});
+          store.dispatch({ type: types.SHOW_MSG, payload: res });
         }
         if (action.type === types.AI_ACTION_LOGIC_DEL) {
           store.dispatch({ type: types.SHOW_MSG, payload: res });
-          store.dispatch({ type: types.GET_LIST_AGENDA, payload: agent.Agenda.getAgendas(1) })
-          //store.dispatch({ type: types.GET_LIST_TRASH, payload: agent.Agenda.all(1, 1) })
+          store.dispatch({ type: types.GET_LIST_AGENDA, payload: agent.Agenda.getAgendas(0) })
+        }
+        if (action.type === types.AI_ACTION_LOGIC_DEL_UNDO) {
+          store.dispatch({ type: types.SHOW_MSG, payload: res });
+          store.dispatch({ type: types.GET_LIST_TRASH, payload: agent.Agenda.getTrash(0) })
         }
       },
       error => {
@@ -53,7 +54,7 @@ const promiseMiddleware = store => next => action => {
 
 const localStorageMiddleware = store => next => action => {
   if (action.type === types.REGISTER || action.type === types.LOGIN) {
-    if (!action.error) {
+    if (!action.error && action.payload.status === 200) {
       window.localStorage.setItem('jwt', action.payload.user.token);
       agent.setToken(action.payload.user.token);
     }

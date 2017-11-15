@@ -31,7 +31,7 @@ function computeStartTime (agenda) {
 export default (state=defaultState, action) => {
   switch (action.type) {
     case AP_ACTION_GET_DETAIL:
-      let agenda = computeStartTime(action.payload.status ? action.payload.agenda : null)
+      let agenda = computeStartTime(action.payload.status ? action.payload.data : null)
       return {...state,currentAgenda:agenda};
     case AP_ACTION_UPDATE_TIMER:
       return {...state, timer: action.payload};

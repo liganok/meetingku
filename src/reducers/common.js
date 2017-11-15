@@ -3,9 +3,10 @@ import * as types from '../constants/actionTypes';
 const defaultState = {
   appName: 'Meetingku',
   token: null,
-  isShowDrawer:false,
-  msg:{status:'',message:'',
-}
+  isShowDrawer: false,
+  msg: {
+    status: '', message: '',
+  }
 };
 
 export default (state = defaultState, action) => {
@@ -24,9 +25,9 @@ export default (state = defaultState, action) => {
     case types.LOGIN:
       return {
         ...state,
-        redirectTo: action.error ? null : '/agenda',
-        token: action.error ? null : action.payload.user.token,
-        currentUser: action.error ? null : action.payload.user
+        redirectTo: action.error || action.payload.status !== 200 ? null : '/agenda',
+        token: action.error || action.payload.status !== 200 ? null : action.payload.user.token,
+        currentUser: action.error || action.payload.status !== 200 ? null : action.payload.user
       };
     case types.REGISTER:
       return {
@@ -49,7 +50,7 @@ export default (state = defaultState, action) => {
       return {
         ...state,
         msg: action.payload,
-        isShowMsg:true
+        isShowMsg: true
       };
     case types.CLOSE_MSG:
       return {

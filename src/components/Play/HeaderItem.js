@@ -56,7 +56,7 @@ HeaderItem.propTypes = {
   name: PropTypes.string,
   host: PropTypes.string,
   location: PropTypes.string,
-  startedAt: PropTypes.number,
+  startedAt: PropTypes.string,
   duration: PropTypes.number,
   spend: PropTypes.number,
   theme: PropTypes.object

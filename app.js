@@ -11,6 +11,9 @@ app.set('port', process.env.PORT || 3000);
 app.use(Logger('dev'));
 app.use(Express.static(Path.join(__dirname, 'build')));
 
+app.use('/', function (request, response) {
+  response.sendFile(path.resolve(__dirname, '../build', 'index.html'));
+});
 
 
 app.listen(app.get('port'), function () {

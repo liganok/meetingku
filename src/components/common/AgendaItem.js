@@ -17,7 +17,8 @@ import {
   AI_ACTION_MOUSE_OVER,
   AI_ACTION_MOUSE_OUT,
   AI_ACTION_LOGIC_DEL,
-  REDIRECT
+  REDIRECT,
+  AI_ACTION_LOGIC_DEL_UNDO
 } from '../../constants/actionTypes'
 
 const mapStateToProps = state => ({ ...state.agendaItem })
@@ -28,6 +29,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch({ type: AI_ACTION_MOUSE_OUT, payload: value }),
   onActionLogicDel: value =>
     dispatch({ type: AI_ACTION_LOGIC_DEL, payload: agent.Agenda.moveToTrash(value) }),
+  onActionLogicDelUndo: value =>
+    dispatch({ type: AI_ACTION_LOGIC_DEL_UNDO, payload: agent.Agenda.moveOutTrash(value) }),
   onRedirect: (value = null) =>
     dispatch({ type: REDIRECT, value: value })
 })
@@ -44,6 +47,7 @@ function AgendaItem(props) {
     onActionMouseOver,
     onActionMouseOut,
     onActionLogicDel,
+    onActionLogicDelUndo,
     onRedirect,
     type,
     style
@@ -85,7 +89,7 @@ function AgendaItem(props) {
             <IconButton
               style={styles.iconButton}
               aria-label="Play/pause"
-              onClick={() => onRedirect(`/${type}/play/${id}`)}>
+              onClick={() => onRedirect(`/agenda/play/${id}`)}>
               <PlayArrowIcon />
             </IconButton>
             {type === 'agenda' &&
@@ -97,13 +101,13 @@ function AgendaItem(props) {
             {type === 'trash' &&
               <IconButton aria-label="Delete"
                 style={styles.iconButton}
-                onClick={() => onActionLogicDel({ id: id, isDel: false })}>
+                onClick={() => onActionLogicDelUndo(id)}>
                 <Delete />
               </IconButton>}
             <IconButton
               style={styles.iconButton}
               aria-label="Detail"
-              onClick={() => onRedirect(`/${type}/detail/${id}`)}>
+              onClick={() => onRedirect(`/agenda/detail/${id}`)}>
               <Description />
             </IconButton>
           </Grid>
@@ -127,6 +131,7 @@ AgendaItem.propTypes = {
   onActionMouseOver: PropTypes.func,
   onActionMouseOut: PropTypes.func,
   onActionLogicDel: PropTypes.func,
+  onActionLogicDelUndo: PropTypes.func,
   onRedirect: PropTypes.func,
   type: PropTypes.oneOf(['agenda', 'template', 'trash']),
   style: PropTypes.any
