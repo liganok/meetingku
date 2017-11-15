@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "babel-core": "5.8.22",
+    "babel-loader": "5.3.2",
     "express": "^4.15.4",
+    "lodash": "^4.17.4",
     "material-ui": "^1.0.0-beta.20",
     "material-ui-icons": "^1.0.0-beta.17",
     "material-ui-pickers": "^1.0.0-alpha.12",
@@ -17,8 +20,7 @@
     "styled-components": "^2.1.2",
     "superagent": "^2.3.0",
     "superagent-promise": "^1.1.0",
-    "babel-core": "5.8.22",
-    "babel-loader": "5.3.2"
+    "throttle": "^1.0.3"
   },
   "devDependencies": {
     "react-scripts": "^1.0.14"
@@ -26,7 +28,7 @@
   "scripts": {
     "start": "node ./index.js",
     "dev": "react-scripts start",
-    "heroku-postbuild": "npm install && npm install --only=dev --no-shrinkwrap && npm run build", 
+    "heroku-postbuild": "npm install && npm install --only=dev --no-shrinkwrap && npm run build",
     "build": "GENERATE_SOURCEMAP=false react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
