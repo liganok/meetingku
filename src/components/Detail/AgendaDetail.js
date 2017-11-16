@@ -16,12 +16,12 @@ import {
   AI_ACTION_MOUSE_OUT,
 } from '../../constants/actionTypes'
 
-const mapStateToProps = state => ({ ...state.agendaDetail })
+const mapStateToProps = state => ({ ...state.agendaDetail, inProgress: state.common.inProgress })
 const mapDispatchToProps = dispatch => ({
   onLoad: (payload) => dispatch({ type: AGENDA_GET_DETAIL, payload }),
   onSaveAgenda: agenda => {
     let ISOStartedAt = new Date(agenda.startedAt).toISOString()
-    let savedAgenda = { ...agenda,startedAt:ISOStartedAt }
+    let savedAgenda = { ...agenda, startedAt: ISOStartedAt }
     dispatch({ type: AGENDA_SAVE, payload: agent.Agenda.save(savedAgenda) })
   },
   onChangeField: (id, key, value) => {
@@ -56,7 +56,8 @@ class AgendaDetail extends React.Component {
       onActionMouseOver,
       onActionMouseOut,
       onMenuItemTap,
-      onSaveAgenda
+      onSaveAgenda,
+      inProgress
     } = this.props
 
     return (
@@ -73,6 +74,7 @@ class AgendaDetail extends React.Component {
         <Grid container spacing={0} justify="flex-end" style={{ marginTop: 10 }}>
           <Button
             style={{ margin: 5 }}
+            disabled={inProgress}
             raised dense color="primary"
             onClick={() => onSaveAgenda(currentAgenda)}>
             Save

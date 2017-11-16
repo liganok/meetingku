@@ -58,7 +58,13 @@ export default (state = defaultState, action) => {
         isShowMsg: false
       };
     case types.H_ACTION_TOGGLE:
-      return { ...state, isShowDrawer: !state.isShowDrawer, };
+      return { ...state, isShowDrawer: !state.isShowDrawer, }
+    case types.AGENDA_SAVE:
+      let id = action.payload.data.id
+      return {
+        ...state,
+        redirectTo: id ? `/agenda/detail/${id}` : null
+      }
     default:
       return state;
   }

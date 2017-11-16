@@ -22,7 +22,7 @@ export default (
         <Route path='/template/play/:id' component={Play} />
         <Route path='/agenda/detail/:id' component={AgendaDetail} />
         <Route path='/agenda/play/:id' component={Play} />
-        <Route path='/new' component={AgendaDetail} />
+        <Route path='/agenda/new' component={AgendaDetail} />
         <Route path='/setting' component={Setting} />
         <Route path='/agenda' component={AgendaList} />
         <Route path='/template' component={TemplateList} />

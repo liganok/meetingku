@@ -17,10 +17,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  onLoad: (payload) => dispatch({
-    type: types.GET_LIST_AGENDA,
-    payload
-  }),
+  onLoad: (payload) => dispatch({ type: types.GET_LIST_AGENDA,payload}),
+  onCreate: () => dispatch({ type: types.AGENDA_CREATE }),
 })
 
 function AddAgenda(props) {
@@ -39,8 +37,8 @@ function AddAgenda(props) {
   }
 
   return (
-    <SLink to="/new">
-      <div style={styles.root} className={props.className}>
+    <SLink to="/agenda/new">
+      <div style={styles.root} className={props.className} onClick={props.onCreate}>
         <Add style={styles.addIcon} />
       </div>
     </SLink>
@@ -69,7 +67,7 @@ class Agenda extends React.Component {
   render() {
     return (
       <div>
-        <SAddAgenda />
+        <SAddAgenda onCreate={this.props.onCreate}/>
         {this.props.agendas && <AgendaList items={this.props.agendas} type="agenda" />}
       </div>
     )

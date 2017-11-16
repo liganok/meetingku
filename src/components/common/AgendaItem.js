@@ -5,6 +5,8 @@ import Card, { CardHeader, CardActions, CardContent } from 'material-ui/Card'
 import IconButton from 'material-ui/IconButton'
 import PlayArrowIcon from 'material-ui-icons/PlayArrow'
 import Delete from 'material-ui-icons/Delete'
+import Undo from 'material-ui-icons/Undo'
+
 import Description from 'material-ui-icons/Description'
 import Flag from 'material-ui-icons/Flag'
 import Alarm from 'material-ui-icons/Alarm'
@@ -99,10 +101,10 @@ function AgendaItem(props) {
                 <Delete />
               </IconButton>}
             {type === 'trash' &&
-              <IconButton aria-label="Delete"
+              <IconButton aria-label="Undo"
                 style={styles.iconButton}
                 onClick={() => onActionLogicDelUndo(id)}>
-                <Delete />
+                <Undo />
               </IconButton>}
             <IconButton
               style={styles.iconButton}

@@ -67,7 +67,7 @@ function Item(props) {
           <TextField
             style={styles.name}
             id={`name${id}`}
-            placeholder="Name"
+            placeholder={isRoot ? 'Input your agenda name':'Add agenda item'}
             value={name}
             fullWidth
             margin="normal"

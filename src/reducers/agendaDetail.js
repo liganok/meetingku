@@ -15,8 +15,9 @@ const defaultState = {
     duration: 0,
     sequence: 0,
     subItems: [],
+    startedAt: new Date()
   },
-  delArr:[]
+  delArr: []
 };
 
 function changeAgenda(sourceAgenda, id, key, value) {
@@ -74,7 +75,7 @@ function addAgenda(sourceAgenda, id) {
 }
 
 function removeAgenda(sourceAgenda, id) {
-  let delArr=[]
+  let delArr = []
   let targetAgenda = sourceAgenda;
   let index = targetAgenda.findIndex(item => {
     return item.id === id;
@@ -115,10 +116,6 @@ export default (state = defaultState, action) => {
         //[action.key]: action.value,
         currentAgenda: changeAgenda(currentAgenda, action.id, action.key, action.value)
       };
-    case AGENDA_CREATE:
-      return { ...state, isAddAgenda: true };
-    case AGENDA_SAVE:
-      return { ...state, };
     case AGENDA_MENU_ITEM_TAP:
       if (action.value === 'ADD') {
         state.currentAgenda = addAgenda(JSON.parse(JSON.stringify(state.currentAgenda)), action.id);
@@ -131,6 +128,8 @@ export default (state = defaultState, action) => {
       return { ...state, isShowActions: true, mouseOverId: action.payload };
     case AI_ACTION_MOUSE_OUT:
       return { ...state, isShowActions: false, mouseOverId: null };
+    case AGENDA_CREATE:
+      return { ...state,currentAgenda:defaultState.currentAgenda };
     default:
       return state;
   }

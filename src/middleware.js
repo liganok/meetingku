@@ -19,8 +19,8 @@ const promiseMiddleware = store => next => action => {
         store.dispatch({ type: types.ASYNC_END, promise: action.payload });
         store.dispatch(action);
         if (action.type === types.AGENDA_SAVE) {
-          console.log('RESULT', res);
           store.dispatch({ type: types.SHOW_MSG, payload: res });
+          store.dispatch({ type: types.AGENDA_GET_DETAIL, payload: agent.Agenda.getAgendaDetail(action.payload.data.id) });
         }
         if (action.type === types.AI_ACTION_LOGIC_DEL) {
           store.dispatch({ type: types.SHOW_MSG, payload: res });

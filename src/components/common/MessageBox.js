@@ -18,13 +18,12 @@ function MessageBox(props) {
     <Snackbar
       style={{marginTop:50}}  
       anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: 'bottom',
+        horizontal: 'left',
       }}  
       open={isShowMsg}
-      autoHideDuration={3000}
+      autoHideDuration={2500}
       onRequestClose={onRequestClose}
-      transition={TransitionRight}
       SnackbarContentProps={{
         'aria-describedby': 'message-id',
       }}
