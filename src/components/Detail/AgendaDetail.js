@@ -46,6 +46,10 @@ class AgendaDetail extends React.Component {
     }
   }
 
+  componentWillUnmount(){
+    //alert('hello')
+  }
+
   render() {
 
     const {

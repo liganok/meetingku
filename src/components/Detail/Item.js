@@ -7,6 +7,9 @@ import Flag from 'material-ui-icons/Flag'
 import Alarm from 'material-ui-icons/Alarm'
 import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft'
 import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight'
+import DateRange from 'material-ui-icons/DateRange'
+import AccessTime from 'material-ui-icons/AccessTime'
+
 import Add from 'material-ui-icons/Add'
 import Remove from 'material-ui-icons/Remove'
 import IconButton from 'material-ui/IconButton'
@@ -17,7 +20,7 @@ function Item(props) {
     id,
     name,
     startedAt,
-    duration=0,
+    duration,
     isHasSubItem,
     isRoot = false,
     mouseOverId,
@@ -80,6 +83,8 @@ function Item(props) {
               value={startedAt}
               leftArrowIcon={<KeyboardArrowLeft/>}
               rightArrowIcon={<KeyboardArrowRight />}
+              dateRangeIcon={<DateRange/>}
+              timeIcon={<AccessTime/>}
               InputProps={{
                 style:styles.startedAt,
                 startAdornment: (

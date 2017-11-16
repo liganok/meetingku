@@ -20,7 +20,8 @@ import {
   AI_ACTION_MOUSE_OUT,
   AI_ACTION_LOGIC_DEL,
   REDIRECT,
-  AI_ACTION_LOGIC_DEL_UNDO
+  AI_ACTION_LOGIC_DEL_UNDO,
+  AI_ACTION_DEL
 } from '../../constants/actionTypes'
 
 const mapStateToProps = state => ({ ...state.agendaItem })
@@ -33,6 +34,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch({ type: AI_ACTION_LOGIC_DEL, payload: agent.Agenda.moveToTrash(value) }),
   onActionLogicDelUndo: value =>
     dispatch({ type: AI_ACTION_LOGIC_DEL_UNDO, payload: agent.Agenda.moveOutTrash(value) }),
+  onActionDel: value =>
+    dispatch({ type: AI_ACTION_DEL, payload: agent.Agenda.delete(value) }),
   onRedirect: (value = null) =>
     dispatch({ type: REDIRECT, value: value })
 })
@@ -50,6 +53,7 @@ function AgendaItem(props) {
     onActionMouseOut,
     onActionLogicDel,
     onActionLogicDelUndo,
+    onActionDel,
     onRedirect,
     type,
     style
@@ -101,11 +105,18 @@ function AgendaItem(props) {
                 <Delete />
               </IconButton>}
             {type === 'trash' &&
-              <IconButton aria-label="Undo"
-                style={styles.iconButton}
-                onClick={() => onActionLogicDelUndo(id)}>
-                <Undo />
-              </IconButton>}
+              <div>
+                <IconButton aria-label="Undo"
+                  style={styles.iconButton}
+                  onClick={() => onActionLogicDelUndo(id)}>
+                  <Undo />
+                </IconButton>
+                <IconButton aria-label="Delete"
+                  style={styles.iconButton}
+                  onClick={() => onActionDel(id)}>
+                  <Delete />
+                </IconButton>
+              </div>}
             <IconButton
               style={styles.iconButton}
               aria-label="Detail"
@@ -134,6 +145,7 @@ AgendaItem.propTypes = {
   onActionMouseOut: PropTypes.func,
   onActionLogicDel: PropTypes.func,
   onActionLogicDelUndo: PropTypes.func,
+  onActionDel:PropTypes.func,
   onRedirect: PropTypes.func,
   type: PropTypes.oneOf(['agenda', 'template', 'trash']),
   style: PropTypes.any

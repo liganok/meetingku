@@ -46,7 +46,7 @@ const Agenda = {
   getAgendaDetail: (agendaId) => requests.get(`/agenda/detail/${agendaId}`),
   moveToTrash: (agendaId) => requests.put(`/agenda/logicalDel/${agendaId}`),
   moveOutTrash: (agendaId) => requests.put(`/agenda/logicalDel/${agendaId}?undo=1`),
-  delete: (agendaId) => requests.delete(`/agenda/remove/${agendaId}`),
+  delete: (agendaId) => requests.del(`/agenda/remove/${agendaId}`),
 }
 
 const Template = {
