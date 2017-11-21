@@ -32,14 +32,13 @@ class AgendaPlay extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     const { currentAgenda, onUpdateTimer } = nextProps
-    if (currentAgenda) {
+    if (currentAgenda && !this.clock) {
       let startTime = new Date(currentAgenda.startedAt).getTime()
       this.clock = setInterval(() => {
         let nowTime = new Date().getTime()
         let timer = 0
         if (nowTime >= startTime && nowTime <= (startTime + currentAgenda.duration * 60000 + 20000)) {
           timer = parseInt((nowTime - startTime) / 1000)
-          console.log('*****timer****',timer)
           onUpdateTimer(timer)
         }
         if (timer > currentAgenda.duration * 60 + 10) {
