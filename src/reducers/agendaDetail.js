@@ -1,12 +1,4 @@
-import {
-  AGENDA_UPDATE_FIELD,
-  AGENDA_CREATE,
-  AGENDA_SAVE,
-  AGENDA_MENU_ITEM_TAP,
-  AGENDA_GET_DETAIL,
-  AI_ACTION_MOUSE_OVER,
-  AI_ACTION_MOUSE_OUT,
-} from '../constants/actionTypes';
+import * as types from '../constants/actionTypes';
 
 const defaultState = {
   isAddAgenda: false,
@@ -96,19 +88,12 @@ function removeAgenda(sourceAgenda, id) {
 
 export default (state = defaultState, action) => {
   switch (action.type) {
-    case AGENDA_GET_DETAIL:
-      let agenda = null
-      if (action.payload.status) {
-        agenda = action.payload.data
-        //convert ISO date to local date for h5 datetime-local display
-        //let ISODate = new Date(agenda.startedAt)
-        //agenda.startedAt = new Date(ISODate.valueOf() - ISODate.getTimezoneOffset() * 60000).toISOString().substring(0, 16)
-      }
+    case types.AGENDA_GET_DETAIL:
       return {
         ...state,
         currentAgenda: action.payload.status ? action.payload.data : null
       };
-    case AGENDA_UPDATE_FIELD:
+    case types.AGENDA_UPDATE_FIELD:
       let currentAgenda = changeAgenda(JSON.parse(JSON.stringify(state.currentAgenda)), action.id, action.key, action.value);
       if (action.key === 'duration') { currentAgenda = countDuration(currentAgenda) };
       return {
@@ -116,7 +101,7 @@ export default (state = defaultState, action) => {
         //[action.key]: action.value,
         currentAgenda: changeAgenda(currentAgenda, action.id, action.key, action.value)
       };
-    case AGENDA_MENU_ITEM_TAP:
+    case types.AGENDA_MENU_ITEM_TAP:
       if (action.value === 'ADD') {
         state.currentAgenda = addAgenda(JSON.parse(JSON.stringify(state.currentAgenda)), action.id);
       }
@@ -124,14 +109,16 @@ export default (state = defaultState, action) => {
         state.currentAgenda = removeAgenda([JSON.parse(JSON.stringify(state.currentAgenda))], action.id);
       }
       return { ...state, };
-    case AI_ACTION_MOUSE_OVER:
+    case types.AI_ACTION_MOUSE_OVER:
       return { ...state, isShowActions: true, mouseOverId: action.payload };
-    case AI_ACTION_MOUSE_OUT:
+    case types.AI_ACTION_MOUSE_OUT:
       return { ...state, isShowActions: false, mouseOverId: null };
-    case AGENDA_CREATE:
-      return { ...state,currentAgenda:defaultState.currentAgenda };
+    case types.AGENDA_CREATE:
+      return { ...state, currentAgenda: defaultState.currentAgenda };
+    case types.AI_ACTION_COPY:
+      return { ...state, currentAgenda: action.payload.status ? action.payload.data : null}
     default:
       return state;
   }
 
-};
+}

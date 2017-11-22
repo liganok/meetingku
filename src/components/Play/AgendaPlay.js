@@ -6,21 +6,20 @@ import agent from '../../agent'
 import HeaderItem from './HeaderItem'
 import BodyItems from './BodyItems'
 
-import {
-  AP_ACTION_GET_DETAIL,
-  AP_ACTION_UPDATE_TIMER,
-} from '../../constants/actionTypes'
+import * as types from '../../constants/actionTypes'
 
 const mapStateToProps = state => ({ ...state.agendaPlay })
 const mapDispatchToProps = dispatch => ({
-  onLoad: (payload) => dispatch({ type: AP_ACTION_GET_DETAIL, payload }),
-  onUpdateTimer: (payload) => dispatch({ type: AP_ACTION_UPDATE_TIMER, payload }),
+  onLoad: (payload) => dispatch({ type: types.AP_ACTION_GET_DETAIL, payload }),
+  onUpdateTimer: (payload) => dispatch({ type: types.AP_ACTION_UPDATE_TIMER, payload }),
+  onActionMouseOver: value =>dispatch({ type: types.AP_ACTION_MOUSE_OVER, payload: value }),
+  onActionMouseOut: value =>dispatch({ type: types.AP_ACTION_MOUSE_OUT, payload: value }),
 })
 
 class AgendaPlay extends React.Component {
   constructor() {
     super()
-    this.clock
+    this.clock = null
   }
 
   componentWillMount() {
@@ -55,11 +54,15 @@ class AgendaPlay extends React.Component {
   }
 
   render() {
-    const { currentAgenda, timer } = this.props
+    const { currentAgenda, timer, mouseOverId = '', onActionMouseOver, onActionMouseOut } = this.props
     if (!currentAgenda) { return null }
+    let isMouseOver = mouseOverId === currentAgenda.id
     return (
       <div>
         <HeaderItem
+          onMouseOver={() => onActionMouseOver(currentAgenda.id)}
+          onMouseOut={() => onActionMouseOut(currentAgenda.id)}
+          isMouseOver = {isMouseOver}
           name={currentAgenda.name}
           startedAt={currentAgenda.startedAt}
           duration={currentAgenda.duration}

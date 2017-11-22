@@ -20,7 +20,7 @@ function Login (props) {
     password='',
     onChangeField,
     onSubmit,
-    onChangeIndex
+    //onChangeIndex
   } = props
 
   return (

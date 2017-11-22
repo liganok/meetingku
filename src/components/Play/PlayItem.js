@@ -1,5 +1,4 @@
 import React from 'react'
-import Paper from 'material-ui/Paper'
 
 function Progress (props) {
   const {
@@ -20,7 +19,6 @@ function Progress (props) {
       zIndex: 1,
     }
   }
-  console.log('bh',backgroundColor)
   return (
     <div style={styles.root}/>
   )

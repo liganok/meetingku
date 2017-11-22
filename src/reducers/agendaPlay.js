@@ -1,7 +1,4 @@
-import {
-  AP_ACTION_GET_DETAIL,
-  AP_ACTION_UPDATE_TIMER,
-} from '../constants/actionTypes';
+import * as types from '../constants/actionTypes';
 
 const defaultState = {
   timer: 0,
@@ -27,14 +24,17 @@ function computeStartTime (agenda) {
   return agenda;
 }
 
-
 export default (state=defaultState, action) => {
   switch (action.type) {
-    case AP_ACTION_GET_DETAIL:
+    case types.AP_ACTION_GET_DETAIL:
       let agenda = computeStartTime(action.payload.status ? action.payload.data : null)
       return {...state,currentAgenda:agenda};
-    case AP_ACTION_UPDATE_TIMER:
+    case types.AP_ACTION_UPDATE_TIMER:
       return {...state, timer: action.payload};
+    case types.AP_ACTION_MOUSE_OVER:
+      return { ...state, mouseOverId: action.payload }
+    case types.AP_ACTION_MOUSE_OUT:
+      return { ...state, mouseOverId: '' }
     default:
       return state;
   }

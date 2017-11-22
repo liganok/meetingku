@@ -1,12 +1,9 @@
-'use strict'
-
 import superagentPromise from 'superagent-promise'
 import _superagent from 'superagent'
-const PORT = process.env.PORT || 3001;
 
 const superagent = superagentPromise(_superagent, global.Promise)
 
-const API_ROOT = (process.env.NODE_ENV === 'development') ? `http://localhost:3001/api` : `http://api.meetingku.com/api`
+const API_ROOT = (process.env.NODE_ENV === 'development') ? 'https://localhost/api' : 'https://api.meetingku.com/api'
 const encode = encodeURIComponent
 const responseBody = res => res.body
 

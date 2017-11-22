@@ -16,13 +16,15 @@ import * as types from '../../constants/actionTypes'
 
 function HeaderItem(props) {
   const {
-    name = 'Board meeting for next q startage',
+    name = '',
     host = 'Bob',
     location = 'New york tower building',
     startedAt,
     duration = 300,
     spend = 180,
     theme,
+    isMouseOver,
+    ...others
   } = props
 
   const circleContainerStyle = {
@@ -39,8 +41,8 @@ function HeaderItem(props) {
 
   let percent = parseInt(spend / 60 / duration * 100)
   return (
-    <Paper style={{ display: 'flex', flexDirection: 'row', flex: 1,marginTop:10 }}>
-      <Link to="/agenda" style={{ position: 'absolute', display: 'flex', justifyContent: 'center', visibility:'hidden1' }}>
+    <Paper {...others} style={{ display: 'flex', flexDirection: 'row', flex: 1,marginTop:10 }}>
+      <Link to="/agenda" style={{ position: 'absolute', display: 'flex', justifyContent: 'center', visibility:!isMouseOver && 'hidden' }}>
         <KeyboardArrowLeft stype={{margin:0}} /> Back
       </Link>
       <div style={{ flex: 2, display: 'flex', flexDirection: 'column', marginLeft: '10px' }}>

@@ -6,6 +6,7 @@ import IconButton from 'material-ui/IconButton'
 import PlayArrowIcon from 'material-ui-icons/PlayArrow'
 import Delete from 'material-ui-icons/Delete'
 import Undo from 'material-ui-icons/Undo'
+import ContentCopy from 'material-ui-icons/ContentCopy'
 
 import Description from 'material-ui-icons/Description'
 import Flag from 'material-ui-icons/Flag'
@@ -15,29 +16,25 @@ import Grid from 'material-ui/Grid'
 
 import agent from '../../agent'
 
-import {
-  AI_ACTION_MOUSE_OVER,
-  AI_ACTION_MOUSE_OUT,
-  AI_ACTION_LOGIC_DEL,
-  REDIRECT,
-  AI_ACTION_LOGIC_DEL_UNDO,
-  AI_ACTION_DEL
-} from '../../constants/actionTypes'
+import * as types from '../../constants/actionTypes'
 
 const mapStateToProps = state => ({ ...state.agendaItem })
 const mapDispatchToProps = dispatch => ({
   onActionMouseOver: value =>
-    dispatch({ type: AI_ACTION_MOUSE_OVER, payload: value }),
+    dispatch({ type: types.AI_ACTION_MOUSE_OVER, payload: value }),
   onActionMouseOut: value =>
-    dispatch({ type: AI_ACTION_MOUSE_OUT, payload: value }),
+    dispatch({ type: types.AI_ACTION_MOUSE_OUT, payload: value }),
   onActionLogicDel: value =>
-    dispatch({ type: AI_ACTION_LOGIC_DEL, payload: agent.Agenda.moveToTrash(value) }),
+    dispatch({ type: types.AI_ACTION_LOGIC_DEL, payload: agent.Agenda.moveToTrash(value) }),
   onActionLogicDelUndo: value =>
-    dispatch({ type: AI_ACTION_LOGIC_DEL_UNDO, payload: agent.Agenda.moveOutTrash(value) }),
+    dispatch({ type: types.AI_ACTION_LOGIC_DEL_UNDO, payload: agent.Agenda.moveOutTrash(value) }),
   onActionDel: value =>
-    dispatch({ type: AI_ACTION_DEL, payload: agent.Agenda.delete(value) }),
+    dispatch({ type: types.AI_ACTION_DEL, payload: agent.Agenda.delete(value) }),
+  onActionCopy: value =>
+    dispatch({ type: types.AI_ACTION_COPY, payload: agent.Agenda.getAgendaDetail(value) }),
   onRedirect: (value = null) =>
-    dispatch({ type: REDIRECT, value: value })
+    dispatch({ type: types.REDIRECT, value: value })
+    
 })
 
 function AgendaItem(props) {
@@ -52,6 +49,7 @@ function AgendaItem(props) {
     onActionMouseOver,
     onActionMouseOut,
     onActionLogicDel,
+    onActionCopy,
     onActionLogicDelUndo,
     onActionDel,
     onRedirect,
@@ -103,6 +101,12 @@ function AgendaItem(props) {
                 style={styles.iconButton}
                 onClick={() => onActionLogicDel(id)}>
                 <Delete />
+              </IconButton>}
+            {type === 'template' &&
+              <IconButton aria-label="Delete"
+                style={styles.iconButton}
+                onClick={() => onActionCopy(id)}>
+                <ContentCopy />
               </IconButton>}
             {type === 'trash' &&
               <div>

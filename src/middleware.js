@@ -36,6 +36,9 @@ const promiseMiddleware = store => next => action => {
           store.dispatch({ type: types.SHOW_MSG, payload: res });
           store.dispatch({ type: types.GET_LIST_TRASH, payload: agent.Agenda.getTrash(0) })
         }
+        if (action.type === types.AI_ACTION_COPY) {
+          store.dispatch({ type: types.REDIRECT, value: '/agenda/new' })
+        }
       },
       error => {
         const currentState = store.getState()
