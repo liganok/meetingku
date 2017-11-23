@@ -15,6 +15,7 @@ import Typography from 'material-ui/Typography'
 import Grid from 'material-ui/Grid'
 
 import agent from '../../agent'
+import ConfirmDialog from './ConfirmDialog'
 
 import * as types from '../../constants/actionTypes'
 
@@ -28,13 +29,17 @@ const mapDispatchToProps = dispatch => ({
     dispatch({ type: types.AI_ACTION_LOGIC_DEL, payload: agent.Agenda.moveToTrash(value) }),
   onActionLogicDelUndo: value =>
     dispatch({ type: types.AI_ACTION_LOGIC_DEL_UNDO, payload: agent.Agenda.moveOutTrash(value) }),
-  onActionDel: value =>
-    dispatch({ type: types.AI_ACTION_DEL, payload: agent.Agenda.delete(value) }),
+  onActionDel: value => {
+    dispatch({ type: types.AI_ACTION_DEL, payload: agent.Agenda.delete(value) })
+    dispatch({ type: types.AI_ACTION_ONOFF_DIALOG })
+  },
   onActionCopy: value =>
     dispatch({ type: types.AI_ACTION_COPY, payload: agent.Agenda.getAgendaDetail(value) }),
+  onOffDialog: () =>
+    dispatch({ type: types.AI_ACTION_ONOFF_DIALOG }),
   onRedirect: (value = null) =>
     dispatch({ type: types.REDIRECT, value: value })
-    
+
 })
 
 function AgendaItem(props) {
@@ -53,6 +58,8 @@ function AgendaItem(props) {
     onActionLogicDelUndo,
     onActionDel,
     onRedirect,
+    onOffDialog,
+    showDialog,
     type,
     style
   } = props
@@ -62,75 +69,82 @@ function AgendaItem(props) {
   }
 
   return (
-    <Card
-      style={style}
-      elevation={isShowActions && (id === mouseOverId) ? 4 : 1}
-      onMouseOver={() => onActionMouseOver(id)}
-      onMouseOut={() => onActionMouseOut(id)}
-    >
-      <CardHeader
-        title={name}
-        onClick={() => onRedirect(`/${type}/detail/${id}`)} />
-      <CardContent style={{ paddingTop: 5 }}>
-        <Grid container spacing={0} justify="space-between" alignItems="center">
-          <Grid item xs={7} container spacing={0}>
-            <Typography color="secondary" type="body2" gutterBottom style={{ paddingRight: 15 }}>
-              <Grid container alignItems="center" spacing={0}>
-                <Flag style={{ width: 20, height: 20, paddingRight: 5 }} />
-                {new Date(startedAt).toLocaleString()}
-              </Grid>
-            </Typography>
-            <Typography color="secondary" type="body2" gutterBottom>
-              <Grid container alignItems="center" spacing={0}>
-                <Alarm style={{ width: 20, height: 20, paddingRight: 5 }} />
-                <span style={{ paddingRight: 5 }}>{duration}</span>
-                mins
+    <div>
+      <Card
+        style={style}
+        elevation={isShowActions && (id === mouseOverId) ? 4 : 1}
+        onMouseOver={() => onActionMouseOver(id)}
+        onMouseOut={() => onActionMouseOut(id)}
+      >
+        <CardHeader
+          title={name}
+          onClick={() => onRedirect(`/${type}/detail/${id}`)} />
+        <CardContent style={{ paddingTop: 5 }}>
+          <Grid container spacing={0} justify="space-between" alignItems="center">
+            <Grid item xs={7} container spacing={0}>
+              <Typography color="secondary" type="body2" gutterBottom style={{ paddingRight: 15 }}>
+                <Grid container alignItems="center" spacing={0}>
+                  <Flag style={{ width: 20, height: 20, paddingRight: 5 }} />
+                  {new Date(startedAt).toLocaleString()}
+                </Grid>
+              </Typography>
+              <Typography color="secondary" type="body2" gutterBottom>
+                <Grid container alignItems="center" spacing={0}>
+                  <Alarm style={{ width: 20, height: 20, paddingRight: 5 }} />
+                  <span style={{ paddingRight: 5 }}>{duration}</span>
+                  mins
             </Grid>
-            </Typography>
-          </Grid>
-          <Grid item xs={5} container spacing={0} justify="flex-end"
-            style={{ visibility: !(isShowActions && (id === mouseOverId)) && "display" }}>
-            <IconButton
-              style={styles.iconButton}
-              aria-label="Play/pause"
-              onClick={() => onRedirect(`/agenda/play/${id}`)}>
-              <PlayArrowIcon />
-            </IconButton>
-            {type === 'agenda' &&
-              <IconButton aria-label="Delete"
+              </Typography>
+            </Grid>
+            <Grid item xs={5} container spacing={0} justify="flex-end"
+              style={{ visibility: !(isShowActions && (id === mouseOverId)) && "display" }}>
+              <IconButton
                 style={styles.iconButton}
-                onClick={() => onActionLogicDel(id)}>
-                <Delete />
-              </IconButton>}
-            {type === 'template' &&
-              <IconButton aria-label="Delete"
-                style={styles.iconButton}
-                onClick={() => onActionCopy(id)}>
-                <ContentCopy />
-              </IconButton>}
-            {type === 'trash' &&
-              <div>
-                <IconButton aria-label="Undo"
-                  style={styles.iconButton}
-                  onClick={() => onActionLogicDelUndo(id)}>
-                  <Undo />
-                </IconButton>
+                aria-label="Play/pause"
+                onClick={() => onRedirect(`/agenda/play/${id}`)}>
+                <PlayArrowIcon />
+              </IconButton>
+              {type === 'agenda' &&
                 <IconButton aria-label="Delete"
                   style={styles.iconButton}
-                  onClick={() => onActionDel(id)}>
+                  onClick={() => onActionLogicDel(id)}>
                   <Delete />
-                </IconButton>
-              </div>}
-            <IconButton
-              style={styles.iconButton}
-              aria-label="Detail"
-              onClick={() => onRedirect(`/agenda/detail/${id}`)}>
-              <Description />
-            </IconButton>
+                </IconButton>}
+              {type === 'template' &&
+                <IconButton aria-label="Delete"
+                  style={styles.iconButton}
+                  onClick={() => onActionCopy(id)}>
+                  <ContentCopy />
+                </IconButton>}
+              {type === 'trash' &&
+                <div>
+                  <IconButton aria-label="Undo"
+                    style={styles.iconButton}
+                    onClick={() => onActionLogicDelUndo(id)}>
+                    <Undo />
+                  </IconButton>
+                  <IconButton aria-label="Delete"
+                    style={styles.iconButton}
+                    onClick={() => onOffDialog()}>
+                    <Delete />
+                  </IconButton>
+                </div>}
+              <IconButton
+                style={styles.iconButton}
+                aria-label="Detail"
+                onClick={() => onRedirect(`/agenda/detail/${id}`)}>
+                <Description />
+              </IconButton>
+            </Grid>
           </Grid>
-        </Grid>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+      <ConfirmDialog
+        message={'Agenda will be deleted'}
+        open={showDialog}
+        onRequestClose={() => onOffDialog()}
+        onConfirm={() => onActionDel(id)} />
+    </div>
   )
 
 }
@@ -149,7 +163,7 @@ AgendaItem.propTypes = {
   onActionMouseOut: PropTypes.func,
   onActionLogicDel: PropTypes.func,
   onActionLogicDelUndo: PropTypes.func,
-  onActionDel:PropTypes.func,
+  onActionDel: PropTypes.func,
   onRedirect: PropTypes.func,
   type: PropTypes.oneOf(['agenda', 'template', 'trash']),
   style: PropTypes.any

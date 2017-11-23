@@ -1,5 +1,6 @@
 import agent from './agent';
-import * as types from './constants/actionTypes';
+import * as types from './constants/actionTypes'
+import {makeCopy} from './utils/agenda'
 
 const promiseMiddleware = store => next => action => {
   if (isPromise(action.payload)) {
@@ -37,6 +38,7 @@ const promiseMiddleware = store => next => action => {
           store.dispatch({ type: types.GET_LIST_TRASH, payload: agent.Agenda.getTrash(0) })
         }
         if (action.type === types.AI_ACTION_COPY) {
+          action.payload = makeCopy(res.data)
           store.dispatch({ type: types.REDIRECT, value: '/agenda/new' })
         }
       },
