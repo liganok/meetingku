@@ -15,7 +15,6 @@ import Typography from 'material-ui/Typography'
 import Grid from 'material-ui/Grid'
 
 import agent from '../../agent'
-import ConfirmDialog from './ConfirmDialog'
 
 import * as types from '../../constants/actionTypes'
 
@@ -35,8 +34,8 @@ const mapDispatchToProps = dispatch => ({
   },
   onActionCopy: value =>
     dispatch({ type: types.AI_ACTION_COPY, payload: agent.Agenda.getAgendaDetail(value) }),
-  onOffDialog: () =>
-    dispatch({ type: types.AI_ACTION_ONOFF_DIALOG }),
+  onOffDialog: value =>
+    dispatch({ type: types.AI_ACTION_ONOFF_DIALOG, payload:value }),
   onRedirect: (value = null) =>
     dispatch({ type: types.REDIRECT, value: value })
 
@@ -125,7 +124,7 @@ function AgendaItem(props) {
                   </IconButton>
                   <IconButton aria-label="Delete"
                     style={styles.iconButton}
-                    onClick={() => onOffDialog()}>
+                    onClick={() => onOffDialog(id)}>
                     <Delete />
                   </IconButton>
                 </div>}
@@ -139,11 +138,6 @@ function AgendaItem(props) {
           </Grid>
         </CardContent>
       </Card>
-      <ConfirmDialog
-        message={'Agenda will be deleted'}
-        open={showDialog}
-        onRequestClose={() => onOffDialog()}
-        onConfirm={() => onActionDel(id)} />
     </div>
   )
 

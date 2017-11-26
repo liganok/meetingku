@@ -26,6 +26,7 @@ function ConfirmDialog(props) {
       open={open}
       transition={Transition}
       keepMounted
+      fullWidth
       onRequestClose={onRequestClose}
     >
       <DialogTitle>{title}</DialogTitle>

@@ -10,7 +10,7 @@ export default (state = defaultState, action) => {
     case types.AI_ACTION_MOUSE_OUT:
       return {...state, isShowActions:false, mouseOverId:null}
     case types.AI_ACTION_ONOFF_DIALOG:
-      return { ...state, showDialog: !state.showDialog }
+      return { ...state, showDialog: !state.showDialog, delId:action.payload }
     default:
       return state;
   }

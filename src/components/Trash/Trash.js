@@ -3,32 +3,48 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import agent from '../../agent'
 import AgendaList from '../common/AgendaList'
+import ConfirmDialog from '../common/ConfirmDialog'
 
-import {GET_LIST_TRASH} from '../../constants/actionTypes'
+import * as types from '../../constants/actionTypes'
 
 const mapStateToProps = state => ({
   ...state.agendaList,
-  currentUser: state.common.currentUser
+  currentUser: state.common.currentUser,
+  showDialog:state.agendaItem.showDialog,
+  delId:state.agendaItem.delId
 })
 
 const mapDispatchToProps = dispatch => ({
   onLoad: (payload) =>
-    dispatch({type: GET_LIST_TRASH, payload}),
+    dispatch({ type: types.GET_LIST_TRASH, payload }),
+  onActionDel: value => {
+    dispatch({ type: types.AI_ACTION_DEL, payload: agent.Agenda.delete(value) })
+    dispatch({ type: types.AI_ACTION_ONOFF_DIALOG })
+  },
+  onOffDialog: value =>
+    dispatch({ type: types.AI_ACTION_ONOFF_DIALOG, payload: value }),
 })
 
 class Trash extends React.Component {
 
-  componentWillMount () {
-    if(this.props.currentUser){
+  componentWillMount() {
+    if (this.props.currentUser) {
       this.props.onLoad(agent.Agenda.getTrash(this.props.currentPage))
     }
   }
 
-  render () {
+  render() {
+    const{showDialog,onOffDialog,onActionDel,delId}=this.props
     return (
-        <div >
-          {this.props.trash && <AgendaList items={this.props.trash} type="trash"/>}
-        </div>
+      <div >
+        {this.props.trash && <AgendaList items={this.props.trash} type="trash" />}
+        <ConfirmDialog
+        title='Confirm to delete?'
+          message={'Agenda will be permanently deleted and can not recover'}
+          open={showDialog}
+          onRequestClose={() => onOffDialog()}
+          onConfirm={() => onActionDel(delId)} />
+      </div>
     )
   }
 

@@ -12,6 +12,7 @@ function deepCopy(agenda){
 function makeCopy(agenda){
   deepCopy(agenda)
   agenda.startedAt = new Date()
+  agenda.isDel = false
   return agenda
 }
 
