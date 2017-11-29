@@ -66,8 +66,8 @@ const promiseMiddleware = store => next => action => {
 const localStorageMiddleware = store => next => action => {
   if (action.type === types.REGISTER || action.type === types.LOGIN) {
     if (!action.error && action.payload.status === 200) {
-      window.localStorage.setItem('jwt', action.payload.user.token);
-      agent.setToken(action.payload.user.token);
+      window.localStorage.setItem('jwt', action.payload.data.token);
+      agent.setToken(action.payload.data.token);
     }
   } else if (action.type === types.LOGOUT) {
     window.localStorage.setItem('jwt', '');
