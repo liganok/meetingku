@@ -20,6 +20,7 @@ const mapDispatchToProps = dispatch => ({
 
 class App extends React.Component {
   componentWillReceiveProps(nextProps) {
+
     if (nextProps.redirectTo) {
       //this.context.router.replace(nextProps.redirectTo);
       this.props.history.push(nextProps.redirectTo)
@@ -50,7 +51,7 @@ class App extends React.Component {
     } = this.props
 
     let isShowHeader = true
-    if ( /*path.indexOf('/login') !== -1 || path.indexOf('/register') !== -1 ||*/ location.pathname.indexOf('/play') !== -1) {
+    if (location.pathname.indexOf('/oauth') !== -1 || location.pathname.indexOf('/register') !== -1 || location.pathname.indexOf('/play') !== -1) {
       isShowHeader = false
     }
     //isShowHeader = false

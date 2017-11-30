@@ -27,6 +27,8 @@ const Auth = {
   register: (username, email, password) => requests.post('/user/register', { user: { username, email, password } }),
   resetpassword: (newPassword, password, email) => requests.put('/user/resetpassword', { user: { newPassword, password, email } }),
   getUserInfo: () => requests.get('/user/userInfo'),
+  oAuthRegister: (oauth_name, oauth_access_token, oauth_expires) => requests.post('/user/oauthregister', { user: { oauth_name, oauth_access_token, oauth_expires } }),
+
 }
 
 const limit = (count, p) => `limit=${count}&offset=${p ? p * count : 0}`;

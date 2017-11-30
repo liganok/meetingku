@@ -11,6 +11,8 @@ import Play from './components/Play/AgendaPlay'
 import TemplateList from './components/Template/Template'
 import TrashList from './components/Trash/Trash'
 import Help from './components/Help/Help'
+import OAuth from './components/Auth/OAuth'
+
 
 export default (
     <Switch>
@@ -28,5 +30,6 @@ export default (
         <Route path='/template' component={TemplateList} />
         <Route path='/trash' component={TrashList} />
         <Route path='/help' component={Help} />
+        <Route path='/oauth/:name' component={OAuth} />
     </Switch>
 )
