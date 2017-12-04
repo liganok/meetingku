@@ -1,12 +1,18 @@
 import React from 'react'
 import agent from '../../agent'
 import { connect } from 'react-redux'
-
 import Card, { CardActions, CardContent } from 'material-ui/Card'
 import Button from 'material-ui/Button'
 import TextField from 'material-ui/TextField'
 import Tabs, { Tab } from 'material-ui/Tabs'
 import AppBar from 'material-ui/AppBar'
+import Divider from 'material-ui/Divider';
+import Typography from 'material-ui/Typography';
+
+import Login from './Login'
+import Register from './Register'
+import OAuth from './OAuth'
+
 import {
   AUTH_UPDATE_FIELD,
   AUTH_CHANGE_INDEX,
@@ -14,121 +20,30 @@ import {
   LOGIN,
 } from '../../constants/actionTypes'
 
-function Login (props) {
-  const {
-    email='',
-    password='',
-    onChangeField,
-    onSubmit,
-    //onChangeIndex
-  } = props
-
-  return (
-    <Card elevation={0}>
-      <form onSubmit={(ev) => {
-        onSubmit(email, password)
-        ev.preventDefault()
-      }}>
-        <CardContent>
-          <TextField
-            fullWidth
-            id="email"
-            label="Email"
-            value={email}
-            onChange={ev => onChangeField('email', ev.target.value)}
-          />
-          <TextField
-            fullWidth
-            id="password"
-            label="Password"
-            value={password}
-            type="password"
-            onChange={ev => onChangeField('password', ev.target.value)}
-          />
-        </CardContent>
-        <CardActions>
-          <Button type="submit" raised color="primary">Log In</Button>
-          {/* <Button color="primary" onClick={(ev) => onChangeIndex(1)}>Sign Up</Button> */}
-        </CardActions>
-      </form>
-    </Card>
-  )
-}
-
-function Register (props) {
-  const {
-    email='',
-    password='',
-    username='',
-    onChangeField,
-    onSubmit,
-    onChangeIndex
-  } = props
-
-  return (
-    <Card elevation={0}>
-      <form onSubmit={(ev) => {
-        onSubmit(username, email, password)
-        ev.preventDefault()
-      }}>
-        <CardContent>
-          <TextField
-            fullWidth
-            id="username"
-            label="User name"
-            value={username}
-            onChange={ev => onChangeField('username', ev.target.value)}
-          />
-          <TextField
-            fullWidth
-            id="email"
-            label="Email"
-            value={email}
-            onChange={ev => onChangeField('email', ev.target.value)}
-          />
-          <TextField
-            fullWidth
-            id="password"
-            label="Password"
-            value={password}
-            type="password"
-            onChange={ev => onChangeField('password', ev.target.value)}
-          />
-        </CardContent>
-        <CardActions>
-          <Button type="submit" raised color="primary">Sign Up</Button>
-          {/* <Button color="primary" onClick={(ev) => onChangeIndex(0)}>Sign In</Button> */}
-        </CardActions>
-      </form>
-    </Card>
-  )
-}
-
-function TabContainer (props) {
+function TabContainer(props) {
   return <div>{props.children}</div>
 }
 
-const mapStateToProps = state => ({...state.auth})
+const mapStateToProps = state => ({ ...state.auth })
 
 const mapDispatchToProps = dispatch => ({
   onChangeField: (key, value) =>
-    dispatch({type: AUTH_UPDATE_FIELD, key: key, value}),
+    dispatch({ type: AUTH_UPDATE_FIELD, key: key, value }),
   onSubmitRegister: (username, email, password) => {
     const payload = agent.Auth.register(username, email, password)
-    dispatch({type: REGISTER, payload})
+    dispatch({ type: REGISTER, payload })
   },
   onSubmitLogin: (email, password) => {
     const payload = agent.Auth.login(email, password)
-    dispatch({type: LOGIN, payload})
+    dispatch({ type: LOGIN, payload })
   },
   onChangeIndex: (value) => {
-    dispatch({type: AUTH_CHANGE_INDEX, value})
+    dispatch({ type: AUTH_CHANGE_INDEX, value })
   },
 })
 
-function Auth (props) {
+function Auth(props) {
   const {
-    style,
     email,
     password,
     username,
@@ -139,8 +54,17 @@ function Auth (props) {
     onChangeIndex
   } = props
 
+  const styles = {
+    root: {
+      margin: '0 auto',
+      marginTop: '20vh',
+      maxWidth: 400,
+      height: 200,
+    },
+  }
+
   return (
-    <div style={style}>
+    <div style={styles.root}>
       <AppBar position="static" color="default">
         <Tabs
           value={tabIndex}
@@ -149,17 +73,23 @@ function Auth (props) {
           textColor="primary"
           fullWidth
         >
-          <Tab label="Log In"/>
-          <Tab label="Sign Up"/>
+          <Tab label="Log In" />
+          <Tab label="Sign Up" />
         </Tabs>
       </AppBar>
+      <OAuth style={{marginTop:20}}/>
+      <div style={{ display: 'flex',alignItems:'center', marginTop: 10, marginBottom: 10}}>
+        <Divider style={{ flex:1 }} />
+        <Typography type="caption" style={{ paddingLeft: 10, paddingRight: 10}}>OR</Typography>
+        <Divider style={{ flex:1 }} />
+      </div>
       {tabIndex === 0 && <TabContainer>
         <Login
           email={email}
           password={password}
           onChangeField={onChangeField}
           onChangeIndex={onChangeIndex}
-          onSubmit={onSubmitLogin}/>
+          onSubmit={onSubmitLogin} />
       </TabContainer>}
       {tabIndex === 1 && <TabContainer>
         <Register
@@ -168,9 +98,8 @@ function Auth (props) {
           password={password}
           onChangeField={onChangeField}
           onChangeIndex={onChangeIndex}
-          onSubmit={onSubmitRegister}/>
+          onSubmit={onSubmitRegister} />
       </TabContainer>}
-
     </div>
   )
 }

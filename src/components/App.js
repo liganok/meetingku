@@ -82,7 +82,7 @@ const styles = {
     margin: '0 auto',
     padding: 0,
     maxWidth: 700,
-    minWidth: 100
+    minWidth: 100,
   }
 }
 

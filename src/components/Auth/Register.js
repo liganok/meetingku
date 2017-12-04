@@ -1,23 +1,53 @@
 import React from 'react'
-import Auth from './Auth'
-import Grid from 'material-ui/Grid'
+import Card, { CardActions, CardContent } from 'material-ui/Card'
+import Button from 'material-ui/Button'
+import TextField from 'material-ui/TextField'
 
 function Register(props) {
-
-  const styles = {
-    root: {
-      marginTop: '20vh',
-      maxWidth: 400,
-      height: 200
-    },
-  }
+  const {
+    email = '',
+    password = '',
+    username = '',
+    onChangeField,
+    onSubmit,
+    onChangeIndex
+  } = props
 
   return (
-    <Grid container justify="center">
-      <Grid item xs={11} style={styles.root}>
-        <Auth tabIndex={1} />
-      </Grid>
-    </Grid>
+    <Card elevation={0}>
+      <form onSubmit={(ev) => {
+        onSubmit(username, email, password)
+        ev.preventDefault()
+      }}>
+        <CardContent>
+          <TextField
+            fullWidth
+            id="username"
+            label="User name"
+            value={username}
+            onChange={ev => onChangeField('username', ev.target.value)}
+          />
+          <TextField
+            fullWidth
+            id="email"
+            label="Email"
+            value={email}
+            onChange={ev => onChangeField('email', ev.target.value)}
+          />
+          <TextField
+            fullWidth
+            id="password"
+            label="Password"
+            value={password}
+            type="password"
+            onChange={ev => onChangeField('password', ev.target.value)}
+          />
+        </CardContent>
+        <CardActions>
+          <Button type="submit" raised color="primary">Sign Up</Button>
+        </CardActions>
+      </form>
+    </Card>
   )
 }
 

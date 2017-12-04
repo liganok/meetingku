@@ -1,23 +1,43 @@
 import React from 'react'
-import Auth from './Auth'
-import Grid from 'material-ui/Grid'
-
-function Login () {
-
-  const styles = {
-    root: {
-      marginTop: '20vh',
-      maxWidth: 400,
-      height: 200
-    },
-  }
+import Card, { CardActions, CardContent } from 'material-ui/Card'
+import Button from 'material-ui/Button'
+import TextField from 'material-ui/TextField'
+function Login(props) {
+  const {
+    email = '',
+    password = '',
+    onChangeField,
+    onSubmit
+  } = props
 
   return (
-    <Grid container justify="center">
-      <Grid item xs={11} style={styles.root}>
-        <Auth tabIndex={0} />
-      </Grid>
-    </Grid>
+    <Card elevation={0}>
+      <form onSubmit={(ev) => {
+        onSubmit(email, password)
+        ev.preventDefault()
+      }}>
+        <CardContent>
+          <TextField
+            fullWidth
+            id="email"
+            label="Email"
+            value={email}
+            onChange={ev => onChangeField('email', ev.target.value)}
+          />
+          <TextField
+            fullWidth
+            id="password"
+            label="Password"
+            value={password}
+            type="password"
+            onChange={ev => onChangeField('password', ev.target.value)}
+          />
+        </CardContent>
+        <CardActions>
+          <Button type="submit" raised color="primary">Log In</Button>
+        </CardActions>
+      </form>
+    </Card>
   )
 }
 

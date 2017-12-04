@@ -22,7 +22,7 @@ export default (state = defaultState, action) => {
     case types.REDIRECT:
       return { ...state, redirectTo: action.value };
     case types.LOGOUT:
-      return { ...state, redirectTo: '/login', token: null, currentUser: null };
+      return { ...state, redirectTo: '/auth', token: null, currentUser: null };
     case types.LOGIN:
       return {
         ...state,

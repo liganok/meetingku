@@ -1,7 +1,7 @@
 import React from 'react'
 import {Route, Switch } from 'react-router-dom'
 
-import Login from './components/Auth/Login'
+import Auth from './components/Auth/Auth'
 import Register from './components/Auth/Register'
 import Setting from './components/Setting/Setting'
 import AgendaList from './components/Agenda/Agenda'
@@ -17,7 +17,7 @@ import OAuth from './components/Auth/OAuth'
 export default (
     <Switch>
         <Route exact path='/' component={AgendaList} />
-        <Route path='/login' component={Login} />
+        <Route path='/auth' component={Auth} />
         <Route path='/register' component={Register} />
         <Route path='/AgendaItem' component={AgendaItem} />
         <Route path='/template/detail/:id' component={AgendaDetail} />
