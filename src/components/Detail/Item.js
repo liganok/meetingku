@@ -11,6 +11,7 @@ import DateRange from 'material-ui-icons/DateRange'
 import AccessTime from 'material-ui-icons/AccessTime'
 
 import Add from 'material-ui-icons/Add'
+import LocationOn from 'material-ui-icons/LocationOn'
 import Remove from 'material-ui-icons/Remove'
 import IconButton from 'material-ui/IconButton'
 import Input, { InputAdornment } from 'material-ui/Input';
@@ -22,6 +23,7 @@ function Item(props) {
     startedAt,
     duration,
     isHasSubItem,
+    location,
     isRoot = false,
     mouseOverId,
     isShowActions,
@@ -77,7 +79,8 @@ function Item(props) {
             onChange={(ev) => { onChangeField(id, 'name', ev.target.value) }}
           />
           <Grid item container align="center" spacing={0} style={{ display: `${isRoot ? '' : 'none'}`,paddingBottom:10 }}>
-            <DateTimePicker
+            <div style={{paddingRight:20}}>
+              <DateTimePicker
               style={styles.startedAt}
               id={`startedAt${startedAt}`}
               value={startedAt}
@@ -94,6 +97,17 @@ function Item(props) {
                 )
               }} 
               onChange={(time) => { onChangeField(id, 'startedAt', time) }}
+            />
+            </div>
+            <Input
+              style={{ ...styles.duration }}
+              id={`location${location}`}
+              value={location}
+              inputProps={{
+              }}
+              margin="dense"
+              startAdornment={<InputAdornment position="start"><LocationOn style={styles.icon} /></InputAdornment>}
+              onChange={(ev) => { onChangeField(id, 'location', ev.target.value) }}
             />
           </Grid>
         </Grid>

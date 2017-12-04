@@ -33,6 +33,7 @@ function ItemList(props) {
         duration={parseInt(agenda.duration)}
         isHasSubItem={isHasSubItem}
         name={agenda.name}
+        location={agenda.location}
         isRoot={isRoot}
         mouseOverId={mouseOverId}
         isShowActions={isShowActions}

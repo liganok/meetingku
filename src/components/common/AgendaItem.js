@@ -35,7 +35,7 @@ const mapDispatchToProps = dispatch => ({
   onActionCopy: value =>
     dispatch({ type: types.AI_ACTION_COPY, payload: agent.Agenda.getAgendaDetail(value) }),
   onOffDialog: value =>
-    dispatch({ type: types.AI_ACTION_ONOFF_DIALOG, payload:value }),
+    dispatch({ type: types.AI_ACTION_ONOFF_DIALOG, payload: value }),
   onRedirect: (value = null) =>
     dispatch({ type: types.REDIRECT, value: value })
 
@@ -97,18 +97,19 @@ function AgendaItem(props) {
             </Grid>
             <Grid item xs={5} container spacing={0} justify="flex-end"
               style={{ visibility: !(isShowActions && (id === mouseOverId)) && "display" }}>
-              <IconButton
-                style={styles.iconButton}
-                aria-label="Play/pause"
-                onClick={() => onRedirect(`/agenda/play/${id}`)}>
-                <PlayArrowIcon />
-              </IconButton>
               {type === 'agenda' &&
-                <IconButton aria-label="Delete"
-                  style={styles.iconButton}
-                  onClick={() => onActionLogicDel(id)}>
-                  <Delete />
-                </IconButton>}
+                <div>
+                  <IconButton aria-label="Delete"
+                    style={styles.iconButton}
+                    onClick={() => onActionLogicDel(id)}>
+                    <Delete />
+                  </IconButton>
+                  <IconButton aria-label="Delete"
+                    style={styles.iconButton}
+                    onClick={() => onActionCopy(id)}>
+                    <ContentCopy />
+                  </IconButton>
+                </div>}
               {type === 'template' &&
                 <IconButton aria-label="Delete"
                   style={styles.iconButton}
@@ -133,6 +134,12 @@ function AgendaItem(props) {
                 aria-label="Detail"
                 onClick={() => onRedirect(`/agenda/detail/${id}`)}>
                 <Description />
+              </IconButton>
+              <IconButton
+                style={styles.iconButton}
+                aria-label="Play/pause"
+                onClick={() => onRedirect(`/agenda/play/${id}`)}>
+                <PlayArrowIcon />
               </IconButton>
             </Grid>
           </Grid>

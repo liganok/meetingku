@@ -28,14 +28,16 @@ export default (state = defaultState, action) => {
         ...state,
         redirectTo: action.error || action.payload.status !== 200 ? null : '/agenda',
         token: action.error || action.payload.status !== 200 ? null : action.payload.data.token,
-        currentUser: action.error || action.payload.status !== 200 ? null : action.payload.data
+        currentUser: action.error || action.payload.status !== 200 ? null : action.payload.data,
+        authError: action.payload.status !== 200 ? action.payload.message:null
       };
     case types.REGISTER:
       return {
         ...state,
         redirectTo: action.error || action.payload.status !== 200 ? null : '/agenda',
         token: action.error || action.payload.status !== 200 ? null : action.payload.data.token,
-        currentUser: action.error || action.payload.status !== 200 ? null : action.payload.data
+        currentUser: action.error || action.payload.status !== 200 ? null : action.payload.data,
+        authError: action.payload.status !== 200 ? action.payload.message : null
       };
     case types.ASYNC_START:
       return {

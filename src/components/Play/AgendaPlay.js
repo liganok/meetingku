@@ -64,6 +64,7 @@ class AgendaPlay extends React.Component {
           onMouseOut={() => onActionMouseOut(currentAgenda.id)}
           isMouseOver = {isMouseOver}
           name={currentAgenda.name}
+          location={currentAgenda.location}
           startedAt={currentAgenda.startedAt}
           duration={currentAgenda.duration}
           spend={timer} />

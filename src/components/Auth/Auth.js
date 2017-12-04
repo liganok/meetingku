@@ -44,6 +44,7 @@ const mapDispatchToProps = dispatch => ({
 
 function Auth(props) {
   const {
+    authError,
     email,
     password,
     username,
@@ -82,6 +83,10 @@ function Auth(props) {
         <Divider style={{ flex:1 }} />
         <Typography type="caption" style={{ paddingLeft: 10, paddingRight: 10}}>OR</Typography>
         <Divider style={{ flex:1 }} />
+      </div>
+      <div style={{backgroundColor:'white',paddingLeft:15,paddingRight:15,display:!authError&&'none'}}>
+        <Typography style={{padding:'10px 0 10px 0'}} color='error'>{authError && authError}</Typography>
+        <Divider/>
       </div>
       {tabIndex === 0 && <TabContainer>
         <Login

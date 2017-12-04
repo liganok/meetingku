@@ -7,30 +7,24 @@ import Button from 'material-ui/Button';
 import agent from '../../agent'
 import ItemList from './ItemList'
 
-import {
-  AGENDA_UPDATE_FIELD,
-  AGENDA_SAVE,
-  AGENDA_MENU_ITEM_TAP,
-  AGENDA_GET_DETAIL,
-  AI_ACTION_MOUSE_OVER,
-  AI_ACTION_MOUSE_OUT,
-} from '../../constants/actionTypes'
+import * as types from '../../constants/actionTypes'
 
 const mapStateToProps = state => ({ ...state.agendaDetail, inProgress: state.common.inProgress })
 const mapDispatchToProps = dispatch => ({
-  onLoad: (payload) => dispatch({ type: AGENDA_GET_DETAIL, payload }),
+  onLoad: (payload) => dispatch({ type: types.AGENDA_GET_DETAIL, payload }),
   onSaveAgenda: agenda => {
     let ISOStartedAt = new Date(agenda.startedAt).toISOString()
     let savedAgenda = { ...agenda, startedAt: ISOStartedAt }
-    dispatch({ type: AGENDA_SAVE, payload: agent.Agenda.save(savedAgenda) })
+    dispatch({ type: types.AGENDA_SAVE, payload: agent.Agenda.save(savedAgenda) })
   },
   onChangeField: (id, key, value) => {
-    dispatch({ type: AGENDA_UPDATE_FIELD, id: id, key: key, value: value })
+    dispatch({ type: types.AGENDA_UPDATE_FIELD, id: id, key: key, value: value })
   },
-  onMenuItemTap: (id, value) => dispatch({ type: AGENDA_MENU_ITEM_TAP, id: id, value: value }),
-  onActionMouseOver: value => dispatch({ type: AI_ACTION_MOUSE_OVER, payload: value }),
-  onActionMouseOut: value => dispatch({ type: AI_ACTION_MOUSE_OUT, payload: value }),
-
+  onMenuItemTap: (id, value) => dispatch({ type: types.AGENDA_MENU_ITEM_TAP, id: id, value: value }),
+  onActionMouseOver: value => dispatch({ type: types.AI_ACTION_MOUSE_OVER, payload: value }),
+  onActionMouseOut: value => dispatch({ type: types.AI_ACTION_MOUSE_OUT, payload: value }),
+  onRedirect: (value = null) =>
+    dispatch({ type: types.REDIRECT, value: value })
 })
 
 class AgendaDetail extends React.Component {
@@ -46,7 +40,7 @@ class AgendaDetail extends React.Component {
     }
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     //alert('hello')
   }
 
@@ -61,7 +55,8 @@ class AgendaDetail extends React.Component {
       onActionMouseOut,
       onMenuItemTap,
       onSaveAgenda,
-      inProgress
+      inProgress,
+      onRedirect
     } = this.props
 
     return (
@@ -76,15 +71,17 @@ class AgendaDetail extends React.Component {
           onMenuItemTap={onMenuItemTap}
         />
         <Grid container spacing={0} justify="flex-end" style={{ marginTop: 10 }}>
+          <Button dense style={{ margin: 5 }}
+            style={{ margin: '0 0 20px 5px' }}
+            onClick={() => onRedirect(`/agenda/play/${currentAgenda.id}`)} >
+            Play
+          </Button>
           <Button
-            style={{ margin: 5 }}
+            style={{ margin: '0 0 20px 5px' }}
             disabled={inProgress}
             raised dense color="primary"
             onClick={() => onSaveAgenda(currentAgenda)}>
             Save
-          </Button>
-          <Button dense style={{ margin: 5 }} >
-            Delete
           </Button>
         </Grid>
       </div>
