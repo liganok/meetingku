@@ -26,9 +26,9 @@ export default (state = defaultState, action) => {
     case types.LOGIN:
       return {
         ...state,
-        redirectTo: action.error || action.payload.status !== 200 ? null : '/agenda',
         token: action.error || action.payload.status !== 200 ? null : action.payload.data.token,
         currentUser: action.error || action.payload.status !== 200 ? null : action.payload.data,
+        redirectTo: action.error || action.payload.status !== 200 ? null : '/agenda',
         authError: action.payload.status !== 200 ? action.payload.message:null
       };
     case types.REGISTER:

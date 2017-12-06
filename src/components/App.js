@@ -7,6 +7,7 @@ import agent from '../agent'
 import routes from '../routes'
 import Header from './Header/Header'
 import MessageBox from './common/MessageBox'
+import { isNeedLoginCheck} from './../utils/auth'
 
 const mapStateToProps = state => ({ ...state.common })
 const mapDispatchToProps = dispatch => ({
@@ -20,9 +21,12 @@ const mapDispatchToProps = dispatch => ({
 
 class App extends React.Component {
   componentWillReceiveProps(nextProps) {
+    let path = this.props.history.location.pathname
+    if (!this.props.currentUser && isNeedLoginCheck(path)) {
+      this.props.history.push('/auth')
+    }
 
     if (nextProps.redirectTo) {
-      //this.context.router.replace(nextProps.redirectTo);
       this.props.history.push(nextProps.redirectTo)
       this.props.onRedirect()
     }
