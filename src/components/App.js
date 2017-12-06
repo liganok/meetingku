@@ -22,7 +22,8 @@ const mapDispatchToProps = dispatch => ({
 class App extends React.Component {
   componentWillReceiveProps(nextProps) {
     let path = this.props.history.location.pathname
-    if (!this.props.currentUser && isNeedLoginCheck(path)) {
+    const token = window.localStorage.getItem('jwt')
+    if (!token && isNeedLoginCheck(path)) {
       this.props.history.push('/auth')
     }
 

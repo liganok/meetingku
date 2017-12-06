@@ -1,6 +1,6 @@
 import agent from './agent';
 import * as types from './constants/actionTypes'
-import {makeCopy} from './utils/agenda'
+import { makeCopy } from './utils/agenda'
 
 const promiseMiddleware = store => next => action => {
   if (isPromise(action.payload)) {
@@ -27,7 +27,7 @@ const promiseMiddleware = store => next => action => {
           store.dispatch({ type: types.SHOW_MSG, payload: res });
           store.dispatch({ type: types.GET_LIST_AGENDA, payload: agent.Agenda.getAgendas(0) })
         }
-        
+
         if (action.type === types.AI_ACTION_LOGIC_DEL_UNDO) {
           store.dispatch({ type: types.SHOW_MSG, payload: res });
           store.dispatch({ type: types.GET_LIST_TRASH, payload: agent.Agenda.getTrash(0) })
@@ -65,13 +65,22 @@ const promiseMiddleware = store => next => action => {
 
 const localStorageMiddleware = store => next => action => {
   if (action.type === types.REGISTER || action.type === types.LOGIN) {
-    if (!action.error && action.payload.status === 200) {
+    if (!action.error && !action.payload.error) {
       window.localStorage.setItem('jwt', action.payload.data.token);
       agent.setToken(action.payload.data.token);
     }
   } else if (action.type === types.LOGOUT) {
     window.localStorage.setItem('jwt', '');
     agent.setToken(null);
+  }
+
+  try {
+    if(action.payload.error.code === 401){
+      window.localStorage.setItem('jwt', '');
+      agent.setToken(null);
+    }
+  } catch (error) {
+    
   }
 
   next(action);

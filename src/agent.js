@@ -40,6 +40,7 @@ const Agenda = {
   update: agenda => requests.put(`/agenda/${agenda.id}`, { agenda: agenda }),
   save: (agenda) => requests.post('/agenda', { agenda }),
   getTemplates: () => requests.get('/agenda/template'),
+  getTemplateDetail: (agendaId) => requests.get(`/agenda/template/${agendaId}`),
   getAgendas: (page) => requests.get(`/agenda?${limit(20, page)}`),
   getTrash: (page) => requests.get(`/agenda?type=1&${limit(20, page)}`),
   getAgendaDetail: (agendaId) => requests.get(`/agenda/detail/${agendaId}`),

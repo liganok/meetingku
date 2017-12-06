@@ -91,7 +91,7 @@ export default (state = defaultState, action) => {
     case types.AGENDA_GET_DETAIL:
       return {
         ...state,
-        currentAgenda: action.payload.status ? action.payload.data : null
+        currentAgenda: action.payload.error ? null : action.payload.data
       };
     case types.AGENDA_UPDATE_FIELD:
       let currentAgenda = changeAgenda(JSON.parse(JSON.stringify(state.currentAgenda)), action.id, action.key, action.value);
@@ -116,7 +116,7 @@ export default (state = defaultState, action) => {
     case types.AGENDA_CREATE:
       return { ...state, currentAgenda: defaultState.currentAgenda };
     case types.AI_ACTION_COPY:
-      return { ...state, currentAgenda: action.payload.status ? action.payload.data : null}
+      return { ...state, currentAgenda: action.payload.error ? null : action.payload.data}
     default:
       return state;
   }

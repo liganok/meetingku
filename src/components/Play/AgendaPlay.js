@@ -25,7 +25,11 @@ class AgendaPlay extends React.Component {
   componentWillMount() {
     const { match, onLoad } = this.props
     if (match.params.id) {
-      onLoad(agent.Agenda.getAgendaDetail(match.params.id))
+      if (match.path.indexOf('template') > 0) {
+        onLoad(agent.Agenda.getTemplateDetail(match.params.id))
+      }else{
+        onLoad(agent.Agenda.getAgendaDetail(match.params.id))
+      }
     }
   }
 

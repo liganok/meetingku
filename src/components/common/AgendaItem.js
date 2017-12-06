@@ -32,8 +32,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch({ type: types.AI_ACTION_DEL, payload: agent.Agenda.delete(value) })
     dispatch({ type: types.AI_ACTION_ONOFF_DIALOG })
   },
-  onActionCopy: value =>
-    dispatch({ type: types.AI_ACTION_COPY, payload: agent.Agenda.getAgendaDetail(value) }),
+  onActionCopy: (value, isFromTemplate) =>
+    dispatch({ type: types.AI_ACTION_COPY, payload: isFromTemplate ? agent.Agenda.getTemplateDetail(value) : agent.Agenda.getAgendaDetail(value) }),
   onOffDialog: value =>
     dispatch({ type: types.AI_ACTION_ONOFF_DIALOG, payload: value }),
   onRedirect: (value = null) =>
@@ -109,13 +109,40 @@ function AgendaItem(props) {
                     onClick={() => onActionCopy(id)}>
                     <ContentCopy />
                   </IconButton>
+                  <IconButton
+                    style={styles.iconButton}
+                    aria-label="Detail"
+                    onClick={() => onRedirect(`/agenda/detail/${id}`)}>
+                    <Description />
+                  </IconButton>
+                  <IconButton
+                    style={styles.iconButton}
+                    aria-label="Play/pause"
+                    onClick={() => onRedirect(`/agenda/play/${id}`)}>
+                    <PlayArrowIcon />
+                  </IconButton>
                 </div>}
               {type === 'template' &&
-                <IconButton aria-label="Delete"
-                  style={styles.iconButton}
-                  onClick={() => onActionCopy(id)}>
-                  <ContentCopy />
-                </IconButton>}
+                <div>
+                  <IconButton aria-label="Delete"
+                    style={styles.iconButton}
+                    onClick={() => onActionCopy(id,true)}>
+                    <ContentCopy />
+                  </IconButton>
+                  <IconButton
+                    style={styles.iconButton}
+                    aria-label="Detail"
+                    onClick={() => onRedirect(`/template/detail/${id}`)}>
+                    <Description />
+                  </IconButton>
+                  <IconButton
+                    style={styles.iconButton}
+                    aria-label="Play/pause"
+                    onClick={() => onRedirect(`/template/play/${id}`)}>
+                    <PlayArrowIcon />
+                  </IconButton>
+                </div>
+              }
               {type === 'trash' &&
                 <div>
                   <IconButton aria-label="Undo"
@@ -128,19 +155,19 @@ function AgendaItem(props) {
                     onClick={() => onOffDialog(id)}>
                     <Delete />
                   </IconButton>
+                  <IconButton
+                    style={styles.iconButton}
+                    aria-label="Detail"
+                    onClick={() => onRedirect(`/agenda/detail/${id}`)}>
+                    <Description />
+                  </IconButton>
+                  <IconButton
+                    style={styles.iconButton}
+                    aria-label="Play/pause"
+                    onClick={() => onRedirect(`/agenda/play/${id}`)}>
+                    <PlayArrowIcon />
+                  </IconButton>
                 </div>}
-              <IconButton
-                style={styles.iconButton}
-                aria-label="Detail"
-                onClick={() => onRedirect(`/agenda/detail/${id}`)}>
-                <Description />
-              </IconButton>
-              <IconButton
-                style={styles.iconButton}
-                aria-label="Play/pause"
-                onClick={() => onRedirect(`/agenda/play/${id}`)}>
-                <PlayArrowIcon />
-              </IconButton>
             </Grid>
           </Grid>
         </CardContent>

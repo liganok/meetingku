@@ -28,12 +28,16 @@ const mapDispatchToProps = dispatch => ({
 })
 
 class AgendaDetail extends React.Component {
-
+  constructor() {
+    super()
+    this.isFromTemplate = false
+  }
   componentWillMount() {
     const { match, onLoad } = this.props
+    this.isFromTemplate = match.path.indexOf('template') > 0
     if (match.params.id) {
-      if (match.path.indexOf('template') > 0) {
-        onLoad(agent.Template.get(match.params.id))
+      if (this.isFromTemplate) {
+        onLoad(agent.Agenda.getTemplateDetail(match.params.id))
       } else {
         onLoad(agent.Agenda.getAgendaDetail(match.params.id))
       }
@@ -77,7 +81,7 @@ class AgendaDetail extends React.Component {
             Play
           </Button>
           <Button
-            style={{ margin: '0 0 20px 5px' }}
+            style={{ margin: '0 0 20px 5px', display: this.isFromTemplate && 'none' }}
             disabled={inProgress}
             raised dense color="primary"
             onClick={() => onSaveAgenda(currentAgenda)}>
