@@ -1,5 +1,5 @@
 import * as types from '../constants/actionTypes';
-import {getOAuthURL} from '../utils/oAuth'
+import { getOAuthURL } from '../utils/oAuth'
 
 const defaultState = {
   appName: 'Meetingku',
@@ -26,18 +26,18 @@ export default (state = defaultState, action) => {
     case types.LOGIN:
       return {
         ...state,
-        token: action.error  ? null : action.payload.data.token,
+        token: action.error ? null : action.payload.data.token,
         currentUser: action.error ? null : action.payload.data,
         redirectTo: action.error ? null : '/agenda',
-        authError: action.error ? action.payload.error.message:null
+        authError: action.error ? action.payload.error.message : null
       };
     case types.REGISTER:
       return {
         ...state,
-        redirectTo: action.error || action.payload.status !== 200 ? null : '/agenda',
-        token: action.error || action.payload.status !== 200 ? null : action.payload.data.token,
-        currentUser: action.error || action.payload.status !== 200 ? null : action.payload.data,
-        authError: action.payload.status !== 200 ? action.payload.message : null
+        token: action.error ? null : action.payload.data.token,
+        currentUser: action.error ? null : action.payload.data,
+        redirectTo: action.error ? null : '/agenda',
+        authError: action.error ? action.payload.message : null
       };
     case types.ASYNC_START:
       return {

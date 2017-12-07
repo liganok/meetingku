@@ -77,7 +77,7 @@ class AgendaDetail extends React.Component {
         <Grid container spacing={0} justify="flex-end" style={{ marginTop: 10 }}>
           <Button dense style={{ margin: 5 }}
             style={{ margin: '0 0 20px 5px' }}
-            onClick={() => onRedirect(`/agenda/play/${currentAgenda.id}`)} >
+            onClick={() => onRedirect(`/${this.isFromTemplate ? 'template' : 'agenda'}/play/${currentAgenda.id}`)} >
             Play
           </Button>
           <Button
