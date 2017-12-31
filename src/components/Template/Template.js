@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import agent from '../../agent'
 import AgendaList from '../common/AgendaList'
-import { GET_LIST_TEMPLATE, } from '../../constants/actionTypes'
+import * as types from '../../constants/actionTypes'
 
 const mapStateToProps = state => ({
   ...state.agendaList,
@@ -11,10 +11,10 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  onLoad: (payload) => dispatch({
-    type: GET_LIST_TEMPLATE,
-    payload
-  }),
+  onLoad: (payload) => {
+    dispatch({ type: types.GET_LIST_TEMPLATE, payload })
+    dispatch({ type: types.UPDATE_APP_NAME, payload: 'Template' })
+  },
 })
 
 class Template extends React.Component {
@@ -25,9 +25,9 @@ class Template extends React.Component {
 
   render() {
     return (
-        <div>
-          {this.props.templates && <AgendaList items={this.props.templates} type="template"/>}
-        </div>
+      <div>
+        {this.props.templates && <AgendaList items={this.props.templates} type="template" />}
+      </div>
     )
   }
 }

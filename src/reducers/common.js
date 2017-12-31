@@ -70,6 +70,11 @@ export default (state = defaultState, action) => {
       }
     case types.AUTH_START_OAUTH:
       return { ...state, oAuthInfo: { type: action.payload }, redirectTo: getOAuthURL(action.payload) }
+    case types.UPDATE_APP_NAME:
+      return {
+        ...state,
+        appName: action.payload
+      };
     default:
       return state;
   }

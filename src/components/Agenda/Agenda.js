@@ -20,7 +20,10 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  onLoad: (payload) => dispatch({ type: types.GET_LIST_AGENDA, payload }),
+  onLoad: (payload) => {
+    dispatch({ type: types.GET_LIST_AGENDA, payload }),
+    dispatch({ type: types.UPDATE_APP_NAME, payload: 'Agenda' })
+  },
   onCreate: () => dispatch({ type: types.AGENDA_CREATE }),
 })
 
@@ -86,7 +89,7 @@ class Agenda extends React.Component {
           <AgendaList items={this.props.agendas} type="agenda" /> :
           <div>
             <Typography type="subheading" style={{ color: SECOND_TEXT_COLOR }}>No agenda found</Typography>
-            <Divider/>
+            <Divider />
           </div>}
       </div>
     )

@@ -19,8 +19,10 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  onLoad: (payload) =>
-    dispatch({ type: types.GET_LIST_TRASH, payload }),
+  onLoad: (payload) => {
+    dispatch({ type: types.GET_LIST_TRASH, payload })
+    dispatch({ type: types.UPDATE_APP_NAME, payload:'Trash' })
+  },
   onActionDel: value => {
     dispatch({ type: types.AI_ACTION_DEL, payload: agent.Agenda.delete(value) })
     dispatch({ type: types.AI_ACTION_ONOFF_DIALOG })

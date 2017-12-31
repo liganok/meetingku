@@ -12,6 +12,8 @@ import * as types from '../../constants/actionTypes'
 const mapStateToProps = state => ({ ...state.agendaDetail, inProgress: state.common.inProgress })
 const mapDispatchToProps = dispatch => ({
   onLoad: (payload) => dispatch({ type: types.AGENDA_GET_DETAIL, payload }),
+  onUpdateAppName: (payload) => dispatch({ type: types.UPDATE_APP_NAME, payload: payload }),
+
   onSaveAgenda: agenda => {
     let ISOStartedAt = new Date(agenda.startedAt).toISOString()
     let savedAgenda = { ...agenda, startedAt: ISOStartedAt }
@@ -33,14 +35,18 @@ class AgendaDetail extends React.Component {
     this.isFromTemplate = false
   }
   componentWillMount() {
-    const { match, onLoad } = this.props
+    const { match, onLoad, onUpdateAppName } = this.props
     this.isFromTemplate = match.path.indexOf('template') > 0
     if (match.params.id) {
       if (this.isFromTemplate) {
         onLoad(agent.Agenda.getTemplateDetail(match.params.id))
+        onUpdateAppName('Temlate')
       } else {
         onLoad(agent.Agenda.getAgendaDetail(match.params.id))
+        onUpdateAppName('Agenda')
       }
+    }else{
+      onUpdateAppName('Agenda')
     }
   }
 

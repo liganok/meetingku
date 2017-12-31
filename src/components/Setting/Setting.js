@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { LOGOUT } from '../../constants/actionTypes'
+import * as types from '../../constants/actionTypes'
 import UserInfo from './UserInfo'
 
 const mapStateToProps = state => ({
@@ -11,21 +11,25 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  onClickLogout: () => dispatch({
-    type: LOGOUT
-  })
+  onClickLogout: () => dispatch({type: types.LOGOUT}),
+  onLoad:()=> dispatch({type:types.UPDATE_APP_NAME,payload:'Setting'})
 })
 
-function Setting(props) {
-  const { currentUser, onClickLogout } = props
-  return (
-    <div>
-      {currentUser && <UserInfo
-        username={currentUser.username}
-        email={currentUser.email}
-        onClickLogout={onClickLogout} />}
-    </div>
-  )
+class Setting extends React.Component{
+  componentWillMount() {
+    this.props.onLoad()
+  }
+  render(){
+    const { currentUser, onClickLogout } = this.props
+    return (
+      <div>
+        {currentUser && <UserInfo
+          username={currentUser.username}
+          email={currentUser.email}
+          onClickLogout={onClickLogout} />}
+      </div>
+    )
+  }
 }
 
 Setting.propTypes = {

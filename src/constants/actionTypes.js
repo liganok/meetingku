@@ -10,6 +10,7 @@ export const ASYNC_START = 'ASYNC_START'
 export const ASYNC_END = 'ASYNC_END'
 export const SHOW_MSG = 'SHOW_MSG'
 export const CLOSE_MSG = 'CLOSE_MSG'
+export const UPDATE_APP_NAME = 'UPDATE_APP_NAME'
 
 //agendaList
 export const GET_LIST_AGENDA = 'GET_LIST_AGENDA'
