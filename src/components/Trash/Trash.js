@@ -4,14 +4,18 @@ import { connect } from 'react-redux'
 import agent from '../../agent'
 import AgendaList from '../common/AgendaList'
 import ConfirmDialog from '../common/ConfirmDialog'
+import Divider from 'material-ui/Divider'
+import Typography from 'material-ui/Typography'
+
+import { SECOND_TEXT_COLOR } from '../../constants/globalSetting'
 
 import * as types from '../../constants/actionTypes'
 
 const mapStateToProps = state => ({
   ...state.agendaList,
   currentUser: state.common.currentUser,
-  showDialog:state.agendaItem.showDialog,
-  delId:state.agendaItem.delId
+  showDialog: state.agendaItem.showDialog,
+  delId: state.agendaItem.delId
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -34,12 +38,17 @@ class Trash extends React.Component {
   }
 
   render() {
-    const{showDialog,onOffDialog,onActionDel,delId}=this.props
+    const { showDialog, onOffDialog, onActionDel, delId } = this.props
     return (
       <div >
-        {this.props.trash && <AgendaList items={this.props.trash} type="trash" />}
+        {this.props.trash && this.props.trash.length > 0 ?
+          <AgendaList items={this.props.trash} type="trash" /> :
+          <div>
+            <Typography type="subheading" style={{ color: SECOND_TEXT_COLOR }}>No trash found</Typography>
+            <Divider />
+          </div>}
         <ConfirmDialog
-        title='Confirm to delete?'
+          title='Confirm to delete?'
           message={'Agenda will be permanently deleted and can not recover'}
           open={showDialog}
           onRequestClose={() => onOffDialog()}
