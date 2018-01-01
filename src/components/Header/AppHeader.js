@@ -18,6 +18,7 @@ function AppHeader(props) {
     appName,
     onActionToggle,
     appLoaded,
+    style
   } = props
 
   const styles = {
@@ -26,7 +27,6 @@ function AppHeader(props) {
     },
     menuButton: {
       marginLeft: -12,
-      marginRight: 20,
     },
     placeholder: {
       minHeight: 80
@@ -34,7 +34,7 @@ function AppHeader(props) {
   }
 
   return (
-    <div>
+    <div style={style}>
       <AppBar position="fixed">
         <Toolbar style={{display:'flex',alignItems:'center'}}>
           <IconButton

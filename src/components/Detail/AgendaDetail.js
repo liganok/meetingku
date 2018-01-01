@@ -40,7 +40,7 @@ class AgendaDetail extends React.Component {
     if (match.params.id) {
       if (this.isFromTemplate) {
         onLoad(agent.Agenda.getTemplateDetail(match.params.id))
-        onUpdateAppName('Temlate')
+        onUpdateAppName('Template')
       } else {
         onLoad(agent.Agenda.getAgendaDetail(match.params.id))
         onUpdateAppName('Agenda')

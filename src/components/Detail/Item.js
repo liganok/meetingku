@@ -72,32 +72,34 @@ function Item(props) {
           <TextField
             style={styles.name}
             id={`name${id}`}
-            placeholder={isRoot ? 'Input your agenda name':'Add agenda item'}
+            placeholder={isRoot ? 'Input your agenda name' : 'Add agenda item'}
             value={name}
             fullWidth
             margin="normal"
             onChange={(ev) => { onChangeField(id, 'name', ev.target.value) }}
           />
-          <Grid item container align="center" spacing={0} style={{ display: `${isRoot ? '' : 'none'}`,paddingBottom:10 }}>
-            <div style={{paddingRight:20}}>
+          <Grid item container align="center" spacing={0} style={{ display: `${isRoot ? '' : 'none'}`, paddingBottom: 10 }}>
+            <div style={{ paddingRight: 20 }}>
               <DateTimePicker
-              style={styles.startedAt}
-              id={`startedAt${startedAt}`}
-              value={startedAt}
-              leftArrowIcon={<KeyboardArrowLeft/>}
-              rightArrowIcon={<KeyboardArrowRight />}
-              dateRangeIcon={<DateRange/>}
-              timeIcon={<AccessTime/>}
-              InputProps={{
-                style:styles.startedAt,
-                startAdornment: (
-                  <InputAdornment  position="start">
-                    <Flag style={styles.icon}/>
-                  </InputAdornment>
-                )
-              }} 
-              onChange={(time) => { onChangeField(id, 'startedAt', time) }}
-            />
+                autoOk
+                ampm={false}
+                style={styles.startedAt}
+                id={`startedAt${startedAt}`}
+                value={startedAt}
+                leftArrowIcon={<KeyboardArrowLeft />}
+                rightArrowIcon={<KeyboardArrowRight />}
+                dateRangeIcon={<DateRange />}
+                timeIcon={<AccessTime />}
+                InputProps={{
+                  style: styles.startedAt,
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Flag style={styles.icon} />
+                    </InputAdornment>
+                  )
+                }}
+                onChange={(time) => { onChangeField(id, 'startedAt', time) }}
+              />
             </div>
             <Input
               style={{ ...styles.duration }}
@@ -114,7 +116,7 @@ function Item(props) {
         <Grid item xs={4} container direction="column" spacing={0} alignItems="flex-end" style={{ padding: 5 }}>
           <Grid item
             style={{ visibility: isShowActions && (id === mouseOverId) ? '' : 'hidden' }}>
-            <IconButton style={{ ...styles.actionButton,marginRight:15}} onClick={() => { onMenuItemTap(id, 'ADD') }}>
+            <IconButton style={{ ...styles.actionButton, marginRight: 15 }} onClick={() => { onMenuItemTap(id, 'ADD') }}>
               <Add />
             </IconButton>
             <IconButton style={styles.actionButton} onClick={() => { onMenuItemTap(id, 'DEL') }}>

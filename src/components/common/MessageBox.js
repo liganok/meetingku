@@ -23,7 +23,7 @@ function MessageBox(props) {
       }}  
       open={isShowMsg}
       autoHideDuration={2500}
-      onRequestClose={onRequestClose}
+      onClose={onRequestClose}
       SnackbarContentProps={{
         'aria-describedby': 'message-id',
       }}
