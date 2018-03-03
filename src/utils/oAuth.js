@@ -1,7 +1,7 @@
 
 function generateGoogleUrl() {
   let CLIENT_ID = '741761109516-i26a0o3l2hjbtp80q4rh4385deq62b33.apps.googleusercontent.com'
-  let REDIRECT_URI = (process.env.NODE_ENV === 'development') ? 'http://localhost:3000/oauth/google' : 'https://www.meetingku.com/oauth/google'
+  let REDIRECT_URI = (process.env.NODE_ENV === 'development') ? 'http://localhost:3000/oauth/google' : 'https://app.meetingku.com/oauth/google'
   let SCOPE = 'https://www.googleapis.com/auth/userinfo.profile+https://www.googleapis.com/auth/userinfo.email'
   let STATE = ''
   let RESPONSE_TYPE = 'token'
