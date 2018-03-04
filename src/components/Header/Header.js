@@ -69,14 +69,14 @@ function Header(props) {
             <ListItemText primary="Setting" />
           </ListItem>
         </SLink>
-        <SLink to="/help">
+        <a href="https://www.meetingku.com" style={{ textDecoration:'none'}}>
           <ListItem button onClick={onActionToggle}>
             <ListItemIcon>
               <Help />
             </ListItemIcon>
             <ListItemText primary="Help" />
           </ListItem>
-        </SLink>
+        </a>
       </Drawer>
     </div>
   )
