@@ -13,6 +13,7 @@ import Flag from 'material-ui-icons/Flag'
 import Alarm from 'material-ui-icons/Alarm'
 import Typography from 'material-ui/Typography'
 import Grid from 'material-ui/Grid'
+import Tooltip from 'material-ui/Tooltip'
 
 import agent from '../../agent'
 
@@ -99,74 +100,96 @@ function AgendaItem(props) {
               style={{ visibility: !(isShowActions && (id === mouseOverId)) && "display" }}>
               {type === 'agenda' &&
                 <div>
-                  <IconButton aria-label="Delete"
-                    style={styles.iconButton}
-                    onClick={() => onActionLogicDel(id)}>
-                    <Delete />
-                  </IconButton>
-                  <IconButton aria-label="Delete"
-                    style={styles.iconButton}
-                    onClick={() => onActionCopy(id)}>
-                    <ContentCopy />
-                  </IconButton>
-                  <IconButton
-                    style={styles.iconButton}
-                    aria-label="Detail"
-                    onClick={() => onRedirect(`/agenda/detail/${id}`)}>
-                    <Description />
-                  </IconButton>
-                  <IconButton
-                    style={styles.iconButton}
-                    aria-label="Play/pause"
-                    onClick={() => onRedirect(`/agenda/play/${id}`)}>
-                    <PlayArrowIcon />
-                  </IconButton>
+                  <Tooltip title="Delete">
+                    <IconButton aria-label="Delete"
+                      style={styles.iconButton}
+                      onClick={() => onActionLogicDel(id)}>
+                      <Delete />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Copy">
+                    <IconButton aria-label="Copy"
+                      style={styles.iconButton}
+                      onClick={() => onActionCopy(id)}>
+                      <ContentCopy />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Detail">
+                    <IconButton
+                      style={styles.iconButton}
+                      aria-label="Detail"
+                      onClick={() => onRedirect(`/agenda/detail/${id}`)}>
+                      <Description />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Start the meeting">
+                    <IconButton
+                      style={styles.iconButton}
+                      aria-label="Play/pause"
+                      onClick={() => onRedirect(`/agenda/play/${id}`)}>
+                      <PlayArrowIcon />
+                    </IconButton>
+                  </Tooltip>
                 </div>}
               {type === 'template' &&
                 <div>
-                  <IconButton aria-label="Delete"
-                    style={styles.iconButton}
-                    onClick={() => onActionCopy(id,true)}>
-                    <ContentCopy />
-                  </IconButton>
-                  <IconButton
-                    style={styles.iconButton}
-                    aria-label="Detail"
-                    onClick={() => onRedirect(`/template/detail/${id}`)}>
-                    <Description />
-                  </IconButton>
-                  <IconButton
-                    style={styles.iconButton}
-                    aria-label="Play/pause"
-                    onClick={() => onRedirect(`/template/play/${id}`)}>
-                    <PlayArrowIcon />
-                  </IconButton>
+                  <Tooltip title="Copy">
+                    <IconButton aria-label="Delete"
+                      style={styles.iconButton}
+                      onClick={() => onActionCopy(id, true)}>
+                      <ContentCopy />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Detail">
+                    <IconButton
+                      style={styles.iconButton}
+                      aria-label="Detail"
+                      onClick={() => onRedirect(`/template/detail/${id}`)}>
+                      <Description />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Start the meeting">
+                    <IconButton
+                      style={styles.iconButton}
+                      aria-label="Play/pause"
+                      onClick={() => onRedirect(`/template/play/${id}`)}>
+                      <PlayArrowIcon />
+                    </IconButton>
+                  </Tooltip>
                 </div>
               }
               {type === 'trash' &&
                 <div>
-                  <IconButton aria-label="Undo"
-                    style={styles.iconButton}
-                    onClick={() => onActionLogicDelUndo(id)}>
-                    <Undo />
-                  </IconButton>
-                  <IconButton aria-label="Delete"
-                    style={styles.iconButton}
-                    onClick={() => onOffDialog(id)}>
-                    <Delete />
-                  </IconButton>
-                  <IconButton
-                    style={styles.iconButton}
-                    aria-label="Detail"
-                    onClick={() => onRedirect(`/agenda/detail/${id}`)}>
-                    <Description />
-                  </IconButton>
-                  <IconButton
-                    style={styles.iconButton}
-                    aria-label="Play/pause"
-                    onClick={() => onRedirect(`/agenda/play/${id}`)}>
-                    <PlayArrowIcon />
-                  </IconButton>
+                  <Tooltip title="Move back to agenda">
+                    <IconButton aria-label="Undo"
+                      style={styles.iconButton}
+                      onClick={() => onActionLogicDelUndo(id)}>
+                      <Undo />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Delete">
+                    <IconButton aria-label="Delete"
+                      style={styles.iconButton}
+                      onClick={() => onOffDialog(id)}>
+                      <Delete />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Detail">
+                    <IconButton
+                      style={styles.iconButton}
+                      aria-label="Detail"
+                      onClick={() => onRedirect(`/agenda/detail/${id}`)}>
+                      <Description />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Start the meeting">
+                    <IconButton
+                      style={styles.iconButton}
+                      aria-label="Play/pause"
+                      onClick={() => onRedirect(`/agenda/play/${id}`)}>
+                      <PlayArrowIcon />
+                    </IconButton>
+                  </Tooltip>
                 </div>}
             </Grid>
           </Grid>
