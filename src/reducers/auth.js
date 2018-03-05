@@ -10,12 +10,12 @@ export default (state = {}, action) => {
     case types.LOGIN:
       return {
         ...state,
-        authError: action.payload.status !== 200 ? action.payload.message : null
+        authError: action.payload.status !== 200 ? action.payload.error.message : null
       };
     case types.REGISTER:
       return {
         ...state,
-        authError: action.payload.status !== 200 ? action.payload.message : null
+        authError: action.payload.status !== 200 ? action.payload.error.message : null
       };
     default:
       return state

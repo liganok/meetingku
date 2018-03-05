@@ -37,7 +37,7 @@ export default (state = defaultState, action) => {
         token: action.error ? null : action.payload.data.token,
         currentUser: action.error ? null : action.payload.data,
         redirectTo: action.error ? null : '/agenda',
-        authError: action.error ? action.payload.message : null
+        authError: action.error ? action.payload.error.message : null
       };
     case types.ASYNC_START:
       return {
