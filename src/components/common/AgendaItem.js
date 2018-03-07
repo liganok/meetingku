@@ -83,14 +83,18 @@ function AgendaItem(props) {
           <Grid container spacing={0} justify="space-between" alignItems="center">
             <Grid item xs={7} container spacing={0}>
               <Typography color="secondary" type="body2" gutterBottom style={{ paddingRight: 15 }}>
-                <Grid container alignItems="center" spacing={0}>
-                  <Flag style={{ width: 20, height: 20, paddingRight: 5 }} />
+                <Grid container spacing={0}>
+                  <Tooltip title="Start time">
+                    <Flag style={{ width: 20, height: 20, paddingRight: 5 }} />
+                  </Tooltip>
                   {new Date(startedAt).toLocaleString()}
                 </Grid>
               </Typography>
               <Typography color="secondary" type="body2" gutterBottom>
-                <Grid container alignItems="center" spacing={0}>
-                  <Alarm style={{ width: 20, height: 20, paddingRight: 5 }} />
+                <Grid container  spacing={0}>
+                  <Tooltip title="Start time">
+                    <Alarm style={{ width: 20, height: 20, paddingRight: 5 }} />
+                  </Tooltip>
                   <span style={{ paddingRight: 5 }}>{duration}</span>
                   mins
             </Grid>

@@ -16,6 +16,8 @@ import Remove from 'material-ui-icons/Remove'
 import IconButton from 'material-ui/IconButton'
 import Input, { InputAdornment } from 'material-ui/Input';
 import { DateTimePicker } from 'material-ui-pickers'
+import Tooltip from 'material-ui/Tooltip'
+
 function Item(props) {
   const {
     id,
@@ -94,7 +96,9 @@ function Item(props) {
                   style: styles.startedAt,
                   startAdornment: (
                     <InputAdornment position="start">
-                      <Flag style={styles.icon} />
+                      <Tooltip title="Start time">
+                        <Flag style={styles.icon} />
+                      </Tooltip>
                     </InputAdornment>
                   )
                 }}
@@ -108,7 +112,12 @@ function Item(props) {
               inputProps={{
               }}
               margin="dense"
-              startAdornment={<InputAdornment position="start"><LocationOn style={styles.icon} /></InputAdornment>}
+              startAdornment={
+                <InputAdornment position="start">
+                  <Tooltip title="Location">
+                    <LocationOn style={styles.icon} />
+                  </Tooltip>
+                </InputAdornment>}
               onChange={(ev) => { onChangeField(id, 'location', ev.target.value) }}
             />
           </Grid>
@@ -116,12 +125,16 @@ function Item(props) {
         <Grid item xs={4} container direction="column" spacing={0} alignItems="flex-end" style={{ padding: 5 }}>
           <Grid item
             style={{ visibility: isShowActions && (id === mouseOverId) ? '' : 'hidden' }}>
-            <IconButton style={{ ...styles.actionButton, marginRight: 15 }} onClick={() => { onMenuItemTap(id, 'ADD') }}>
-              <Add />
-            </IconButton>
-            <IconButton style={styles.actionButton} onClick={() => { onMenuItemTap(id, 'DEL') }}>
-              <Remove />
-            </IconButton>
+            <Tooltip title="Add sub-item">
+              <IconButton style={{ ...styles.actionButton, marginRight: 15 }} onClick={() => { onMenuItemTap(id, 'ADD') }}>
+                <Add />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Remove">
+              <IconButton style={{ ...styles.actionButton, display: isRoot && 'none' }} onClick={() => { onMenuItemTap(id, 'DEL') }}>
+                <Remove />
+              </IconButton>
+            </Tooltip>
           </Grid>
           <Input
             style={styles.duration}
@@ -134,7 +147,11 @@ function Item(props) {
               'readOnly': isHasSubItem ? true : false
             }}
             margin="dense"
-            startAdornment={<InputAdornment position="start"><Alarm style={styles.icon} /></InputAdornment>}
+            startAdornment={<InputAdornment position="start">
+              <Tooltip title="Duration">
+                <Alarm style={styles.icon} />
+              </Tooltip>
+            </InputAdornment>}
             endAdornment={<InputAdornment position="end">mins</InputAdornment>}
             onChange={(ev) => { onChangeField(id, 'duration', ev.target.value) }}
           />

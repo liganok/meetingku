@@ -10,6 +10,7 @@ import LocationOn from 'material-ui-icons/LocationOn'
 import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft'
 import Button from 'material-ui/Button'
 import { Link } from 'react-router-dom'
+import Tooltip from 'material-ui/Tooltip'
 
 
 import * as types from '../../constants/actionTypes'
@@ -41,9 +42,9 @@ function HeaderItem(props) {
 
   let percent = parseInt(spend / 60 / duration * 100)
   return (
-    <Paper {...others} style={{ display: 'flex', flexDirection: 'row', flex: 1,marginTop:10 }}>
-      <Link to="/agenda" style={{ position: 'absolute', display: 'flex', justifyContent: 'center', visibility:!isMouseOver && 'hidden' }}>
-        <KeyboardArrowLeft stype={{margin:0}} /> Back
+    <Paper {...others} style={{ display: 'flex', flexDirection: 'row', flex: 1, marginTop: 10 }}>
+      <Link to="/agenda" style={{ position: 'absolute', display: 'flex', justifyContent: 'center', visibility: !isMouseOver && 'hidden' }}>
+        <KeyboardArrowLeft stype={{ margin: 0 }} /> Back
       </Link>
       <div style={{ flex: 2, display: 'flex', flexDirection: 'column', marginLeft: '10px' }}>
         <div style={{ flex: 0.5 }} />
@@ -54,18 +55,20 @@ function HeaderItem(props) {
         <div style={{ flex: 2, display: 'flex', flexDirection: 'column', justifyContent: 'space-around' }}>
           <Typography color="secondary" type="body2">
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <LocationOn style={styles.iconButton} />
+              <Tooltip title="Start time">
+                <Flag style={styles.iconButton} />
+              </Tooltip>
+              {new Date(startedAt).toLocaleString()}
+            </div>
+          </Typography>
+          <Typography color="secondary" type="body2">
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <Tooltip title="Location">
+                <LocationOn style={styles.iconButton} />
+              </Tooltip>
               {location}
             </div>
           </Typography>
-          <div>
-            <Typography color="secondary" type="body2">
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                <Flag style={styles.iconButton} />
-                {new Date(startedAt).toLocaleString()}
-              </div>
-            </Typography>
-          </div>
         </div>
         <div style={{ flex: 0.5 }} />
       </div>
