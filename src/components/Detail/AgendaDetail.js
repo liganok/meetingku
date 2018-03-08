@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import Grid from 'material-ui/Grid'
 import Button from 'material-ui/Button';
+import Tooltip from 'material-ui/Tooltip'
 
 import agent from '../../agent'
 import ItemList from './ItemList'
@@ -45,7 +46,7 @@ class AgendaDetail extends React.Component {
         onLoad(agent.Agenda.getAgendaDetail(match.params.id))
         onUpdateAppName('Agenda')
       }
-    }else{
+    } else {
       onUpdateAppName('Agenda')
     }
   }
@@ -66,9 +67,9 @@ class AgendaDetail extends React.Component {
       onMenuItemTap,
       onSaveAgenda,
       inProgress,
-      onRedirect
+      onRedirect,
+      isUpdated = false,
     } = this.props
-
     return (
       <div>
         <ItemList
@@ -81,11 +82,14 @@ class AgendaDetail extends React.Component {
           onMenuItemTap={onMenuItemTap}
         />
         <Grid container spacing={0} justify="flex-end" style={{ marginTop: 10 }}>
-          <Button dense style={{ margin: 5 }}
-            style={{ margin: '0 0 20px 5px' }}
-            onClick={() => onRedirect(`/${this.isFromTemplate ? 'template' : 'agenda'}/play/${currentAgenda.id}`)} >
-            Play
+          <Tooltip title="Start the meeting">
+            <Button raised dense color="primary"
+              style={{ margin: '0 0 20px 5px' }}
+              disabled={isUpdated || (currentAgenda.id.substring(0, 3) === 'NEW')}
+              onClick={() => onRedirect(`/${this.isFromTemplate ? 'template' : 'agenda'}/play/${currentAgenda.id}`)} >
+              Play
           </Button>
+          </Tooltip>
           <Button
             style={{ margin: '0 0 20px 5px', display: this.isFromTemplate && 'none' }}
             disabled={inProgress}

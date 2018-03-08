@@ -9,7 +9,8 @@ const defaultState = {
     subItems: [],
     startedAt: new Date()
   },
-  delArr: []
+  delArr: [],
+  isUpdated: false
 };
 
 function changeAgenda(sourceAgenda, id, key, value) {
@@ -91,14 +92,14 @@ export default (state = defaultState, action) => {
     case types.AGENDA_GET_DETAIL:
       return {
         ...state,
-        currentAgenda: action.payload.error ? null : action.payload.data
+        currentAgenda: action.payload.error ? null : action.payload.data, isUpdated: false
       };
     case types.AGENDA_UPDATE_FIELD:
       let currentAgenda = changeAgenda(JSON.parse(JSON.stringify(state.currentAgenda)), action.id, action.key, action.value);
       if (action.key === 'duration') { currentAgenda = countDuration(currentAgenda) };
       return {
         ...state,
-        //[action.key]: action.value,
+        isUpdated: true,
         currentAgenda: changeAgenda(currentAgenda, action.id, action.key, action.value)
       };
     case types.AGENDA_MENU_ITEM_TAP:
@@ -108,15 +109,17 @@ export default (state = defaultState, action) => {
       if (action.value === 'DEL') {
         state.currentAgenda = removeAgenda([JSON.parse(JSON.stringify(state.currentAgenda))], action.id);
       }
-      return { ...state, };
+      return { ...state, isUpdated: true };
     case types.AI_ACTION_MOUSE_OVER:
       return { ...state, isShowActions: true, mouseOverId: action.payload };
     case types.AI_ACTION_MOUSE_OUT:
       return { ...state, isShowActions: false, mouseOverId: null };
     case types.AGENDA_CREATE:
-      return { ...state, currentAgenda: defaultState.currentAgenda };
+      return { ...state, currentAgenda: defaultState.currentAgenda, isUpdated: true, };
     case types.AI_ACTION_COPY:
-      return { ...state, currentAgenda: action.payload.error ? null : action.payload.data}
+      return { ...state, currentAgenda: action.payload.error ? null : action.payload.data, isUpdated: true, }
+    case types.AGENDA_SAVE:
+      return { ...state, isUpdated: true };
     default:
       return state;
   }
