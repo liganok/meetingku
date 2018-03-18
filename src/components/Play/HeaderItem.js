@@ -7,10 +7,15 @@ import Circle from './CircleProgress'
 import { withTheme } from 'material-ui/styles'
 import Flag from 'material-ui-icons/Flag'
 import LocationOn from 'material-ui-icons/LocationOn'
-import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft'
 import Button from 'material-ui/Button'
 import { Link } from 'react-router-dom'
 import Tooltip from 'material-ui/Tooltip'
+import Status from '../common/Status'
+import IconButton from 'material-ui/IconButton'
+
+import NavigateBefore from 'material-ui-icons/NavigateBefore'
+import Edit from 'material-ui-icons/Edit'
+import OndemandVideo from 'material-ui-icons/OndemandVideo'
 
 
 import * as types from '../../constants/actionTypes'
@@ -25,6 +30,10 @@ function HeaderItem(props) {
     spend = 180,
     theme,
     isMouseOver,
+    type = 'agenda',
+    id,
+    status,
+    onActionLocalStart,
     ...others
   } = props
 
@@ -43,14 +52,35 @@ function HeaderItem(props) {
   let percent = parseInt(spend / 60 / duration * 100)
   return (
     <Paper {...others} style={{ display: 'flex', flexDirection: 'row', flex: 1, marginTop: 10 }}>
-      <Link to="/agenda" style={{ position: 'absolute', display: 'flex', justifyContent: 'center', visibility: !isMouseOver && 'hidden' }}>
-        <KeyboardArrowLeft stype={{ margin: 0 }} /> Back
-      </Link>
       <div style={{ flex: 2, display: 'flex', flexDirection: 'column', marginLeft: '10px' }}>
-        <div style={{ flex: 0.5 }} />
+        <div style={{ flex: 1, visibility: !isMouseOver && 'hidden' }}>
+          <Link to={`/${type}`}>
+            <Tooltip title="Back">
+              <IconButton>
+                <NavigateBefore />
+              </IconButton>
+            </Tooltip>
+          </Link>
+          {type == 'agenda' &&
+            <Link to={`/${type}/detail/${id}`}>
+              <Tooltip title="Edit">
+                <IconButton>
+                  <Edit />
+                </IconButton>
+              </Tooltip>
+            </Link>}
+          <Tooltip title="Local start">
+            <IconButton onClick={onActionLocalStart}>
+              <OndemandVideo />
+            </IconButton>
+          </Tooltip>
+        </div>
 
-        <div style={{ flex: 4, display: 'flex', alignItems: 'center' }}>
+        <div style={{ flex: 4, display: 'flex', flexDirection: 'column' }}>
           <Typography color="inherit" type="display1">{name}</Typography>
+          <div style={{ paddingTop: 3 }}>
+            <Status status = {status}/>
+          </div>
         </div>
         <div style={{ flex: 2, display: 'flex', flexDirection: 'column', justifyContent: 'space-around' }}>
           <Typography color="secondary" type="body2">

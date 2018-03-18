@@ -12,14 +12,16 @@ const mapStateToProps = state => ({ ...state.agendaPlay })
 const mapDispatchToProps = dispatch => ({
   onLoad: (payload) => dispatch({ type: types.AP_ACTION_GET_DETAIL, payload }),
   onUpdateTimer: (payload) => dispatch({ type: types.AP_ACTION_UPDATE_TIMER, payload }),
-  onActionMouseOver: value =>dispatch({ type: types.AP_ACTION_MOUSE_OVER, payload: value }),
-  onActionMouseOut: value =>dispatch({ type: types.AP_ACTION_MOUSE_OUT, payload: value }),
+  onActionMouseOver: value => dispatch({ type: types.AP_ACTION_MOUSE_OVER, payload: value }),
+  onActionMouseOut: value => dispatch({ type: types.AP_ACTION_MOUSE_OUT, payload: value }),
+  onActionLocalStart: value => dispatch({ type: types.AP_ACTION_LOCAL_START }),
 })
 
 class AgendaPlay extends React.Component {
   constructor() {
     super()
     this.clock = null
+    this.type = 'agenda'
   }
 
   componentWillMount() {
@@ -27,7 +29,8 @@ class AgendaPlay extends React.Component {
     if (match.params.id) {
       if (match.path.indexOf('template') > 0) {
         onLoad(agent.Agenda.getTemplateDetail(match.params.id))
-      }else{
+        this.agenda = 'template'
+      } else {
         onLoad(agent.Agenda.getAgendaDetail(match.params.id))
       }
     }
@@ -58,19 +61,35 @@ class AgendaPlay extends React.Component {
   }
 
   render() {
-    const { currentAgenda, timer, mouseOverId = '', onActionMouseOver, onActionMouseOut } = this.props
+    const { currentAgenda, timer, mouseOverId = '', onActionMouseOver, onActionMouseOut, onActionLocalStart } = this.props
     if (!currentAgenda) { return null }
     let isMouseOver = mouseOverId === currentAgenda.id
+
+    let startTime = new Date(currentAgenda.startedAt).getTime()
+    let nowTime = new Date().getTime()
+    let status
+    if (startTime > nowTime) { 
+      status = 'todo' 
+    } else if (nowTime > (startTime + currentAgenda.duration * 60000)){
+      status = 'done'
+    }else{
+      status = 'inProcess'
+    }
+
     return (
       <div>
         <HeaderItem
           onMouseOver={() => onActionMouseOver(currentAgenda.id)}
           onMouseOut={() => onActionMouseOut(currentAgenda.id)}
-          isMouseOver = {isMouseOver}
+          onActionLocalStart={() => { onActionLocalStart(); clearInterval(this.clock); this.clock = null }}
+          isMouseOver={isMouseOver}
           name={currentAgenda.name}
           location={currentAgenda.location}
           startedAt={currentAgenda.startedAt}
           duration={currentAgenda.duration}
+          type={this.agenda}
+          id={currentAgenda.id}
+          status={status}
           spend={timer} />
         <BodyItems
           agenda={currentAgenda}

@@ -13,6 +13,8 @@ import TrashList from './components/Trash/Trash'
 import Help from './components/Help/Help'
 import OAuth from './components/Auth/OAuth'
 
+import Status from './components/common/Status'
+
 
 export default (
     <Switch>
@@ -31,5 +33,8 @@ export default (
         <Route path='/trash' component={TrashList} />
         <Route path='/help' component={Help} />
         <Route path='/oauth/:name' component={OAuth} />
+
+        <Route path='/Status' component={Status} />
+
     </Switch>
 )
