@@ -120,7 +120,7 @@ function AgendaItem(props) {
               <Grid item>
                 {type === 'agenda' &&
                   <div>
-                    <Tooltip title="Move to">
+                    <Tooltip title="Move to trash">
                       <IconButton aria-label="Delete"
                         style={styles.iconButton}
                         onClick={() => onActionLogicDel(id)}>
