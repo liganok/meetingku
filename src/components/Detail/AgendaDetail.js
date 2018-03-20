@@ -26,6 +26,8 @@ const mapDispatchToProps = dispatch => ({
   onMenuItemTap: (id, value) => dispatch({ type: types.AGENDA_MENU_ITEM_TAP, id: id, value: value }),
   onActionMouseOver: value => dispatch({ type: types.AI_ACTION_MOUSE_OVER, payload: value }),
   onActionMouseOut: value => dispatch({ type: types.AI_ACTION_MOUSE_OUT, payload: value }),
+  onActionCopy: (value, isFromTemplate) =>
+    dispatch({ type: types.AI_ACTION_COPY, payload: isFromTemplate ? agent.Agenda.getTemplateDetail(value) : agent.Agenda.getAgendaDetail(value) }),
   onRedirect: (value = null) =>
     dispatch({ type: types.REDIRECT, value: value })
 })
@@ -66,6 +68,7 @@ class AgendaDetail extends React.Component {
       onActionMouseOut,
       onMenuItemTap,
       onSaveAgenda,
+      onActionCopy,
       inProgress,
       onRedirect,
       isUpdated = false,
@@ -87,7 +90,7 @@ class AgendaDetail extends React.Component {
               style={{ margin: '0 0 20px 5px' }}
               disabled={isUpdated || (currentAgenda.id.substring(0, 3) === 'NEW')}
               onClick={() => onRedirect(`/${this.isFromTemplate ? 'template' : 'agenda'}/play/${currentAgenda.id}`)} >
-              Play
+              Start
           </Button>
           </Tooltip>
           <Button
@@ -96,6 +99,13 @@ class AgendaDetail extends React.Component {
             raised dense color="primary"
             onClick={() => onSaveAgenda(currentAgenda)}>
             Save
+          </Button>
+          <Button
+            style={{ margin: '0 0 20px 5px', display: !this.isFromTemplate && 'none' }}
+            disabled={inProgress}
+            raised dense color="primary"
+            onClick={() => { onActionCopy(currentAgenda.id),this.isFromTemplate = false}}>
+            Copy
           </Button>
         </Grid>
       </div>

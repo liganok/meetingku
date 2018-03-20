@@ -69,7 +69,7 @@ function HeaderItem(props) {
                 </IconButton>
               </Tooltip>
             </Link>}
-          <Tooltip title="Local start">
+          <Tooltip title="Start now locally">
             <IconButton onClick={onActionLocalStart}>
               <OndemandVideo />
             </IconButton>
