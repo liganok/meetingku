@@ -104,7 +104,7 @@ class AgendaDetail extends React.Component {
             style={{ margin: '0 0 20px 5px', display: !this.isFromTemplate && 'none' }}
             disabled={inProgress}
             raised dense color="primary"
-            onClick={() => { onActionCopy(currentAgenda.id),this.isFromTemplate = false}}>
+            onClick={() => { onActionCopy(currentAgenda.id,true),this.isFromTemplate = false}}>
             Copy
           </Button>
         </Grid>
