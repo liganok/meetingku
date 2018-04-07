@@ -50,7 +50,7 @@ function AppHeader(props) {
             <CircularProgress color="inherit" size={22} />
           </div>
           {appLoaded && (user ?
-            <LoggedInView isShow={isShowRightButtons} /> :
+            <LoggedInView user={user} isShow={isShowRightButtons} /> :
             <LoggedOutView isShow={isShowRightButtons} />)}
         </Toolbar>
       </AppBar>
