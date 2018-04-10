@@ -8,15 +8,15 @@ function Status(props) {
 
   const statusBar={
     todo:{
-      color:'gray',
+      color:'#b6bbbf',
       text:'Not start'
     },
     done: {
-      color: 'gray',
+      color: '#60be4f',
       text: 'Finished'
     },
     inProcess: {
-      color: 'green',
+      color: '#ff9900',
       text: 'In process'
     }
   }
