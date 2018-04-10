@@ -46,6 +46,9 @@ class AgendaPlay extends React.Component {
         if (nowTime >= startTime && nowTime <= (startTime + currentAgenda.duration * 60000 + 20000)) {
           timer = parseInt((nowTime - startTime) / 1000)
           onUpdateTimer(timer)
+        } else if (nowTime > (startTime + currentAgenda.duration * 60000 + 20000)){
+          timer = (currentAgenda.duration * 60000 + 20000) / 1000
+          onUpdateTimer(timer)
         }
         if (timer > currentAgenda.duration * 60 + 10) {
           clearInterval(this.clock)
