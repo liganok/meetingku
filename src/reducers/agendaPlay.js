@@ -2,6 +2,7 @@ import * as types from '../constants/actionTypes';
 
 const defaultState = {
   timer: 0,
+  status: 'todo', //same as status bar
 };
 
 function computeStartTime(agenda) {
@@ -24,13 +25,32 @@ function computeStartTime(agenda) {
   return agenda;
 }
 
+function getInitialTimerandStatus(currentAgenda){
+  let timer = 0, status = 'todo'
+  let startTime = new Date(currentAgenda.startedAt).getTime()
+  let nowTime = new Date().getTime()
+
+  if (nowTime >= startTime && nowTime <= (startTime + currentAgenda.duration * 60000)) {
+    timer = parseInt((nowTime - startTime) / 1000)
+    status = 'inProcess'
+  }
+  if (nowTime > (startTime + currentAgenda.duration * 60000)) {
+    timer = currentAgenda.duration * 60+ 10
+    status = 'done'
+  }
+  return {timer,status}
+}
+
 export default (state = defaultState, action) => {
   switch (action.type) {
     case types.AP_ACTION_GET_DETAIL:
       let agenda = computeStartTime(action.payload.error ? null : action.payload.data)
-      return { ...state, currentAgenda: agenda, timer:0 };
+      let initialTimerandStatus = getInitialTimerandStatus(agenda)
+      return { ...state, currentAgenda: agenda, timer:initialTimerandStatus.timer,status:initialTimerandStatus.status };
     case types.AP_ACTION_UPDATE_TIMER:
-      return { ...state, timer: action.payload };
+      return { ...state, timer: state.timer +1 };
+    case types.AP_ACTION_UPDATE_STATUS:
+      return { ...state, status: action.payload };
     case types.AP_ACTION_MOUSE_OVER:
       return { ...state, mouseOverId: action.payload }
     case types.AP_ACTION_MOUSE_OUT:
@@ -38,7 +58,9 @@ export default (state = defaultState, action) => {
     case types.AP_ACTION_LOCAL_START:
       let localAgenda = state.currentAgenda
       localAgenda.startedAt = new Date().toISOString()
-      return { ...state, currentAgenda: JSON.parse(JSON.stringify(localAgenda))}
+      initialTimerandStatus = getInitialTimerandStatus(localAgenda)
+      return { ...state, currentAgenda: localAgenda, timer: initialTimerandStatus.timer, status: initialTimerandStatus.status };
+
     default:
       return state;
   }

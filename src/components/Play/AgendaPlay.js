@@ -12,6 +12,7 @@ const mapStateToProps = state => ({ ...state.agendaPlay })
 const mapDispatchToProps = dispatch => ({
   onLoad: (payload) => dispatch({ type: types.AP_ACTION_GET_DETAIL, payload }),
   onUpdateTimer: (payload) => dispatch({ type: types.AP_ACTION_UPDATE_TIMER, payload }),
+  onUpdateStatus: (payload) => dispatch({ type: types.AP_ACTION_UPDATE_STATUS, payload }),
   onActionMouseOver: value => dispatch({ type: types.AP_ACTION_MOUSE_OVER, payload: value }),
   onActionMouseOut: value => dispatch({ type: types.AP_ACTION_MOUSE_OUT, payload: value }),
   onActionLocalStart: value => dispatch({ type: types.AP_ACTION_LOCAL_START }),
@@ -37,20 +38,20 @@ class AgendaPlay extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { currentAgenda, onUpdateTimer } = nextProps
+    const { currentAgenda, status, timer, onUpdateTimer, onUpdateStatus } = nextProps
     if (currentAgenda && !this.clock) {
       let startTime = new Date(currentAgenda.startedAt).getTime()
       this.clock = setInterval(() => {
         let nowTime = new Date().getTime()
-        let timer = 0
         if (nowTime >= startTime && nowTime <= (startTime + currentAgenda.duration * 60000 + 20000)) {
-          timer = parseInt((nowTime - startTime) / 1000)
-          onUpdateTimer(timer)
+          onUpdateTimer()
+          onUpdateStatus('inProcess')
         } else if (nowTime > (startTime + currentAgenda.duration * 60000 + 20000)){
-          timer = (currentAgenda.duration * 60000 + 20000) / 1000
-          onUpdateTimer(timer)
+          onUpdateStatus('done')
+          clearInterval(this.clock)
         }
-        if (timer > currentAgenda.duration * 60 + 10) {
+        if (timer > currentAgenda.duration * 60 + 2) {
+          onUpdateStatus('done')
           clearInterval(this.clock)
         }
       }, 1000)
@@ -64,20 +65,9 @@ class AgendaPlay extends React.Component {
   }
 
   render() {
-    const { currentAgenda, timer, mouseOverId = '', onActionMouseOver, onActionMouseOut, onActionLocalStart } = this.props
+    const { currentAgenda, timer,status, mouseOverId = '', onActionMouseOver, onActionMouseOut, onActionLocalStart } = this.props
     if (!currentAgenda) { return null }
     let isMouseOver = mouseOverId === currentAgenda.id
-
-    let startTime = new Date(currentAgenda.startedAt).getTime()
-    let nowTime = new Date().getTime()
-    let status
-    if (startTime > nowTime) { 
-      status = 'todo' 
-    } else if (nowTime > (startTime + currentAgenda.duration * 60000)){
-      status = 'done'
-    }else{
-      status = 'inProcess'
-    }
 
     return (
       <div>

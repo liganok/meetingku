@@ -18,6 +18,10 @@ function Status(props) {
     inProcess: {
       color: '#ff9900',
       text: 'In process'
+    },
+    plause: {
+      color: '#ff9900',
+      text: 'Plause'
     }
   }
 
