@@ -29,7 +29,7 @@ function BodyItem(props) {
     <Paper>
       <PlayItem completed={completed} backgroundColor={theme.palette.primary[700]}>
         <Grid container spacing={0} justify="space-between" alignItems="center" style={styles.root}>
-          <Typography color="secondary" type="title" noWrap>{name}</Typography>
+          <Typography  style={{ fontSize: '1.1rem' }} noWrap>{name}</Typography>
           <Typography style={{ backgroundColor: theme.palette.grey[200], padding: 5 }} color="secondary" gutterBottom noWrap>{spendText} / {duration}:00</Typography>
         </Grid>
       </PlayItem>

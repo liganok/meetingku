@@ -51,9 +51,9 @@ function HeaderItem(props) {
 
   let percent = parseInt(spend / 60 / duration * 100)
   return (
-    <Paper {...others} style={{ display: 'flex', flexDirection: 'row', flex: 1, marginTop: 10 }}>
-      <div style={{ flex: 2, display: 'flex', flexDirection: 'column', marginLeft: '10px' }}>
-        <div style={{ flex: 1, visibility: !isMouseOver && 'hidden' }}>
+    <Paper {...others} style={{ display: 'flex', flexDirection: 'row',alignItems:'center', flex: 1, marginTop: 10 }}>
+      <div style={{ flex: 2, display: 'flex', flexDirection: 'column',justifyContent:'space-between', marginLeft: '10px' }}>
+        <div style={{ visibility: !isMouseOver && 'hidden'}}>
           <Link to={`/${type}`}>
             <Tooltip title="Back">
               <IconButton>
@@ -76,13 +76,13 @@ function HeaderItem(props) {
           </Tooltip>
         </div>
 
-        <div style={{ flex: 4, display: 'flex', flexDirection: 'column' }}>
-          <Typography color="inherit" type="display1">{name}</Typography>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <Typography color="inherit" style={{fontSize:'1.7rem'}}>{name}</Typography>
           <div style={{ paddingTop: 3 }}>
             <Status status = {status}/>
           </div>
         </div>
-        <div style={{ flex: 2, display: 'flex', flexDirection: 'column', justifyContent: 'space-around' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-around' }}>
           <Typography color="secondary" type="body2">
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <Tooltip title="Start time">
@@ -100,7 +100,7 @@ function HeaderItem(props) {
             </div>
           </Typography>
         </div>
-        <div style={{ flex: 0.5 }} />
+        <div style={{  }} />
       </div>
       <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
         <div style={circleContainerStyle}>
