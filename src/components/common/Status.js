@@ -19,9 +19,9 @@ function Status(props) {
       color: '#ff9900',
       text: 'In process'
     },
-    plause: {
-      color: '#ff9900',
-      text: 'Plause'
+    pause: {
+      color: '#b6bbbf',
+      text: 'Pause'
     }
   }
 

@@ -25,7 +25,7 @@ function computeStartTime(agenda) {
   return agenda;
 }
 
-function getInitialTimerandStatus(currentAgenda){
+function getInitialTimerandStatus(currentAgenda) {
   let timer = 0, status = 'todo'
   let startTime = new Date(currentAgenda.startedAt).getTime()
   let nowTime = new Date().getTime()
@@ -35,10 +35,27 @@ function getInitialTimerandStatus(currentAgenda){
     status = 'inProcess'
   }
   if (nowTime > (startTime + currentAgenda.duration * 60000)) {
-    timer = currentAgenda.duration * 60+ 10
+    timer = currentAgenda.duration * 60 + 10
     status = 'done'
   }
-  return {timer,status}
+  return { timer, status }
+}
+
+function updateTimerandStatus(startedAt, duration, timer, status) {
+  let startTime = new Date(startedAt).getTime()
+  let nowTime = new Date().getTime()
+
+  if (nowTime >= startTime && nowTime <= (startTime + duration * 60000 + 2000) || status === 'inProcess') {
+    if (status != 'pause') {
+      timer = timer + 1
+      status = 'inProcess'
+    }
+  }
+  if (timer > duration * 60) {
+    timer = timer + 1
+    status = 'done'
+  }
+  return { timer, status }
 }
 
 export default (state = defaultState, action) => {
@@ -46,11 +63,13 @@ export default (state = defaultState, action) => {
     case types.AP_ACTION_GET_DETAIL:
       let agenda = computeStartTime(action.payload.error ? null : action.payload.data)
       let initialTimerandStatus = getInitialTimerandStatus(agenda)
-      return { ...state, currentAgenda: agenda, timer:initialTimerandStatus.timer,status:initialTimerandStatus.status };
+      return { ...state, currentAgenda: agenda, timer: initialTimerandStatus.timer, status: initialTimerandStatus.status };
     case types.AP_ACTION_UPDATE_TIMER:
-      return { ...state, timer: state.timer +1 };
+      return { ...state, ...updateTimerandStatus(state.currentAgenda.startedAt, state.currentAgenda.duration, state.timer, state.status) };
     case types.AP_ACTION_UPDATE_STATUS:
       return { ...state, status: action.payload };
+    case types.AP_ACTION_ADD_TIMER:
+      return { ...state, timer: state.timer + action.payload };
     case types.AP_ACTION_MOUSE_OVER:
       return { ...state, mouseOverId: action.payload }
     case types.AP_ACTION_MOUSE_OUT:

@@ -13,6 +13,7 @@ const mapDispatchToProps = dispatch => ({
   onLoad: (payload) => dispatch({ type: types.AP_ACTION_GET_DETAIL, payload }),
   onUpdateTimer: (payload) => dispatch({ type: types.AP_ACTION_UPDATE_TIMER, payload }),
   onUpdateStatus: (payload) => dispatch({ type: types.AP_ACTION_UPDATE_STATUS, payload }),
+  onAddTimer: (payload) => dispatch({ type: types.AP_ACTION_ADD_TIMER, payload }),
   onActionMouseOver: value => dispatch({ type: types.AP_ACTION_MOUSE_OVER, payload: value }),
   onActionMouseOut: value => dispatch({ type: types.AP_ACTION_MOUSE_OUT, payload: value }),
   onActionLocalStart: value => dispatch({ type: types.AP_ACTION_LOCAL_START }),
@@ -38,22 +39,10 @@ class AgendaPlay extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { currentAgenda, status, timer, onUpdateTimer, onUpdateStatus } = nextProps
+    const { currentAgenda, onUpdateTimer } = nextProps
     if (currentAgenda && !this.clock) {
-      let startTime = new Date(currentAgenda.startedAt).getTime()
       this.clock = setInterval(() => {
-        let nowTime = new Date().getTime()
-        if (nowTime >= startTime && nowTime <= (startTime + currentAgenda.duration * 60000 + 20000)) {
-          onUpdateTimer()
-          onUpdateStatus('inProcess')
-        } else if (nowTime > (startTime + currentAgenda.duration * 60000 + 20000)){
-          onUpdateStatus('done')
-          clearInterval(this.clock)
-        }
-        if (timer > currentAgenda.duration * 60 + 2) {
-          onUpdateStatus('done')
-          clearInterval(this.clock)
-        }
+        onUpdateTimer()
       }, 1000)
     }
   }
@@ -65,10 +54,12 @@ class AgendaPlay extends React.Component {
   }
 
   render() {
-    const { currentAgenda, timer,status, mouseOverId = '', onActionMouseOver, onActionMouseOut, onActionLocalStart } = this.props
+    const { currentAgenda, timer, status, mouseOverId = '', onActionMouseOver, onActionMouseOut, onActionLocalStart } = this.props
     if (!currentAgenda) { return null }
     let isMouseOver = mouseOverId === currentAgenda.id
-
+    if (status == 'done') {
+      clearInterval(this.clock)
+    }
     return (
       <div>
         <HeaderItem
