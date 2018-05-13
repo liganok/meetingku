@@ -11,8 +11,8 @@ function LoggedOutView(props) {
   return (
     <div style={{ display: isShow ? null : 'none' }}>
       <SLink to="/auth">
-        <Button color="contrast">
-          <Typography color='inherit'>Log in</Typography>
+        <Button color="inherit">
+          <Typography style={{color:'white'}}>Log in</Typography>
         </Button></SLink>
     </div>
   )

@@ -3,14 +3,14 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Paper from 'material-ui/Paper'
 import IconButton from 'material-ui/IconButton'
-import PlayArrowIcon from 'material-ui-icons/OndemandVideo'
-import Delete from 'material-ui-icons/Delete'
-import Undo from 'material-ui-icons/Undo'
-import ContentCopy from 'material-ui-icons/ContentCopy'
+import PlayArrowIcon from '@material-ui/icons/OndemandVideo'
+import Delete from '@material-ui/icons/Delete'
+import Undo from '@material-ui/icons/Undo'
+import ContentCopy from '@material-ui/icons/ContentCopy'
 
-import Description from 'material-ui-icons/Description'
-import Flag from 'material-ui-icons/Flag'
-import Alarm from 'material-ui-icons/Alarm'
+import Description from '@material-ui/icons/Description'
+import Flag from '@material-ui/icons/Flag'
+import Alarm from '@material-ui/icons/Alarm'
 import Typography from 'material-ui/Typography'
 import Grid from 'material-ui/Grid'
 import Tooltip from 'material-ui/Tooltip'
@@ -89,13 +89,13 @@ function AgendaItem(props) {
     >
       <div style={{ display: 'flex', justifyContent: 'space-between',alignItems:'center' }}
         onClick={() => onRedirect(`/${type}/detail/${id}`)}>
-        <Typography type='title'>{name}</Typography>
+        <Typography variant='title'>{name}</Typography>
         <Status status={status} />
       </div>
       <div style={{ paddingTop: 15 }}>
         <Grid container spacing={0} justify="space-between" alignItems="center">
           <Grid item xs={7} container spacing={0}>
-            <Typography color="secondary" type="body2" gutterBottom style={{ paddingRight: 15 }}>
+            <Typography color="textSecondary" type="body2" gutterBottom style={{ paddingRight: 15 }}>
               <Grid container spacing={0}>
                 <Tooltip title="Start time">
                   <Flag style={{ width: 20, height: 20, paddingRight: 5 }} />
@@ -103,7 +103,7 @@ function AgendaItem(props) {
                 {new Date(startedAt).toLocaleString()}
               </Grid>
             </Typography>
-            <Typography color="secondary" type="body2" gutterBottom>
+            <Typography color="textSecondary" type="body2" gutterBottom>
               <Grid container spacing={0}>
                 <Tooltip title="Duration">
                   <Alarm style={{ width: 20, height: 20, paddingRight: 5 }} />

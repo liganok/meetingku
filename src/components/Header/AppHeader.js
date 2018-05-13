@@ -4,7 +4,7 @@ import AppBar from 'material-ui/AppBar'
 import Typography from 'material-ui/Typography'
 import IconButton from 'material-ui/IconButton'
 import Toolbar from 'material-ui/Toolbar'
-import MenuIcon from 'material-ui-icons/Menu'
+import MenuIcon from '@material-ui/icons/Menu'
 import { CircularProgress } from 'material-ui/Progress'
 
 import LoggedInView from './LoggedInView'
@@ -38,12 +38,12 @@ function AppHeader(props) {
       <AppBar position="fixed">
         <Toolbar style={{display:'flex',alignItems:'center'}}>
           <IconButton
-            color="contrast" aria-label="Menu"
+            color="inherit" aria-label="Menu"
             style={styles.menuButton}
             onClick={onActionToggle}>
             <MenuIcon />
           </IconButton>
-          <Typography type="title" color="inherit" style={styles.title}>
+          <Typography variant="title" color="inherit" style={styles.title}>
             {appName}
           </Typography>
           <div style={{ display: inProgress ? '' : 'none' }}>

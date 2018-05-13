@@ -3,20 +3,22 @@ import PropTypes from 'prop-types';
 import Grid from 'material-ui/Grid'
 import Paper from 'material-ui/Paper'
 import TextField from 'material-ui/TextField'
-import Flag from 'material-ui-icons/Flag'
-import Alarm from 'material-ui-icons/Alarm'
-import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft'
-import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight'
-import DateRange from 'material-ui-icons/DateRange'
-import AccessTime from 'material-ui-icons/AccessTime'
+import Flag from '@material-ui/icons/Flag'
+import Alarm from '@material-ui/icons/Alarm'
+import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
+import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
+import DateRange from '@material-ui/icons/DateRange'
+import AccessTime from '@material-ui/icons/AccessTime'
 
-import Add from 'material-ui-icons/Add'
-import LocationOn from 'material-ui-icons/LocationOn'
-import Remove from 'material-ui-icons/Remove'
+import Add from '@material-ui/icons/Add'
+import LocationOn from '@material-ui/icons/LocationOn'
+import Remove from '@material-ui/icons/Remove'
 import IconButton from 'material-ui/IconButton'
 import Input, { InputAdornment } from 'material-ui/Input';
-import { DateTimePicker } from 'material-ui-pickers'
 import Tooltip from 'material-ui/Tooltip'
+import DateFnsUtils from "material-ui-pickers/utils/date-fns-utils";
+import DateTimePicker from "material-ui-pickers/DateTimePicker";
+import MuiPickersUtilsProvider from "material-ui-pickers/utils/MuiPickersUtilsProvider";
 
 function Item(props) {
   const {
@@ -81,30 +83,33 @@ function Item(props) {
             onChange={(ev) => { onChangeField(id, 'name', ev.target.value) }}
           />
           <Grid item container align="center" spacing={0} style={{ display: `${isRoot ? '' : 'none'}`, paddingBottom: 10 }}>
-            <div style={{ paddingRight: 20 }}>
-              <DateTimePicker
-                autoOk
-                ampm={false}
-                style={styles.startedAt}
-                id={`startedAt${startedAt}`}
-                value={startedAt}
-                leftArrowIcon={<KeyboardArrowLeft />}
-                rightArrowIcon={<KeyboardArrowRight />}
-                dateRangeIcon={<DateRange />}
-                timeIcon={<AccessTime />}
-                InputProps={{
-                  style: styles.startedAt,
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <Tooltip title="Start time">
-                        <Flag style={styles.icon} />
-                      </Tooltip>
-                    </InputAdornment>
-                  )
-                }}
-                onChange={(time) => { onChangeField(id, 'startedAt', time) }}
-              />
-            </div>
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <div style={{ paddingRight: 20 }}>
+                <DateTimePicker
+                  autoOk
+                  ampm={false}
+                  style={styles.startedAt}
+                  id={`startedAt${startedAt}`}
+                  value={startedAt}
+                  leftArrowIcon={<KeyboardArrowLeft />}
+                  rightArrowIcon={<KeyboardArrowRight />}
+                  dateRangeIcon={<DateRange />}
+                  timeIcon={<AccessTime />}
+                  onChange={(time) => { onChangeField(id, 'startedAt', time) }}
+                  InputProps={{
+                    style: styles.startedAt,
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <Tooltip title="Start time">
+                          <Flag style={styles.icon} />
+                        </Tooltip>
+                      </InputAdornment>
+                    )
+                  }}
+                />
+              </div>
+            </MuiPickersUtilsProvider>
+
             <Input
               style={{ ...styles.duration }}
               id={`location${location}`}

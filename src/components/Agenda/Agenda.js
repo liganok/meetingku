@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { SLink } from '../common/StyledComponents'
 import { connect } from 'react-redux'
 import agent from '../../agent'
-import Add from 'material-ui-icons/Add'
+import Add from '@material-ui/icons/Add'
 import styled from 'styled-components'
 import Typography from 'material-ui/Typography'
 import Divider from 'material-ui/Divider'
@@ -50,13 +50,13 @@ function AddAgenda(props) {
       <SLink to="/agenda/new" style={{ flex: 1 }}>
         <div style={styles.root} className={props.className} onClick={props.onCreate}>
           <Add style={styles.addIcon} />
-          <Typography type="subheading" style={{ color: SECOND_TEXT_COLOR }}>Add new agenda</Typography>
+          <Typography variant="subheading" style={{ color: SECOND_TEXT_COLOR }}>Add new agenda</Typography>
         </div>
       </SLink>
       <SLink to="/template" style={{ flex: 1 }}>
         <div style={styles.root} className={props.className} onClick={props.onCreate}>
           <Add style={styles.addIcon} />
-          <Typography type="subheading" style={{ color: SECOND_TEXT_COLOR }}>Copy from template</Typography>
+          <Typography variant="subheading" style={{ color: SECOND_TEXT_COLOR }}>Copy from template</Typography>
         </div>
       </SLink>
     </div>
@@ -86,9 +86,9 @@ class Agenda extends React.Component {
       <div>
         <SAddAgenda onCreate={this.props.onCreate} />
         {this.props.agendas && this.props.agendas.length > 0 ?
-          <AgendaList items={this.props.agendas} type="agenda" /> :
+          <AgendaList items={this.props.agendas} variant="agenda" /> :
           <div>
-            <Typography type="subheading" style={{ color: SECOND_TEXT_COLOR }}>No agenda found</Typography>
+            <Typography variant="subheading" style={{ color: SECOND_TEXT_COLOR }}>No agenda found</Typography>
             <Divider />
           </div>}
       </div>

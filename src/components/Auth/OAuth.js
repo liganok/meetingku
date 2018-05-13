@@ -5,7 +5,7 @@ import Button from 'material-ui/Button'
 
 import * as types from '../../constants/actionTypes'
 import { getOAuthURL } from '../../utils/oAuth'
-import Save from 'material-ui-icons/Save'
+import Save from '@material-ui/icons/Save'
 import GoogleIcon from '../../svg/GoogleIcon'
 
 const mapStateToProps = state => ({ ...state.common })

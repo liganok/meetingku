@@ -38,7 +38,7 @@ function Status(props) {
   }
 
   return (
-    <Typography style={style.root} type='caption' >
+    <Typography style={style.root} variant='caption' >
       {statusBar[status].text}
     </Typography>
   )

@@ -54,7 +54,7 @@ class AgendaPlay extends React.Component {
   }
 
   render() {
-    const { currentAgenda, timer, status, mouseOverId = '', onActionMouseOver, onActionMouseOut, onActionLocalStart } = this.props
+    const { currentAgenda, timer, status, mouseOverId = '', onActionMouseOver, onActionMouseOut, onActionLocalStart, onAddTimer, onUpdateStatus } = this.props
     if (!currentAgenda) { return null }
     let isMouseOver = mouseOverId === currentAgenda.id
     if (status == 'done') {
@@ -65,6 +65,8 @@ class AgendaPlay extends React.Component {
         <HeaderItem
           onMouseOver={() => onActionMouseOver(currentAgenda.id)}
           onMouseOut={() => onActionMouseOut(currentAgenda.id)}
+          onAddTimer={(value)=>onAddTimer(value)}
+          onUpdateStatus={()=>onUpdateStatus()}
           onActionLocalStart={() => { onActionLocalStart(); clearInterval(this.clock); this.clock = null }}
           isMouseOver={isMouseOver}
           name={currentAgenda.name}

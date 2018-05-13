@@ -81,7 +81,7 @@ function Auth(props) {
       <OAuth style={{marginTop:20}}/>
       <div style={{ display: 'flex',alignItems:'center', marginTop: 10, marginBottom: 10}}>
         <Divider style={{ flex:1 }} />
-        <Typography type="caption" style={{ paddingLeft: 10, paddingRight: 10}}>OR</Typography>
+        <Typography variant="caption" style={{ paddingLeft: 10, paddingRight: 10}}>OR</Typography>
         <Divider style={{ flex:1 }} />
       </div>
       <div style={{backgroundColor:'white',paddingLeft:15,paddingRight:15,display:!authError&&'none'}}>

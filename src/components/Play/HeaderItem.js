@@ -5,17 +5,17 @@ import Grid from 'material-ui/Grid'
 import Paper from 'material-ui/Paper'
 import Circle from './CircleProgress'
 import { withTheme } from 'material-ui/styles'
-import Flag from 'material-ui-icons/Flag'
-import LocationOn from 'material-ui-icons/LocationOn'
+import Flag from '@material-ui/icons/Flag'
+import LocationOn from '@material-ui/icons/LocationOn'
 import Button from 'material-ui/Button'
 import { Link } from 'react-router-dom'
 import Tooltip from 'material-ui/Tooltip'
 import Status from '../common/Status'
 import IconButton from 'material-ui/IconButton'
 
-import NavigateBefore from 'material-ui-icons/NavigateBefore'
-import Edit from 'material-ui-icons/Edit'
-import OndemandVideo from 'material-ui-icons/OndemandVideo'
+import NavigateBefore from '@material-ui/icons/NavigateBefore'
+import Edit from '@material-ui/icons/Edit'
+import OndemandVideo from '@material-ui/icons/OndemandVideo'
 
 
 import * as types from '../../constants/actionTypes'
@@ -34,6 +34,8 @@ function HeaderItem(props) {
     id,
     status,
     onActionLocalStart,
+    onAddTimer,
+    onUpdateStatus,
     ...others
   } = props
 
@@ -47,12 +49,12 @@ function HeaderItem(props) {
   const styles = {
     iconButton: { width: '1rem', height: '1rem', paddingRight: 8 }
   }
-  console.log('theme', theme)
+  //console.log('theme', theme)
 
   let percent = parseInt(spend / 60 / duration * 100)
   return (
-    <Paper {...others} style={{ display: 'flex', flexDirection: 'row',alignItems:'center', flex: 1, marginTop: 10 }}>
-      <div style={{ visibility: !isMouseOver && 'hidden', position:'fixed',alignSelf:'flex-start'}}>
+    <Paper {...others} style={{ position: 'relative', display: 'flex', alignItems: 'center', flex: 1, marginTop: 10 }}>
+      <div style={{ visibility: !isMouseOver && 'hidden', position: 'fixed', alignSelf: 'flex-start' }}>
         <Link to={`/${type}`}>
           <Tooltip title="Back">
             <IconButton>
@@ -74,16 +76,16 @@ function HeaderItem(props) {
           </IconButton>
         </Tooltip>
       </div>
-      <div style={{ flex: 2, display: 'flex', flexDirection: 'column',justifyContent:'space-between', marginLeft: '10px' }}>
+      <div style={{ flex: 2, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', marginLeft: '10px' }}>
 
-        <div style={{ flex:4, display: 'flex', flexDirection: 'column' }}>
-          <Typography color="inherit" style={{fontSize:'1.7rem'}}>{name}</Typography>
+        <div style={{ flex: 4, display: 'flex', flexDirection: 'column' }}>
+          <Typography color="inherit" style={{ fontSize: '1.7rem' }} >{name}</Typography>
           <div style={{ paddingTop: 3 }}>
-            <Status status = {status}/>
+            <Status status={status} />
           </div>
         </div>
-        <div style={{ flex: 2, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', paddingTop: '1rem' }}>
-          <Typography color="secondary" type="caption">
+        <div style={{ flex: 2, display: 'flex', paddingTop: '1rem' }}>
+          <Typography color="textSecondary" variant="caption">
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <Tooltip title="Start time">
                 <Flag style={styles.iconButton} />
@@ -91,7 +93,7 @@ function HeaderItem(props) {
               {new Date(startedAt).toLocaleString()}
             </div>
           </Typography>
-          <Typography color="secondary" type="caption">
+          <Typography color="textSecondary" variant="caption">
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <Tooltip title="Location">
                 <LocationOn style={styles.iconButton} />
@@ -105,13 +107,22 @@ function HeaderItem(props) {
         <div style={circleContainerStyle}>
           <Circle
             percent={percent}
-            strokeWidth="6"
+            strokeWidth="5"
             strokeLinecap="square"
-            strokeColor={theme.palette.primary[700]}
+            strokeColor={theme.palette.primary.main}
             spend={spend}
             duration={duration}
           />
         </div>
+      </div>
+      <div style={{ visibility: !isMouseOver && 'hidden', position: 'absolute', alignSelf: 'flex-end', top: '60%', left: '40%' }}>
+        <Button color="primary" size="small">
+          Pause
+        </Button>
+        <Button color="primary" size="small"
+          onClick={() => onAddTimer(15)}>
+          +5 S
+        </Button>
       </div>
     </Paper>
   )

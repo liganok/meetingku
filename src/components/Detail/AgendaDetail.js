@@ -86,25 +86,29 @@ class AgendaDetail extends React.Component {
         />
         <Grid container spacing={0} justify="flex-end" style={{ marginTop: 10 }}>
           <Tooltip title="Start the meeting">
-            <Button raised dense color="primary"
-              style={{ margin: '0 0 20px 5px' }}
-              disabled={isUpdated || (currentAgenda.id.substring(0, 3) === 'NEW')}
-              onClick={() => onRedirect(`/${this.isFromTemplate ? 'template' : 'agenda'}/play/${currentAgenda.id}`)} >
-              Start
-          </Button>
+            <div>
+              <Button variant="raised" size="small" color="primary"
+                style={{ margin: '0 0 20px 5px' }}
+                disabled={isUpdated || (currentAgenda.id.substring(0, 3) === 'NEW')}
+                onClick={() => onRedirect(`/${this.isFromTemplate ? 'template' : 'agenda'}/play/${currentAgenda.id}`)} >
+                Start
+              </Button>
+            </div>
           </Tooltip>
           <Button
             style={{ margin: '0 0 20px 5px', display: this.isFromTemplate && 'none' }}
+            size="small"
             disabled={inProgress}
-            raised dense color="primary"
+            variant="raised" color="primary"
             onClick={() => onSaveAgenda(currentAgenda)}>
             Save
           </Button>
           <Button
             style={{ margin: '0 0 20px 5px', display: !this.isFromTemplate && 'none' }}
+            size="small"
             disabled={inProgress}
-            raised dense color="primary"
-            onClick={() => { onActionCopy(currentAgenda.id,true),this.isFromTemplate = false}}>
+            variant="raised" color="primary"
+            onClick={() => { onActionCopy(currentAgenda.id, true), this.isFromTemplate = false }}>
             Copy
           </Button>
         </Grid>
