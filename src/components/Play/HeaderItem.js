@@ -45,45 +45,45 @@ function HeaderItem(props) {
     padding: '8px'
   }
   const styles = {
-    iconButton: { width: 18, height: 18, paddingRight: 8 }
+    iconButton: { width: '1rem', height: '1rem', paddingRight: 8 }
   }
   console.log('theme', theme)
 
   let percent = parseInt(spend / 60 / duration * 100)
   return (
     <Paper {...others} style={{ display: 'flex', flexDirection: 'row',alignItems:'center', flex: 1, marginTop: 10 }}>
-      <div style={{ flex: 2, display: 'flex', flexDirection: 'column',justifyContent:'space-between', marginLeft: '10px' }}>
-        <div style={{ visibility: !isMouseOver && 'hidden'}}>
-          <Link to={`/${type}`}>
-            <Tooltip title="Back">
-              <IconButton>
-                <NavigateBefore />
-              </IconButton>
-            </Tooltip>
-          </Link>
-          {type == 'agenda' &&
-            <Link to={`/${type}/detail/${id}`}>
-              <Tooltip title="Edit">
-                <IconButton>
-                  <Edit />
-                </IconButton>
-              </Tooltip>
-            </Link>}
-          <Tooltip title="Start now locally">
-            <IconButton onClick={onActionLocalStart}>
-              <OndemandVideo />
+      <div style={{ visibility: !isMouseOver && 'hidden', position:'fixed',alignSelf:'flex-start'}}>
+        <Link to={`/${type}`}>
+          <Tooltip title="Back">
+            <IconButton>
+              <NavigateBefore />
             </IconButton>
           </Tooltip>
-        </div>
+        </Link>
+        {type == 'agenda' &&
+          <Link to={`/${type}/detail/${id}`}>
+            <Tooltip title="Edit">
+              <IconButton>
+                <Edit />
+              </IconButton>
+            </Tooltip>
+          </Link>}
+        <Tooltip title="Start now locally">
+          <IconButton onClick={onActionLocalStart}>
+            <OndemandVideo />
+          </IconButton>
+        </Tooltip>
+      </div>
+      <div style={{ flex: 2, display: 'flex', flexDirection: 'column',justifyContent:'space-between', marginLeft: '10px' }}>
 
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex:4, display: 'flex', flexDirection: 'column' }}>
           <Typography color="inherit" style={{fontSize:'1.7rem'}}>{name}</Typography>
           <div style={{ paddingTop: 3 }}>
             <Status status = {status}/>
           </div>
         </div>
-        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-around' }}>
-          <Typography color="secondary" type="body2">
+        <div style={{ flex: 2, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', paddingTop: '1rem' }}>
+          <Typography color="secondary" type="caption">
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <Tooltip title="Start time">
                 <Flag style={styles.iconButton} />
@@ -91,7 +91,7 @@ function HeaderItem(props) {
               {new Date(startedAt).toLocaleString()}
             </div>
           </Typography>
-          <Typography color="secondary" type="body2">
+          <Typography color="secondary" type="caption">
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <Tooltip title="Location">
                 <LocationOn style={styles.iconButton} />
@@ -100,7 +100,6 @@ function HeaderItem(props) {
             </div>
           </Typography>
         </div>
-        <div style={{  }} />
       </div>
       <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
         <div style={circleContainerStyle}>

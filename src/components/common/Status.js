@@ -33,12 +33,12 @@ function Status(props) {
       paddingRight: 5,
       display: 'inline',
       color: 'white',
-      fontSize: '0.05 rem'
+      // fontSize: '0.01rem'
     }
   }
 
   return (
-    <Typography style={style.root} >
+    <Typography style={style.root} type='caption' >
       {statusBar[status].text}
     </Typography>
   )
