@@ -66,7 +66,7 @@ class AgendaPlay extends React.Component {
           onMouseOver={() => onActionMouseOver(currentAgenda.id)}
           onMouseOut={() => onActionMouseOut(currentAgenda.id)}
           onAddTimer={(value)=>onAddTimer(value)}
-          onUpdateStatus={()=>onUpdateStatus()}
+          onUpdateStatus={(value)=>onUpdateStatus(value)}
           onActionLocalStart={() => { onActionLocalStart(); clearInterval(this.clock); this.clock = null }}
           isMouseOver={isMouseOver}
           name={currentAgenda.name}

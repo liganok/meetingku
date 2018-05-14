@@ -20,6 +20,15 @@ import DateFnsUtils from "material-ui-pickers/utils/date-fns-utils";
 import DateTimePicker from "material-ui-pickers/DateTimePicker";
 import MuiPickersUtilsProvider from "material-ui-pickers/utils/MuiPickersUtilsProvider";
 
+function stopBubble(e) {
+  if (e && e.stopPropagation) {//非IE浏览器 
+    e.stopPropagation();
+  }
+  else {//IE浏览器 
+    window.event.cancelBubble = true;
+  }
+}
+
 function Item(props) {
   const {
     id,
@@ -84,10 +93,12 @@ function Item(props) {
           />
           <Grid item container align="center" spacing={0} style={{ display: `${isRoot ? '' : 'none'}`, paddingBottom: 10 }}>
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              <div style={{ paddingRight: 20 }}>
+              <div style={{ paddingRight: 20 }}
+                onMouseOver={(e) => stopBubble(e)}
+                onMouseOut={(e) => stopBubble(e)}>
                 <DateTimePicker
                   autoOk
-                  ampm={false}
+                  showTodayButton
                   style={styles.startedAt}
                   id={`startedAt${startedAt}`}
                   value={startedAt}
@@ -98,13 +109,13 @@ function Item(props) {
                   onChange={(time) => { onChangeField(id, 'startedAt', time) }}
                   InputProps={{
                     style: styles.startedAt,
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <Tooltip title="Start time">
-                          <Flag style={styles.icon} />
-                        </Tooltip>
-                      </InputAdornment>
-                    )
+                    // startAdornment: (
+                    //   <InputAdornment position="start">
+                    //     <Tooltip title="Start time">
+                    //       <Flag style={styles.icon} />
+                    //     </Tooltip>
+                    //   </InputAdornment>
+                    // )
                   }}
                 />
               </div>

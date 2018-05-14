@@ -54,7 +54,7 @@ function HeaderItem(props) {
   let percent = parseInt(spend / 60 / duration * 100)
   return (
     <Paper {...others} style={{ position: 'relative', display: 'flex', alignItems: 'center', flex: 1, marginTop: 10 }}>
-      <div style={{ visibility: !isMouseOver && 'hidden', position: 'fixed', alignSelf: 'flex-start' }}>
+      <div style={{ visibility: !isMouseOver && 'hidden', position: 'fixed', alignSelf: 'flex-start',backgroundColor:'white' }}>
         <Link to={`/${type}`}>
           <Tooltip title="Back">
             <IconButton>
@@ -70,7 +70,7 @@ function HeaderItem(props) {
               </IconButton>
             </Tooltip>
           </Link>}
-        <Tooltip title="Start now locally">
+        <Tooltip title="Restart">
           <IconButton onClick={onActionLocalStart}>
             <OndemandVideo />
           </IconButton>
@@ -116,12 +116,15 @@ function HeaderItem(props) {
         </div>
       </div>
       <div style={{ visibility: !isMouseOver && 'hidden', position: 'absolute', alignSelf: 'flex-end', top: '60%', left: '40%' }}>
-        <Button color="primary" size="small">
-          Pause
+        <Button color="primary" size="small"
+          disabled={status !== 'inProcess' && status !== 'pause'}
+          onClick={() => onUpdateStatus(status==='pause'? 'inProcess':'pause')}>
+          {status === 'pause' ? 'start' : 'PAUSE'}
         </Button>
         <Button color="primary" size="small"
+          disabled={status === 'done'}
           onClick={() => onAddTimer(15)}>
-          +5 S
+          + 15S
         </Button>
       </div>
     </Paper>
