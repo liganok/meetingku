@@ -13,6 +13,7 @@ function BodyItem(props) {
     spend = 0,
     spacing = 10,
     theme,
+    isHasSubItem = false,
     setting = {
       color: [{ leftTime: 30, color: '#FF4500' },
         { leftTime: 60, color: '#ff9900' },
@@ -37,6 +38,7 @@ function BodyItem(props) {
 
   let leftTime = duration * 60 - spend;
   for (let i = 0; i < setting.color.length; i++) {
+    if(isHasSubItem) {break}
     if (leftTime === 0) {
       reminderColor = theme.palette.grey[200];
       break;

@@ -20,6 +20,7 @@ function renderComponent(agenda, timer) {
       name={agenda.name}
       duration={agenda.duration}
       spend={spend}
+      isHasSubItem={isHasSubItem}
     />
   )
 
