@@ -115,7 +115,7 @@ function HeaderItem(props) {
           />
         </div>
       </div>
-      <div style={{ visibility: !isMouseOver && 'hidden', position: 'absolute', alignSelf: 'flex-end', top: '60%', left: '40%' }}>
+      <div style={{ visibility: !isMouseOver && status !=='pause' && 'hidden', position: 'absolute', alignSelf: 'flex-end', top: '60%', left: '40%' }}>
         <Button color="primary" size="small"
           disabled={status !== 'inProcess' && status !== 'pause'}
           onClick={() => onUpdateStatus(status==='pause'? 'inProcess':'pause')}>

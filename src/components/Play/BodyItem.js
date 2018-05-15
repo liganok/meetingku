@@ -12,14 +12,19 @@ function BodyItem(props) {
     duration = 1,
     spend = 0,
     spacing = 10,
-    theme
+    theme,
+    setting = {
+      color: [{ leftTime: 30, color: '#FF4500' },
+        { leftTime: 60, color: '#ff9900' },
+        { leftTime: 180, color: '#60be4f' }]
+    },
   } = props
 
   const styles = {
     root: {
       display: 'flex',
-      justifyContent:'space-between',
-      alignItems:'center',
+      justifyContent: 'space-between',
+      alignItems: 'center',
       marginTop: spacing,
       padding: 10,
       paddingTop: 15,
@@ -28,12 +33,31 @@ function BodyItem(props) {
   }
   let completed = parseInt(spend / 60 / duration * 100)
   let spendText = `${parseInt(spend / 60)}:${spend % 60 < 10 ? ('0' + spend % 60) : spend % 60}`
+  let reminderColor = theme.palette.grey[200];
+
+  let leftTime = duration * 60 - spend;
+  for (let i = 0; i < setting.color.length; i++) {
+    if (leftTime === 0) {
+      reminderColor = theme.palette.grey[200];
+      break;
+    }
+    let test = setting.color[i].leftTime
+    if (leftTime <= test) {
+      if (leftTime % 2 === 0) {
+        reminderColor = theme.palette.grey[200];
+      } else {
+        reminderColor = setting.color[i].color;
+      }
+      break;
+    }
+  }
+  console.log('************color*************', reminderColor)
   return (
     <Paper>
       <PlayItem completed={completed} backgroundColor={theme.palette.primary.main}>
-        <div  style={styles.root}>
+        <div style={styles.root}>
           <Typography style={{ fontSize: '1.1rem' }} noWrap>{name}</Typography>
-          <Typography style={{ backgroundColor: theme.palette.grey[200], padding: 5 }} color="textSecondary"  noWrap>{spendText} / {duration}:00</Typography>
+          <Typography style={{ backgroundColor: reminderColor, padding: 5 }} color="textSecondary" noWrap>{spendText} / {duration}:00</Typography>
         </div>
       </PlayItem>
     </Paper>
