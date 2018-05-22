@@ -44,7 +44,7 @@ function Register(props) {
           />
         </CardContent>
         <CardActions>
-          <Button type="submit" variant="raised" size="small" fullWidth color="primary">Sign Up</Button>
+          <Button type="submit" variant="raised"  fullWidth color="primary">Sign Up</Button>
         </CardActions>
       </form>
     </Card>

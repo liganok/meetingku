@@ -54,7 +54,7 @@ function HeaderItem(props) {
   let percent = parseInt(spend / 60 / duration * 100)
   return (
     <Paper {...others} style={{ position: 'relative', display: 'flex', alignItems: 'center', flex: 1, marginTop: 10 }}>
-      <div style={{ visibility: !isMouseOver && 'hidden', position: 'fixed', alignSelf: 'flex-start',backgroundColor:'white' }}>
+      <div style={{ visibility: !isMouseOver && 'hidden', position: 'absolute', alignSelf: 'flex-start',backgroundColor:'white' }}>
         <Link to={`/${type}`}>
           <Tooltip title="Back">
             <IconButton>

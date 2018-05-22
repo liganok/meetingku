@@ -34,7 +34,7 @@ function Login(props) {
           />
         </CardContent>
         <CardActions>
-          <Button type="submit" variant="raised" size="small" fullWidth color="primary">Log In</Button>
+          <Button type="submit" variant="raised"  fullWidth color="primary">Log In</Button>
         </CardActions>
       </form>
     </Card>

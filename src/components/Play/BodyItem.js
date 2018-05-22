@@ -53,7 +53,6 @@ function BodyItem(props) {
       break;
     }
   }
-  console.log('************color*************', reminderColor)
   return (
     <Paper>
       <PlayItem completed={completed} backgroundColor={theme.palette.primary.main}>
