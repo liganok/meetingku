@@ -56,7 +56,7 @@ function BodyItem(props) {
   return (
     <Paper>
       <PlayItem completed={completed} backgroundColor={theme.palette.primary.main}>
-        <div style={styles.root}>
+        <div style={styles.root} onClick={() => void (0)}>
           <Typography style={{ fontSize: '1.1rem' }} noWrap>{name}</Typography>
           <Typography style={{ backgroundColor: reminderColor, padding: 5 }} color="textSecondary" noWrap>{spendText} / {duration}:00</Typography>
         </div>
