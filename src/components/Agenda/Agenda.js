@@ -47,16 +47,16 @@ function AddAgenda(props) {
 
   return (
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-      <SLink to="/agenda/new" style={{ flex: 1 }}>
-        <div style={styles.root} className={props.className} onClick={props.onCreate}>
-          <Add style={styles.addIcon} />
-          <Typography variant="subheading" style={{ color: SECOND_TEXT_COLOR }}>Add new agenda</Typography>
-        </div>
-      </SLink>
       <SLink to="/template" style={{ flex: 1 }}>
         <div style={styles.root} className={props.className} onClick={props.onCreate}>
           <Add style={styles.addIcon} />
           <Typography variant="subheading" style={{ color: SECOND_TEXT_COLOR }}>Copy from template</Typography>
+        </div>
+      </SLink>
+      <SLink to="/agenda/new" style={{ flex: 1 }}>
+        <div style={styles.root} className={props.className} onClick={props.onCreate}>
+          <Add style={styles.addIcon} />
+          <Typography variant="subheading" style={{ color: SECOND_TEXT_COLOR }}>Add new agenda</Typography>
         </div>
       </SLink>
     </div>

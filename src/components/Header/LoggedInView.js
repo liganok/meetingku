@@ -15,7 +15,7 @@ function LoggedInView(props) {
       <IconButton
         style={{ display: isShow ? null : 'none' }}>
         {/* <AccountCircle style={{ width: 30, height: 30 }} color="contrast" /> */}
-        <Avatar>{user.username.substring(0,1)}</Avatar>
+        <Avatar style={{ color: 'fff', backgroundColor:'#ff9900'}}>{user.username.substring(0,1)}</Avatar>
       </IconButton>
     </SLink>
   )
