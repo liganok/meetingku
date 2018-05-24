@@ -7,8 +7,9 @@ import HeaderItem from './HeaderItem'
 import BodyItems from './BodyItems'
 
 import * as types from '../../constants/actionTypes'
+import Typography from 'material-ui/Typography'
 
-const mapStateToProps = state => ({ ...state.agendaPlay })
+const mapStateToProps = state => ({ ...state.agendaPlay, inProgress: state.common.inProgress })
 const mapDispatchToProps = dispatch => ({
   onLoad: (payload) => dispatch({ type: types.AP_ACTION_GET_DETAIL, payload }),
   onUpdateTimer: (payload) => dispatch({ type: types.AP_ACTION_UPDATE_TIMER, payload }),
@@ -54,8 +55,14 @@ class AgendaPlay extends React.Component {
   }
 
   render() {
-    const { currentAgenda, timer, status, mouseOverId = '', onActionMouseOver, onActionMouseOut, onActionLocalStart, onAddTimer, onUpdateStatus } = this.props
-    if (!currentAgenda) { return null }
+    const { currentAgenda, timer, status, mouseOverId = '', onActionMouseOver, onActionMouseOut, onActionLocalStart, onAddTimer, onUpdateStatus, inProgress } = this.props
+    if (!currentAgenda) {
+      return (
+        <div style={{ display: inProgress ? '' : 'none', textAlign: 'center', padding: '10px' }}>
+          <Typography>loading ...</Typography>
+        </div>
+      )
+    }
     let isMouseOver = mouseOverId === currentAgenda.id
     if (status == 'done') {
       clearInterval(this.clock)
@@ -65,9 +72,9 @@ class AgendaPlay extends React.Component {
         <HeaderItem
           onMouseOver={() => onActionMouseOver(currentAgenda.id)}
           onMouseOut={() => onActionMouseOut(currentAgenda.id)}
-          onClick={()=>void(0)}
-          onAddTimer={(value)=>onAddTimer(value)}
-          onUpdateStatus={(value)=>onUpdateStatus(value)}
+          onClick={() => void (0)}
+          onAddTimer={(value) => onAddTimer(value)}
+          onUpdateStatus={(value) => onUpdateStatus(value)}
           onActionLocalStart={() => { onActionLocalStart(); clearInterval(this.clock); this.clock = null }}
           isMouseOver={isMouseOver}
           name={currentAgenda.name}
