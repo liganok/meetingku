@@ -16,8 +16,8 @@ function BodyItem(props) {
     isHasSubItem = false,
     setting = {
       color: [{ leftTime: 30, color: '#FF4500' },
-        { leftTime: 60, color: '#ff9900' },
-        { leftTime: 180, color: '#60be4f' }]
+      { leftTime: 60, color: '#ff9900' },
+      { leftTime: 180, color: '#60be4f' }]
     },
   } = props
 
@@ -34,11 +34,15 @@ function BodyItem(props) {
   }
   let completed = parseInt(spend / 60 / duration * 100)
   let spendText = `${parseInt(spend / 60)}:${spend % 60 < 10 ? ('0' + spend % 60) : spend % 60}`
+  let timeText = `${spendText} / ${duration}:00`
   let reminderColor = theme.palette.grey[200];
 
   let leftTime = duration * 60 - spend;
+  if (leftTime > 0 && leftTime < 180 && spend > 0 && !isHasSubItem) {
+    timeText = `- ${parseInt(leftTime / 60)}:${leftTime % 60 < 10 ? ('0' + leftTime % 60) : leftTime % 60}`
+  }
   for (let i = 0; i < setting.color.length; i++) {
-    if(isHasSubItem) {break}
+    if (isHasSubItem) { break }
     if (leftTime === 0) {
       reminderColor = theme.palette.grey[200];
       break;
@@ -58,7 +62,7 @@ function BodyItem(props) {
       <PlayItem completed={completed} backgroundColor={theme.palette.primary.main}>
         <div style={styles.root} onClick={() => void (0)}>
           <Typography style={{ fontSize: '1.1rem' }} noWrap>{name}</Typography>
-          <Typography style={{ backgroundColor: reminderColor, padding: 5 }} color="textSecondary" noWrap>{spendText} / {duration}:00</Typography>
+          <Typography style={{ backgroundColor: reminderColor, padding: 5 }} color="textSecondary" noWrap>{timeText}</Typography>
         </div>
       </PlayItem>
     </Paper>
