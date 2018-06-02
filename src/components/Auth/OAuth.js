@@ -39,7 +39,7 @@ class OAuth extends React.Component {
   render() {
     return (
       <div style={this.props.style}>
-        <Button raised href={getOAuthURL('google')}
+        <Button variant="raised" href={getOAuthURL('google')}
           style={{ width: '100%', textTransform: 'none', backgroundColor: 'white',  }}>
           <GoogleIcon style={{width:18,height:18,paddingRight:5}}/>
           Google
