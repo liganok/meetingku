@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types';
-import Grid from 'material-ui/Grid'
-import Paper from 'material-ui/Paper'
-import TextField from 'material-ui/TextField'
+import Grid from '@material-ui/core/Grid'
+import Paper from '@material-ui/core/Paper'
+import TextField from '@material-ui/core/TextField'
 import Flag from '@material-ui/icons/Flag'
 import Alarm from '@material-ui/icons/Alarm'
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
@@ -13,9 +13,9 @@ import AccessTime from '@material-ui/icons/AccessTime'
 import Add from '@material-ui/icons/Add'
 import LocationOn from '@material-ui/icons/LocationOn'
 import Remove from '@material-ui/icons/Remove'
-import IconButton from 'material-ui/IconButton'
-import Input, { InputAdornment } from 'material-ui/Input';
-import Tooltip from 'material-ui/Tooltip'
+import IconButton from '@material-ui/core/IconButton'
+import { Input, InputAdornment } from '@material-ui/core';
+import Tooltip from '@material-ui/core/Tooltip'
 import DateFnsUtils from "material-ui-pickers/utils/date-fns-utils";
 import DateTimePicker from "material-ui-pickers/DateTimePicker";
 import MuiPickersUtilsProvider from "material-ui-pickers/utils/MuiPickersUtilsProvider";

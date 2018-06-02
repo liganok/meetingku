@@ -1,13 +1,13 @@
 import React from 'react'
 import agent from '../../agent'
 import { connect } from 'react-redux'
-import Card, { CardActions, CardContent } from 'material-ui/Card'
-import Button from 'material-ui/Button'
-import TextField from 'material-ui/TextField'
-import Tabs, { Tab } from 'material-ui/Tabs'
-import AppBar from 'material-ui/AppBar'
-import Divider from 'material-ui/Divider';
-import Typography from 'material-ui/Typography';
+import Card, { CardActions, CardContent } from '@material-ui/core/Card'
+import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField'
+import Tabs, { Tab } from '@material-ui/core/Tabs'
+import AppBar from '@material-ui/core/AppBar'
+import Divider from '@material-ui/core/Divider';
+import Typography from '@material-ui/core/Typography';
 
 import Login from './Login'
 import Register from './Register'

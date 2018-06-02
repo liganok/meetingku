@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import IconButton from 'material-ui/IconButton'
-import Button from 'material-ui/Button'
-import Paper from 'material-ui/Paper'
-import Typography from 'material-ui/Typography'
+import IconButton from '@material-ui/core/IconButton'
+import Button from '@material-ui/core/Button'
+import Paper from '@material-ui/core/Paper'
+import Typography from '@material-ui/core/Typography'
 import VDivider from '../common/VDivider'
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
 

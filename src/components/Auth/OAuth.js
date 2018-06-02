@@ -1,7 +1,7 @@
 import React from 'react'
 import agent from '../../agent'
 import { connect } from 'react-redux'
-import Button from 'material-ui/Button'
+import Button from '@material-ui/core/Button'
 
 import * as types from '../../constants/actionTypes'
 import { getOAuthURL } from '../../utils/oAuth'

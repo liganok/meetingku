@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Snackbar from 'material-ui/Snackbar';
-import Slide from 'material-ui/transitions/Slide';
+import Snackbar from '@material-ui/core/Snackbar';
 
 function MessageBox(props) {
   const {

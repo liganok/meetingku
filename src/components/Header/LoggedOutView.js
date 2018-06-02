@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { SLink } from '../common/StyledComponents'
-import Button from 'material-ui/Button'
-import Typography from 'material-ui/Typography'
+import Button from '@material-ui/core/Button'
+import Typography from '@material-ui/core/Typography'
 
 function LoggedOutView(props) {
   const {

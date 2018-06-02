@@ -4,8 +4,8 @@ import { connect } from 'react-redux'
 import agent from '../../agent'
 import AgendaList from '../common/AgendaList'
 import ConfirmDialog from '../common/ConfirmDialog'
-import Divider from 'material-ui/Divider'
-import Typography from 'material-ui/Typography'
+import Divider from '@material-ui/core/Divider'
+import Typography from '@material-ui/core/Typography'
 
 import { SECOND_TEXT_COLOR } from '../../constants/globalSetting'
 

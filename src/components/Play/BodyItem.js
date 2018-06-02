@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types';
-import Typography from 'material-ui/Typography'
-import Grid from 'material-ui/Grid'
+import Typography from '@material-ui/core/Typography'
+import Grid from '@material-ui/core/Grid'
 import PlayItem from './PlayItem'
-import Paper from 'material-ui/Paper'
-import { withTheme } from 'material-ui/styles';
+import Paper from '@material-ui/core/Paper'
+import { withTheme } from '@material-ui/core/styles';
 
 function BodyItem(props) {
   const {

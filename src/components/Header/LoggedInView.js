@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { SLink } from '../common/StyledComponents'
-import IconButton from 'material-ui/IconButton'
+import IconButton from '@material-ui/core/IconButton'
 import AccountCircle from '@material-ui/icons/AccountCircle'
-import Avatar from 'material-ui/Avatar';
+import Avatar from '@material-ui/core/Avatar';
 
 function LoggedInView(props) {
   const {

@@ -1,7 +1,7 @@
 import React from 'react'
-import Card, { CardActions, CardContent } from 'material-ui/Card'
-import Button from 'material-ui/Button'
-import TextField from 'material-ui/TextField'
+import Card, { CardActions, CardContent } from '@material-ui/core/Card'
+import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField'
 
 function Register(props) {
   const {

@@ -5,8 +5,8 @@ import { connect } from 'react-redux'
 import agent from '../../agent'
 import Add from '@material-ui/icons/Add'
 import styled from 'styled-components'
-import Typography from 'material-ui/Typography'
-import Divider from 'material-ui/Divider'
+import Typography from '@material-ui/core/Typography'
+import Divider from '@material-ui/core/Divider'
 
 import AgendaList from '../common/AgendaList'
 

@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
-import Grid from 'material-ui/Grid'
-import Button from 'material-ui/Button';
-import Tooltip from 'material-ui/Tooltip'
+import Grid from '@material-ui/core/Grid'
+import Button from '@material-ui/core/Button';
+import Tooltip from '@material-ui/core/Tooltip'
 
 import agent from '../../agent'
 import ItemList from './ItemList'

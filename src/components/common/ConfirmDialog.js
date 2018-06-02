@@ -1,12 +1,13 @@
 import React from 'react'
-import Button from 'material-ui/Button';
-import Dialog, {
+import Button from '@material-ui/core/Button';
+import {
+  Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
-} from 'material-ui/Dialog';
-import Slide from 'material-ui/transitions/Slide';
+} from '@material-ui/core';
+import Slide from '@material-ui/core/Slide';
 
 function Transition(props) {
   return <Slide direction="up" {...props} />;
@@ -16,7 +17,7 @@ function ConfirmDialog(props) {
   const {
     title = 'Confirm',
     message = '',
-    open,
+    open = false,
     onRequestClose,
     onConfirm
   } = props

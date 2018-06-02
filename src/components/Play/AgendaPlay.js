@@ -7,7 +7,7 @@ import HeaderItem from './HeaderItem'
 import BodyItems from './BodyItems'
 
 import * as types from '../../constants/actionTypes'
-import Typography from 'material-ui/Typography'
+import Typography from '@material-ui/core/Typography'
 
 const mapStateToProps = state => ({ ...state.agendaPlay, inProgress: state.common.inProgress })
 const mapDispatchToProps = dispatch => ({

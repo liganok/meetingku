@@ -3,8 +3,8 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom'
 import store from './store';
-import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
-import { blue, teal } from 'material-ui/colors'
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { blue, teal } from '@material-ui/core/colors'
 import App from './components/App';
 import './styles/index.css';
 import registerServiceWorker from './registerServiceWorker';
