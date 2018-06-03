@@ -3,7 +3,7 @@ import _superagent from 'superagent'
 
 const superagent = superagentPromise(_superagent, global.Promise)
 
-const API_ROOT = (process.env.NODE_ENV === 'development') ? 'http://localhost:8080/api' : 'https://api.meetingku.com/api'
+const API_ROOT = (process.env.NODE_ENV === 'development') ? 'http://192.168.0.103:8080/api' : 'https://api.meetingku.com/api'
 const encode = encodeURIComponent
 const responseBody = res => res.body
 

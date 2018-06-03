@@ -11,6 +11,10 @@ export default (state = defaultState, action) => {
       return {...state, isShowActions:false, mouseOverId:null}
     case types.AI_ACTION_ONOFF_DIALOG:
       return { ...state, showDialog: !state.showDialog, delId:action.payload }
+    case types.AI_ACTION_OPEN_MENUITEM:
+      return { ...state, anchorEl: action.payload }
+    case types.AI_ACTION_CLOSE_MENUITEM:
+      return { ...state, anchorEl: null }
     default:
       return state;
   }
