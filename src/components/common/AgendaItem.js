@@ -68,7 +68,8 @@ function AgendaItem(props) {
   } = props
 
   const styles = {
-    iconButton: { width: 40, height: 40 }
+    iconButton: { width: 40, height: 40 },
+    iconFlag: { width: 15, height: 15, paddingRight: 5, color: "#a4a6b0" }
   }
 
   let startTime = new Date(startedAt).getTime()
@@ -94,44 +95,42 @@ function AgendaItem(props) {
         <Typography variant='title'>{name}</Typography>
         <Status status={status} />
       </div>
-      <div style={{ paddingTop: 15 }}>
-        <Grid container spacing={0} justify="space-between" alignItems="center">
-          <Grid item xs={7} container spacing={0}>
-            <Typography color="textSecondary" type="body2" gutterBottom style={{ paddingRight: 15 }}>
-              <Grid container spacing={0}>
-                <Tooltip title="Start time">
-                  <Flag style={{ width: 20, height: 20, paddingRight: 5 }} />
-                </Tooltip>
-                {new Date(startedAt).toLocaleString()}
-              </Grid>
-            </Typography>
-            <Typography color="textSecondary" type="body2" gutterBottom>
-              <Grid container spacing={0}>
-                <Tooltip title="Duration">
-                  <Alarm style={{ width: 20, height: 20, paddingRight: 5 }} />
-                </Tooltip>
-                <span style={{ paddingRight: 5 }}>{duration}</span>
-                mins
-            </Grid>
+      <Grid style={{ paddingTop: 15 }} container spacing={0} justify="space-between" alignItems="center">
+        <Grid item xs={7} container spacing={0}>
+          <Grid container spacing={0}>
+            <Tooltip title="Start time">
+              <Flag style={styles.iconFlag} />
+            </Tooltip>
+            <Typography color="textSecondary" variant="caption" gutterBottom style={{ paddingRight: 15 }}>
+              {new Date(startedAt).toLocaleString()}
             </Typography>
           </Grid>
-          <Grid item xs={5} container spacing={0} direction="column" justify="space-around" alignItems="flex-end"
-            style={{ visibility: !(isShowActions && (id === mouseOverId)) && "display" }}>
-            <AgendaActions
-              type={type}
-              anchorEl={anchorEl}
-              onActionDetail={() => { onRedirect(`/${type === 'template' ? 'template':'agenda'}/detail/${id}`); onCloseMenu() }}
-              onActionCopy={() => { onActionCopy(id, true); onCloseMenu() }}
-              onActionLogicDel={() => { onActionLogicDel(id); onCloseMenu() }}
-              onActionDel={() => { onOffDialog(id); onCloseMenu() }}
-              onActionLogicDelUndo={() => { onActionLogicDelUndo(id); onCloseMenu() }}
-              onOpenMenu={(ev) => onOpenMenu(ev.currentTarget)}
-              onCloseMenu={() => onCloseMenu()}
-              onActionPlay={() => onRedirect(`/${type === 'template' ? 'template' : 'agenda'}/play/${id}`)}
-            />
+          <Grid container spacing={0}>
+            <Tooltip title="Duration">
+              <Alarm style={styles.iconFlag} />
+            </Tooltip>
+            <Typography color="textSecondary" variant="caption" gutterBottom>
+              <span style={{ paddingRight: 5 }}>{duration}</span>
+              mins
+            </Typography>
           </Grid>
         </Grid>
-      </div>
+        <Grid item xs={5} container spacing={0} direction="column" justify="space-around" alignItems="flex-end"
+          style={{ visibility: !(isShowActions && (id === mouseOverId)) && "display" }}>
+          <AgendaActions
+            type={type}
+            anchorEl={anchorEl}
+            onActionDetail={() => { onRedirect(`/${type === 'template' ? 'template' : 'agenda'}/detail/${id}`); onCloseMenu() }}
+            onActionCopy={() => { onActionCopy(id, true); onCloseMenu() }}
+            onActionLogicDel={() => { onActionLogicDel(id); onCloseMenu() }}
+            onActionDel={() => { onOffDialog(id); onCloseMenu() }}
+            onActionLogicDelUndo={() => { onActionLogicDelUndo(id); onCloseMenu() }}
+            onOpenMenu={(ev) => onOpenMenu(ev.currentTarget)}
+            onCloseMenu={() => onCloseMenu()}
+            onActionPlay={() => onRedirect(`/${type === 'template' ? 'template' : 'agenda'}/play/${id}`)}
+          />
+        </Grid>
+      </Grid>
     </Paper>
   )
 

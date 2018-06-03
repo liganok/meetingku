@@ -50,10 +50,10 @@ class Trash extends React.Component {
             <Divider />
           </div>}
         <ConfirmDialog
-          title='Confirm to delete?'
+          title='Confirm to delete'
           message={'Agenda will be permanently deleted and can not recover'}
           open={showDialog}
-          onRequestClose={() => onOffDialog()}
+          onClose={() => onOffDialog()}
           onConfirm={() => onActionDel(delId)} />
       </div>
     )

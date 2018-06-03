@@ -25,10 +25,10 @@ function ConfirmDialog(props) {
   return (
     <Dialog
       open={open}
-      transition={Transition}
+      TransitionComponent={Transition}
       keepMounted
       fullWidth
-      onRequestClose={onRequestClose}
+      onClose={onRequestClose}
     >
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>

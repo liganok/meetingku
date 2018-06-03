@@ -9,10 +9,6 @@ function MessageBox(props) {
     onRequestClose
   } = props
 
-  // function TransitionRight(props) {
-  //   return <Slide direction="left" {...props} />;
-  // }
-
   return (
     <Snackbar
       style={{marginTop:50}}  
