@@ -28,8 +28,8 @@ function AgendaActions(props) {
 
 
   const styles = {
-    root:{
-      display:'flex'
+    root: {
+      display: 'flex'
     },
     iconButton: { width: 40, height: 40 }
   }
@@ -44,15 +44,17 @@ function AgendaActions(props) {
           <PlayArrowIcon />
         </IconButton>
       </Tooltip>
-      <IconButton
-        style={styles.iconButton}
-        aria-label="More"
-        aria-owns={anchorEl ? 'long-menu' : null}
-        aria-haspopup="true"
-        onClick={onOpenMenu}
-      >
-        <MoreVertIcon />
-      </IconButton>
+      <Tooltip title="More">
+        <IconButton
+          style={styles.iconButton}
+          aria-label="More"
+          aria-owns={anchorEl ? 'long-menu' : null}
+          aria-haspopup="true"
+          onClick={onOpenMenu}
+        >
+          <MoreVertIcon />
+        </IconButton>
+      </Tooltip>
       <Menu
         id="agenda-menu"
         anchorEl={anchorEl}
