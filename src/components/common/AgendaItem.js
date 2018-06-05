@@ -121,7 +121,7 @@ function AgendaItem(props) {
             type={type}
             anchorEl={anchorEl}
             onActionDetail={() => { onRedirect(`/${type === 'template' ? 'template' : 'agenda'}/detail/${id}`); onCloseMenu() }}
-            onActionCopy={() => { onActionCopy(id, true); onCloseMenu() }}
+            onActionCopy={() => { onActionCopy(id, type==='template'? true:false); onCloseMenu() }}
             onActionLogicDel={() => { onActionLogicDel(id); onCloseMenu() }}
             onActionDel={() => { onOffDialog(id); onCloseMenu() }}
             onActionLogicDelUndo={() => { onActionLogicDelUndo(id); onCloseMenu() }}
